@@ -1,0 +1,128 @@
+10 ! The no. of lines to skip in the beginning
+!
+! INPUT to TrackPoint program
+! ===========================
+!
+! This file's name has to be set in BasicsDef::optionFilename (AnalyzeDef.h)
+! Macros have to be set in loginfo.h file:
+!   LOG - if log file is to be created
+!   FILE_OUTPUT - if helpfiles are to be generated
+!           OBS!  type of helpfiles has to be set in line X-Y below
+!
+! path for input (incl. slash) - subdirectories not allowed (test.par, FOR035.dat and image files): BasicsDef::theInpath
+input/
+! path for output  (incl. slash)- subdirectories not allowed, that is helpfiles, socket file and log file: BasicsDef::theOutpath
+output/
+!path for calibration files
+C://direct/ffaff.dat
+! Run type. Type C for calibration run, P for production run, and R for recalculation calibration values
+C
+! Camera type. RGB24 or RGB8
+RGB8
+! Frame and wand type. ORIGINAL or DIODE
+ORIGINAL
+! name of calibration summary file, for recalculating calibration values. The file has to be in the calibration directory.
+calibration_summary_2012062311_3540.dat
+! path and name of calibration file, the file has to be placed in the input directory: BasicsDef::calibrationFilename = BasicsDef::theInpath + ... calibration_summary_2012122008_5133.dat
+C://direct/
+! path and name of trigger program (only relevant if all image file input options are false)
+gegrte
+! trigging interval, millisec: InputDef::triggingIntervalMs
+0
+! trigger port (COM3 or COM4)
+COM4
+! no. of triplet groups of cameras: BasicsDef:noOfTripletsCameras: InputDef::numcameras = LimitsDef::IM_FACTOR * ...
+2
+! no of time pts, this run: InputDef::noOfTimePts
+200
+! no of time points looking back after initial section
+10
+! no of markers (time tracks): InputDef::noOfTracks
+5
+! Parameter for point detection: Offset pixel value (from median) to separate background from particles: InputDef::imlimit
+100
+! Parameter for point detection: Minimum number of pixels in the x- and y-direction to identify a point: InputDef::minpix
+0
+! Parameter for point detection: Maximum number of pixels in the x- and y-direction to identify a point: InputDef::maxpix
+0
+! Parameter for point detection: Size of window used for removing image 'background': ImageDef::subwinz
+100
+! Min. distance between particles (pixels): InputDef::minsep
+0
+! Area of search along epipolar line (pixels): InputDef::epilim
+50
+! Max. error (mm) in 'ellemelle'-function: InputDef::maxerr
+0
+! Parameter for identifying possible next point in trajectory: Max. hor.dist. (mm): InputDef::maxdist2
+200.0
+! Parameter for identifying possible next point in trajectory: Max. vert. dist. (mm): InputDef::maxdeltaz (ML: M� v�re >0, men ellers ingen effekt)
+20.0
+! Factor used for determining the next point in a trajectory, importance of vert. acceleration (0.0 = None, 1.0 = Full): ConnectpointsDef.useAccel_z
+0.0
+! Factor used for determining the next point in a trajectory, total acc. limit reduction factor along traj.: ConnectpointsDef.aRedfactTrack
+0.4
+! Factor used for determining the next point in a trajectory, vertical acc. limit reduction factor along traj.: ConnectpointsDef.aRedfactTrackZ
+0.7
+! Max. number of images a point can be absent: InputDef::MaxImageGap
+0
+! the size of the initial phase is the gap: InputDef::initPhase =  InputDef::MaxImageGap + the following no.
+2
+! Min. number of points in a track: InputDef::MinPointsInTrack
+4
+! output from program: Basic format (earlier PrintOptions[0])
+F
+! output from program: Presocket format (earlier PrintOptions[1])
+F
+! output from program: Socket Connection (earlier PrintOptions[2])
+T
+! time stamp for triplets input ... info file in e.g. <input path>/group_0_triplets__20100427141709/group_0_20100427141709_info.txt
+2013011710_0151
+!image file input, triplets from file (IKKE TESTET)
+T
+! image file input (TR), triplets from file, turned right
+T
+! image file output, original images (IKKE TESTET)
+T
+! image file output, generated triplets
+T
+! image file output, generated triplets, turned right
+T
+! help file, seq_dat_0_files; output from ImageDetectPoints(), input to DuplicatePoints()
+T
+! help file, seq_dat_files; output from DuplicatePoints(), input to PointCoordinates()
+T
+! help file, match_0_files; output from match3(), input to dobbelmatch()
+T
+! help file, match_files; output from dobbelmatch(), input to MakeTimeSeries() and WriteTimeSeries()
+T
+! help file, match_trj_files; output from Connectpoints()
+T
+! help file, socketdata to file; output from Timeseries()
+T
+! Approximation limit for frame markers
+0.0
+! Approximate location for the frame markers (Only relevant in calibration runs) (12 lines pr camera group)
+470.687 304.156
+342.749 287.329
+299.914 281.324
+336.742 196.22
+373.985 380.337
+416.587 360.713
+514.144 313.054 
+316.089 305.026
+403.746 402.555
+276.325 393.603
+407.332 364.996
+415.03 280.041
+470.687 304.156
+342.749 287.329
+299.914 281.324
+336.742 196.22
+373.985 380.337
+416.587 360.713
+514.144 313.054 
+316.089 305.026
+403.746 402.555
+276.325 393.603
+407.332 364.996
+415.03 280.041

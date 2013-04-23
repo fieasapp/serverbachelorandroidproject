@@ -1,0 +1,40 @@
+
+C:/CalPoint_des2012/calibration_2013012208_5420/calibration_comb_0_1_2.dat
+
+S0 = 0.0693. Mean: 0.45, max: 0.58
+
+Camno 6. Serial no. 34900252
+  XO: -1543.06        Y0: -222.92         Z0: 1861.89       
+  AL: -0.952571       BE: 0.148936        KA: -1.46469      
+
+   C: 533.573         C std.dev.: 1.6647          XH: 45.615         XH std.dev.: 4.3675        
+  YH: 11.874         YH std.dev.: 4.0464          AF: -5.5e-005      AF std.dev.: 0.000473      
+ ORT: -0.000658     ORT std.dev.: 0.000432      
+  F1: 1e-006         F1 std.dev.: 1.14e-007       F2: 6.11e-012      F2 std.dev.: 3.44e-012     
+  F3: 1.31e-022      F3 std.dev.: 0               P1: 1.23e-006      P1 std.dev.: 5.35e-006     
+  P2: 1.95e-006      P2 std.dev.: 5.32e-006       RO: 0             
+
+Camno 7. Serial no. 50800042
+  XO: -803.75         Y0: -1589.54        Z0: 1868.71       
+  AL: -0.589559       BE: 0.746746        KA: -0.867116     
+
+   C: 545.296         C std.dev.: 1.6252          XH: 50.725         XH std.dev.: 4.8734        
+  YH: 5.861          YH std.dev.: 2.449           AF: -5.6e-005      AF std.dev.: 0.000601      
+ ORT: 0.000961      ORT std.dev.: 0.000335      
+  F1: 9.86e-007      F1 std.dev.: 5.9e-008        F2: 2.24e-012      F2 std.dev.: 8.29e-013     
+  F3: -3.21e-023     F3 std.dev.: 0               P1: 2.72e-006      P1 std.dev.: 5.58e-006     
+  P2: 3.34e-006      P2 std.dev.: 3.74e-006       RO: 0             
+
+Camno 8. Serial no. 50800016
+  XO: 1228.19         Y0: -1388.93        Z0: 1861.34       
+  AL: 0.497364        BE: 0.762289        KA: 0.61989       
+
+   C: 540.117         C std.dev.: 1.8319          XH: 7.612          XH std.dev.: 4.5448        
+  YH: -2.585         YH std.dev.: 2.9171          AF: -0.00158       AF std.dev.: 0.000564      
+ ORT: 0.000282      ORT std.dev.: 0.000524      
+  F1: 8.86e-007      F1 std.dev.: 6.71e-008       F2: 4.62e-012      F2 std.dev.: 1.25e-012     
+  F3: 9.71e-024      F3 std.dev.: 0               P1: -1.16e-006     P1 std.dev.: 5.75e-006     
+  P2: 1.74e-006      P2 std.dev.: 3.73e-006       RO: 0             
+
+
+==============
