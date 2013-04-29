@@ -30,14 +30,14 @@ import javax.swing.JOptionPane;
 public class ServerSettingsController extends ComponentAdapter implements ActionListener,
 Observer, ItemListener{
     
-    private ServerMainGui mainGui = null;
-    private SettingsDialog dialog = null;
-    private ServerSettingsModel settingsModel = null;
+    private ServerMainGui mainGui = null; //Main View
+    private SettingsDialog dialog = null; //Additional View
+    private ServerSettingsModel settingsModel = null; //Model
     
     //RUNNABLE AND THREADS
     private ActivityServer activityServer = null;
     
-    private Thread thread = null;
+    private Thread thread = null; //Thread use to execute a runnable(ActivityServer)
     
     
     //ACTION COMMAND
@@ -59,6 +59,23 @@ Observer, ItemListener{
         this.settingsModel = settingsModel;
         this.mainGui = mainGui;
         this.activityServer = activityServer;
+    }
+    
+    /**
+     * Set initial value of the main gui text fields
+     */
+    public void setMainGuiInitialValues()
+    {
+        settingsModel.loadServerPreferences();
+    }
+    
+    /*
+     * Set initial value of the settings dialog form
+     */
+    public void setSettingsDialogInitialValues()
+    {
+        mainGui.getSettingsForm().getcbUseLocalIP().setSelected(settingsModel.useLocalBrokerAddress());
+        mainGui.getSettingsForm().getcbUseMachineName().setSelected(settingsModel.useLocalMachinename());
     }
     
     /**
@@ -151,23 +168,6 @@ Observer, ItemListener{
     }
 
     /**
-     * Set initial value of the main gui text fields
-     */
-    public void setMainGuiInitialValues()
-    {
-        settingsModel.loadServerPreferences();
-    }
-    
-    /*
-     * Set initial value of the settings dialog form
-     */
-    public void setSettingsDialogInitialValues()
-    {
-        mainGui.getSettingsForm().getcbUseLocalIP().setSelected(settingsModel.useLocalBrokerAddress());
-        mainGui.getSettingsForm().getcbUseMachineName().setSelected(settingsModel.useLocalMachinename());
-    }
-    
-    /**
      * Retrieves the local name of the machine the server is on.
      * @return Local Machine name
      */
@@ -245,29 +245,29 @@ Observer, ItemListener{
         
         if(ie.getItem().equals(mainGui.getSettingsForm().getcbUseMachineName()))
         {
-            switch(ie.getStateChange())
+            switch(ie.getStateChange()) //If the event is from Server name field checkbox
             {
                 case 1:
                    mainGui.getSettingsForm().setServerNameText(getMachineName());
-                   settingsModel.setUseLocalMachinename(true);
+                   settingsModel.setUseLocalMachinename(true); //checkbox is checked
                     break;
                 
                 case 2:
-                    settingsModel.setUseLocalMachinename(false);
+                    settingsModel.setUseLocalMachinename(false); //checkbox is unchecked
                     break;
             }
         }
         else if(ie.getItem().equals(mainGui.getSettingsForm().getcbUseLocalIP()))
         {
-            switch(ie.getStateChange())
+            switch(ie.getStateChange()) //If the event is from broker address field checkbox
             {
                 case 1:
                    mainGui.getSettingsForm().setBrokerAddressText(getLocalIPAddress());
-                   settingsModel.setUseLocalBrokerAddress(true); 
+                   settingsModel.setUseLocalBrokerAddress(true); //checkbox is checked
                    break;
                 
                 case 2:
-                    settingsModel.setUseLocalBrokerAddress(false);
+                    settingsModel.setUseLocalBrokerAddress(false); //checkbox is unchecked
                     break;
             }
         }
@@ -314,8 +314,7 @@ Observer, ItemListener{
     
     @Override
     public void update(DataChangeEvent<?> e) {
-        System.out.println("UPDATED");
-        updateMainGui();
+        updateMainGui(); //update the main view
     }
 
     @Override

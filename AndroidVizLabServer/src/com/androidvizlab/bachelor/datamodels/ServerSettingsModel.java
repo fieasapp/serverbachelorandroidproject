@@ -11,12 +11,13 @@ import java.util.HashMap;
  */
 public class ServerSettingsModel extends SimpleObservable{
     
-    private String serverAddress = "localhost";
-    private int serverPort = 1330;
-    private String brokerAddress = "localhost";
-    private int brokerPort = 1883;
-    private boolean useLocalBrokerAddress = true;
-    private boolean useLocalMachinename = true;
+    private String serverAddress = "localhost"; //default
+    private int serverPort = 1330; //default
+    private String brokerAddress = "localhost"; //default
+    private int brokerPort = 1883; //default
+    
+    private boolean useLocalBrokerAddress = true; //default
+    private boolean useLocalMachinename = true; //default
     
     //MAP KEYS
     public static final String KEY_SERVER_ADDRESS = "server_address";
@@ -53,6 +54,10 @@ public class ServerSettingsModel extends SimpleObservable{
         }
     }
     
+    /**
+     * Saves the server preferences and settings by
+     * writing it to a text file.
+     */
     public synchronized void saveServerSettings()
     {
         fau.writeToFile(KEY_SERVER_ADDRESS+":"+serverAddress,

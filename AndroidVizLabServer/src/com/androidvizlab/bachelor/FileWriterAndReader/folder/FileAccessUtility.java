@@ -117,14 +117,4 @@ public class FileAccessUtility {
             }
         }
     }
-    
-    public static void main(String[] args)
-    {
-        FileAccessUtility u = new FileAccessUtility();
-        u.writeToFile("server_address:localhost","server_port:1330",
-                "broker_address:localhost","broker_port:1883");
-        
-        HashMap<String,String> list = u.readFromFile();
-        System.out.println(list.get("server_address"));
-    }
 }

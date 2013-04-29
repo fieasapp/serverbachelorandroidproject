@@ -7,7 +7,8 @@ import java.io.File;
  *
  * @author The Hive
  */
-public class ExternalProcessHandler extends SimpleObservable{
+public class ExternalProcessHandler extends SimpleObservable 
+implements Runnable{
     
     private boolean processStarted = false;
     private int processExitVal = 100;
@@ -81,9 +82,18 @@ public class ExternalProcessHandler extends SimpleObservable{
         }
     }
     
-    public static void main(String args[])
+    //*** RUNNABLE INTERFACE ***//
+    
+    @Override
+    public void run() 
+    {
+        runProcess(); //start the process
+    }
+    
+    //JUST FOR TEST
+    /*public static void main(String args[])
     {
        ExternalProcessHandler exp = new ExternalProcessHandler();
        exp.runProcess();
-    }
+    }*/
 }

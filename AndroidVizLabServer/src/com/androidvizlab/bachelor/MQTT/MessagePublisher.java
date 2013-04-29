@@ -9,7 +9,7 @@ import com.ibm.mqtt.MqttSimpleCallback;
  *
  * @author The Hive
  */
-public class MessagePublisher implements MqttSimpleCallback{
+public class MessagePublisher implements MqttSimpleCallback, Runnable{
     
     //Connection parameters
     private String connString = "tcp://";
@@ -85,12 +85,38 @@ public class MessagePublisher implements MqttSimpleCallback{
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public static void main(String[] args)
+    //*** RUNNABLE INTERFACE ***//
+    
+    @Override
+    public void run() {
+        this.setupConnection();
+    }
+    
+    //*** SETTERS AND GETTERS ***//
+    
+    public String getBrokerName() {
+        return brokerName;
+    }
+
+    public void setBrokerName(String brokerName) {
+        this.brokerName = brokerName;
+    }
+
+    public int getBrokerPortNr() {
+        return brokerPortNr;
+    }
+
+    public void setBrokerPortNr(int brokerPortNr) {
+        this.brokerPortNr = brokerPortNr;
+    }
+    
+    //JUST FOR TEST
+    /*public static void main(String[] args)
     {
         MessagePublisher msgpublisher = new MessagePublisher();
         msgpublisher.setupConnection();
         msgpublisher.publish("test", "This is a test");
         msgpublisher.disconnect();
         System.exit(0);
-    }
+    }*/
 }
