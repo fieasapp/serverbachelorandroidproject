@@ -108,8 +108,19 @@ public class ClientHandler implements Runnable, Observer{
  
     public void stop()
     {
-        t.interrupt();
-        t = null;
+        try
+        {
+            if(!conSocket.isClosed() && conSocket != null)
+            {
+                conSocket.close();
+            }
+            t.interrupt();
+            t = null;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -204,14 +215,14 @@ public class ClientHandler implements Runnable, Observer{
     	}
     	catch(IOException ex)
     	{
-    		msg = "ERROR!! " +ex;
-    		ex.printStackTrace();
-    		System.out.println(msg);
+            msg = "ERROR!! " +ex;
+            ex.printStackTrace();
+            System.out.println(msg);
     	}
     	catch(Exception e)
     	{
-    		msg = "ERROR!! " +e;
-    		System.out.println("ERROR!! " +e);
+            msg = "ERROR!! " +e;
+            System.out.println("ERROR!! " +e);
     	}
     }
     
@@ -234,14 +245,14 @@ public class ClientHandler implements Runnable, Observer{
     	}
     	catch(IOException ex)
     	{
-    		msg = "ERROR!! " +ex;
-    		ex.printStackTrace();
-    		System.out.println(msg);
+            msg = "ERROR!! " +ex;
+            ex.printStackTrace();
+            System.out.println(msg);
     	}
     	catch(Exception e)
     	{
-    		msg = "ERROR!! " +e;
-    		System.out.println("ERROR!! " +e);
+            msg = "ERROR!! " +e;
+            System.out.println("ERROR!! " +e);
     	}
     }
     

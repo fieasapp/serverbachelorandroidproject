@@ -157,7 +157,7 @@ Observer, ItemListener{
                     mainGui.getSettingsForm().getServerPortText(), 1330));
             settingsModel.setBrokerAddress(mainGui.getSettingsForm().getBrokerAddressText());
             settingsModel.setBrokerPort(NumberConverter.converToInt(
-                    mainGui.getSettingsForm().getBrokerPortText(), 1330));
+                    mainGui.getSettingsForm().getBrokerPortText(), 1883));
             settingsModel.saveServerSettings(); 
             mainGui.getSettingsForm().dispose();
         }
