@@ -138,6 +138,7 @@ public class ClientHandler implements Runnable, Observer{
                         //TODO read optionfile, send the optionfile as VizlabInput
                         //data = new VizlabInputData();
                         //sendData(data);
+                        System.out.println("Request received, sending options.txt file...");
                         sendData(data);
                     }
                     else if(msg.equals(CLIENT_REQUEST_MSG[1])) //Get the result of the calibration
@@ -146,13 +147,13 @@ public class ClientHandler implements Runnable, Observer{
                         //output = new CameraGroup();
                         //sendData(output);
                         
-                        camFileReader.realCalibrationSummaryFile(new File("src//calibration_summary.dat"));
+                        camFileReader.realCalibrationSummaryFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibration_summary.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//calibrationcob.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibrationcob.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//calibrationcob2.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibrationcob2.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//calibrationcob3.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibrationcob3.dat"));
                         
                         VizlabOutputData output = new VizlabOutputData();
                         output.setListCamGrp(camFileReader.getCameraCombInfo());
