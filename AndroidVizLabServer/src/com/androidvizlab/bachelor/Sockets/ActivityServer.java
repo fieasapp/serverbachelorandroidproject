@@ -2,14 +2,17 @@ package com.androidvizlab.bachelor.Sockets;
 
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import java.net.ServerSocket;
+import java.net.Socket;
+import javax.swing.JOptionPane;
 
 
 public class ActivityServer extends SimpleObservable implements Runnable{
     
     // SERVER CONNECTION VARIABLES
     private int PORTNR = 1330;
-    private ServerSocket server_socket = null;
-    private ClientHandler client_handler = null;
+    private ServerSocket serverSocket = null;
+    private Socket socketAccept = null;
+    private ClientHandler clientHandler = null;
 
     // MQTT CONNECTION VARIABLES
     private String brokerAddress = "localhost";
@@ -59,25 +62,41 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     {
         try
         {
-            server_socket = new ServerSocket(PORTNR);
-            
-            setServerState(SERVERSTATE.SERVER_STATE_RUNNING); //Set server state
-            
-            while(continueRunning)
-            {
-                System.out.println("Server: Waiting for client. . .");
-                this.notifyObservers("Server: Waiting for client. . .");
-                client_handler = new ClientHandler(server_socket.accept());
-                System.out.println("Server: A Client has connected.");
-                this.notifyObservers("Server: A Client has connected.");
-            }
+            serverSocket = new ServerSocket(PORTNR);
         }
         catch(Exception e)
         {
+            JOptionPane.showMessageDialog(null, "Could not create socket!, check that port is available.");
             e.printStackTrace();
-            System.err.println("Error: " + e);
             stop();
+        }    
+        
+        setServerState(SERVERSTATE.SERVER_STATE_RUNNING); //Set server state
+            
+        while(continueRunning)
+        {
+            try{
+                
+                System.out.println("Server: Waiting for client. . .");
+                this.notifyObservers("Server: Waiting for client. . .");
+
+                if(serverSocket != null && !serverSocket.isClosed())
+                {
+                    socketAccept = serverSocket.accept();
+                }
+                
+                clientHandler = new ClientHandler(socketAccept);
+
+
+                System.out.println("Server: A Client has connected.");
+                this.notifyObservers("Server: A Client has connected.");
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
         }
+        
     }
 
     public void stop()
@@ -86,9 +105,14 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         {
             setContinueRunning(false); //cancel while loop
             
-            if(server_socket != null && server_socket.isBound())
+            if(clientHandler != null)
             {
-                server_socket.close();
+                clientHandler.stop();
+            }
+            
+            if(serverSocket != null && serverSocket.isBound())
+            {
+                serverSocket.close();
             }
         
             setServerState(SERVERSTATE.SERVER_STATE_STOP); //Set server state
@@ -150,10 +174,10 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     
     public enum SERVERSTATE
     {
-        SERVER_STATE_RUNNING(1000),
-        SERVER_STATE_STOP(1001),
+        SERVER_STATE_READY(1000),
+        SERVER_STATE_RUNNING(1001),
         SERVER_STATE_ACCEPTING(1002),
-        SERVER_STATE_READY(1003);
+        SERVER_STATE_STOP(1003);
         
         private int code;
         
@@ -170,6 +194,7 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         public String getValue()
         {
             String value = "";
+            
             switch(code)
             {
                 case 1000:

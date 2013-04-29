@@ -78,16 +78,16 @@ public class ServerMainGui extends javax.swing.JFrame {
         switch(modes)
         {
             case 1000:
-                dfStatus.setForeground(Color.GREEN);
+                dfStatus.setForeground(Color.ORANGE);
                 break;
             case 1001:
-                dfStatus.setForeground(Color.RED);
+                dfStatus.setForeground(Color.GREEN);
                 break;
             case 1002:
                 dfStatus.setForeground(Color.CYAN);
                 break;
             case 1003:
-                dfStatus.setForeground(Color.ORANGE);
+                dfStatus.setForeground(Color.RED);
                 break;
         }
     }

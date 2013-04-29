@@ -4,6 +4,7 @@ import com.androidvizlab.bachelor.FileWriterAndReader.folder.FileAccessUtility;
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import com.androidvizlab.bachelor.utilities.NumberConverter;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,7 +44,7 @@ public class ServerSettingsModel extends SimpleObservable{
     {
         HashMap<String,String> settings = fau.readFromFile();
         
-        if(settings != null)
+        if(settings != null && !settings.isEmpty())
         {
             setServerAddress((String)settings.get(KEY_SERVER_ADDRESS));
             setServerPort(NumberConverter.converToInt(settings.get(KEY_SERVER_PORT),1330));
@@ -51,6 +52,17 @@ public class ServerSettingsModel extends SimpleObservable{
             setBrokerPort(NumberConverter.converToInt(settings.get(KEY_BROKER_PORT),1883));
             setUseLocalBrokerAddress(Boolean.valueOf(settings.get(KEY_LOCAL_BROKERADDRESS)));
             setUseLocalMachinename(Boolean.valueOf(settings.get(KEY_LOCAL_MACHINENAME)));
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Could not find saved preferences, will use default settings!");
+            
+            setServerAddress(serverAddress);
+            setServerPort(serverPort);
+            setBrokerAddress(brokerAddress);
+            setBrokerPort(brokerPort);
+            setUseLocalBrokerAddress(false);
+            setUseLocalMachinename(false);
         }
     }
     
