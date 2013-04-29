@@ -1,4 +1,4 @@
-package com.androidvizlab.bachelor.FileWriterAndReader.folder;
+package com.androidvizlab.bachelor.FileWriterAndReader;
 import com.androidvizlab.bachelor.datamodels.Camera;
 import com.androidvizlab.bachelor.datamodels.CameraGroup;
 import java.io.BufferedReader;

@@ -1,5 +1,5 @@
 package com.androidvizlab.bachelor.datamodels;
-import com.androidvizlab.bachelor.FileWriterAndReader.folder.Helpmethods;
+import com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods;
 import com.androidvizlab.bachelor.datamodels.CameraInfo;
 import java.io.BufferedReader;
 import java.io.File;
