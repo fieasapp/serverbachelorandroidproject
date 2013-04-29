@@ -15,12 +15,16 @@ public class ServerSettingsModel extends SimpleObservable{
     private int serverPort = 1330;
     private String brokerAddress = "localhost";
     private int brokerPort = 1883;
+    private boolean useLocalBrokerAddress = true;
+    private boolean useLocalMachinename = true;
     
     //MAP KEYS
     public static final String KEY_SERVER_ADDRESS = "server_address";
     public static final String KEY_SERVER_PORT = "server_port";
     public static final String KEY_BROKER_ADDRESS = "broker_address";
     public static final String KEY_BROKER_PORT = "broker_port";
+    public static final String KEY_LOCAL_BROKERADDRESS = "local_broker_address";
+    public static final String KEY_LOCAL_MACHINENAME = "local_machinename";
     
     //UTILITY FOR READING AND WRITING ON TO A TEXT FILE
     private FileAccessUtility fau = null;
@@ -44,6 +48,8 @@ public class ServerSettingsModel extends SimpleObservable{
             setServerPort(NumberConverter.converToInt(settings.get(KEY_SERVER_PORT),1330));
             setBrokerAddress((String) settings.get(KEY_BROKER_ADDRESS));
             setBrokerPort(NumberConverter.converToInt(settings.get(KEY_BROKER_PORT),1883));
+            setUseLocalBrokerAddress(Boolean.valueOf(settings.get(KEY_LOCAL_BROKERADDRESS)));
+            setUseLocalMachinename(Boolean.valueOf(settings.get(KEY_LOCAL_MACHINENAME)));
         }
     }
     
@@ -52,7 +58,9 @@ public class ServerSettingsModel extends SimpleObservable{
         fau.writeToFile(KEY_SERVER_ADDRESS+":"+serverAddress,
                 KEY_SERVER_PORT+":"+serverPort,
                 KEY_BROKER_ADDRESS+":"+brokerAddress,
-                KEY_BROKER_PORT+":"+brokerPort);
+                KEY_BROKER_PORT+":"+brokerPort,
+                KEY_LOCAL_BROKERADDRESS+":"+useLocalBrokerAddress,
+                KEY_LOCAL_MACHINENAME+":"+useLocalMachinename);
     }
         
     //*** GETTERS AND SETTERS ***//
@@ -90,6 +98,24 @@ public class ServerSettingsModel extends SimpleObservable{
 
     public void setBrokerPort(int brokerPort) {
         this.brokerPort = brokerPort;
+        this.notifyObservers();
+    }
+
+    public boolean useLocalBrokerAddress() {
+        return useLocalBrokerAddress;
+    }
+
+    public void setUseLocalBrokerAddress(boolean useLocalBrokerAddress) {
+        this.useLocalBrokerAddress = useLocalBrokerAddress;
+        this.notifyObservers();
+    }
+
+    public boolean useLocalMachinename() {
+        return useLocalMachinename;
+    }
+
+    public void setUseLocalMachinename(boolean useLocalMachinename) {
+        this.useLocalMachinename = useLocalMachinename;
         this.notifyObservers();
     }
 }

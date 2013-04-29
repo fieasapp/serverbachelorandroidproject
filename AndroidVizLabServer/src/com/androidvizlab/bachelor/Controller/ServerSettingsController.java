@@ -8,6 +8,7 @@ import com.androidvizlab.bachelor.Gui.ServerMainGui;
 import com.androidvizlab.bachelor.Gui.SettingsDialog;
 import com.androidvizlab.bachelor.Interface.DataChangeEvent;
 import com.androidvizlab.bachelor.Interface.Observer;
+import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
 import com.androidvizlab.bachelor.utilities.NumberConverter;
 import java.awt.event.ActionEvent;
@@ -33,6 +34,12 @@ Observer, ItemListener{
     private SettingsDialog dialog = null;
     private ServerSettingsModel settingsModel = null;
     
+    //RUNNABLE AND THREADS
+    private ActivityServer activityServer = null;
+    
+    private Thread thread = null;
+    
+    
     //ACTION COMMAND
     private final String COMMAND_START = "START";
     private final String COMMAND_STOP = "STOP";
@@ -46,10 +53,12 @@ Observer, ItemListener{
         
     }
     
-    public ServerSettingsController(ServerMainGui mainGui, ServerSettingsModel settingsModel)
+    public ServerSettingsController(ServerMainGui mainGui, 
+            ServerSettingsModel settingsModel, ActivityServer activityServer)
     {
         this.settingsModel = settingsModel;
         this.mainGui = mainGui;
+        this.activityServer = activityServer;
     }
     
     /**
@@ -76,19 +85,34 @@ Observer, ItemListener{
             mainGui.getSettingsForm().setError(1);
             return false;
         }
-        else if(mainGui.getSettingsForm().getServerPortText() == null
+        else
+        {
+            mainGui.getSettingsForm().setError(-1);
+        }
+        
+        if(mainGui.getSettingsForm().getServerPortText() == null
                 || mainGui.getSettingsForm().getServerPortText().isEmpty())
         {
             mainGui.getSettingsForm().setError(2);
             return false;
         }
-        else if(mainGui.getSettingsForm().getBrokerAddressText() == null
+        else
+        {
+            mainGui.getSettingsForm().setError(-2);
+        }
+        
+        if(mainGui.getSettingsForm().getBrokerAddressText() == null
                 || mainGui.getSettingsForm().getBrokerAddressText().isEmpty())
         {
             mainGui.getSettingsForm().setError(3);
             return false;
         }
-        else if(mainGui.getSettingsForm().getBrokerPortText() == null
+        else
+        {
+            mainGui.getSettingsForm().setError(-3);
+        }
+        
+        if(mainGui.getSettingsForm().getBrokerPortText() == null
                 || mainGui.getSettingsForm().getBrokerPortText().isEmpty())
         {
             mainGui.getSettingsForm().setError(4);
@@ -96,8 +120,10 @@ Observer, ItemListener{
         }
         else
         {
-            return true;
+            mainGui.getSettingsForm().setError(-4);
         }
+        
+        return true;
     }
     
     /**
@@ -106,8 +132,8 @@ Observer, ItemListener{
      */
     public void saveServerSettings()
     {
-        if(isValidSettingsData()){
-            System.out.println("VALID");
+        if(isValidSettingsData())
+        {
             settingsModel.setServerAddress(mainGui.getSettingsForm().getServerAddressText());
             settingsModel.setServerPort(NumberConverter.converToInt(
                     mainGui.getSettingsForm().getServerPortText(), 1330));
@@ -136,13 +162,13 @@ Observer, ItemListener{
      */
     public void setSettingsDialogInitialValues()
     {
-        mainGui.getSettingsForm().setServerNameText(getMachineName());
-        mainGui.getSettingsForm().setBrokerAddressText(getLocalIPAddress());
+        mainGui.getSettingsForm().getcbUseLocalIP().setSelected(settingsModel.useLocalBrokerAddress());
+        mainGui.getSettingsForm().getcbUseMachineName().setSelected(settingsModel.useLocalMachinename());
     }
     
     /**
-     * Retrieves the local name of the machine the server is on and
-     * display it on the text field.
+     * Retrieves the local name of the machine the server is on.
+     * @return Local Machine name
      */
     public String getMachineName()
     {
@@ -155,6 +181,10 @@ Observer, ItemListener{
         return name;
     }
     
+    /**
+     * Retrieves the local machine IP-address.
+     * @return Local Machine IP-Address
+     */
     public String getLocalIPAddress()
     {
         String name = "localhost";
@@ -172,13 +202,12 @@ Observer, ItemListener{
     public void componentShown(ComponentEvent ce) {
         super.componentShown(ce);
         
-        if(ce.getComponent().equals(mainGui)){
-            System.out.println("Component is mainGui");
+        if(ce.getComponent().equals(mainGui))
+        { 
             setMainGuiInitialValues();
         }
         else if(ce.getComponent().equals(mainGui.getSettingsForm()))
         {
-            System.out.println("Component is dialog");
             setSettingsDialogInitialValues();
         }
     }
@@ -194,10 +223,11 @@ Observer, ItemListener{
             {
                 case 1:
                    mainGui.getSettingsForm().setServerNameText(getMachineName());
+                   settingsModel.setUseLocalMachinename(true);
                     break;
                 
                 case 2:
-                    //mainGui.getSettingsForm().setServerNameText(getLocalIPAddress());
+                    settingsModel.setUseLocalMachinename(false);
                     break;
             }
         }
@@ -207,10 +237,11 @@ Observer, ItemListener{
             {
                 case 1:
                    mainGui.getSettingsForm().setBrokerAddressText(getLocalIPAddress());
-                    break;
+                   settingsModel.setUseLocalBrokerAddress(true); 
+                   break;
                 
                 case 2:
-                    //mainGui.getSettingsForm().setServerNameText(getLocalIPAddress());
+                    settingsModel.setUseLocalBrokerAddress(false);
                     break;
             }
         }
@@ -226,11 +257,26 @@ Observer, ItemListener{
         
         if(command.equals(COMMAND_START))
         {
+            mainGui.setEnableStartBtn(false);
             
+            thread = new Thread(activityServer);
+            thread.start();
+            
+            mainGui.setServerStatus(ActivityServer.SERVER_STATE_RUNNING,1);
+            
+            mainGui.setEnableStopBtn(true);
         }
         else if(command.equals(COMMAND_STOP))
         {
+            mainGui.setEnableStopBtn(false);
             
+            activityServer.setContinueRunning(false);
+            activityServer.stop();
+            thread.interrupt();
+            
+            mainGui.setServerStatus(ActivityServer.SERVER_STATE_STOP, 2);
+            
+            mainGui.setEnableStartBtn(true);
         }
         else if(command.equals(COMMAND_CLEAR))
         {
@@ -288,5 +334,13 @@ Observer, ItemListener{
 
     public void setSettingsModel(ServerSettingsModel settingsModel) {
         this.settingsModel = settingsModel;
+    }
+
+    public ActivityServer getActivityServer() {
+        return activityServer;
+    }
+
+    public void setActivityServer(ActivityServer activityServer) {
+        this.activityServer = activityServer;
     }
 }
