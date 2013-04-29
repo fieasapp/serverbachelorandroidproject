@@ -2,7 +2,9 @@ package com.androidvizlab.bachelor.Gui;
 
 
 import com.androidvizlab.bachelor.Controller.ServerSettingsController;
+import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
@@ -67,6 +69,21 @@ public class ServerMainGui extends javax.swing.JFrame {
         dfServerPort.setText(input);
     }
     
+    public void setServerStatus(String input,int modes)
+    {
+        dfStatus.setText(input);
+        
+        switch(modes)
+        {
+            case 1:
+                dfStatus.setForeground(Color.GREEN);
+                break;
+            case 2:
+                dfStatus.setForeground(Color.RED);
+                break;
+        }
+    }
+    
     //*** GET VALUE FROM TEXT FIELD ***//
     
     public String getServerNameText()
@@ -128,6 +145,18 @@ public class ServerMainGui extends javax.swing.JFrame {
     public void exit()
     {
         System.exit(0);
+    }
+    
+    //*** ENABLE/DISABLE BUTTONS ***//
+    
+    public void setEnableStartBtn(boolean enable)
+    {
+        btnStart.setEnabled(enable);
+    }
+    
+    public void setEnableStopBtn(boolean enable)
+    {
+        btnStop.setEnabled(enable);
     }
     
     //*** GETTERS AND SETTERS ***//
@@ -348,7 +377,7 @@ public class ServerMainGui extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ServerMainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+           
         ServerSettingsController controller = new ServerSettingsController();
         
         final ServerMainGui gui = new ServerMainGui(controller,controller,
@@ -358,8 +387,12 @@ public class ServerMainGui extends javax.swing.JFrame {
         ServerSettingsModel model = new ServerSettingsModel();
         model.addObserver(controller);
         
+        ActivityServer activityServer = new ActivityServer();
+        activityServer.addObserver(controller);
+        
         controller.setMainGui(gui);
         controller.setSettingsModel(model);
+        controller.setActivityServer(activityServer);
         
         
         

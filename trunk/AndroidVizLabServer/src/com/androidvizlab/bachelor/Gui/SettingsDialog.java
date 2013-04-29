@@ -128,6 +128,18 @@ public class SettingsDialog extends javax.swing.JDialog {
             case 4:
                 this.errorLabelBrokerPort.setVisible(true);
                 break;
+            case -1:
+                this.errorLabelServerName.setVisible(false);
+                break;
+            case -2:
+                this.errorLabelServerPort.setVisible(false);
+                break;
+            case -3:
+                this.errorLabelBrokerAddress.setVisible(false);
+                break;
+            case -4:
+                this.errorLabelBrokerPort.setVisible(false);
+                break;
         }
     }
     
