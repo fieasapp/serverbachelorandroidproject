@@ -1,4 +1,4 @@
-package com.androidvizlab.bachelor.FileWriterAndReader.folder;
+package com.androidvizlab.bachelor.FileWriterAndReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

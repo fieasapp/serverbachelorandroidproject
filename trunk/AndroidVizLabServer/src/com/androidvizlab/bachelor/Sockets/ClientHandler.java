@@ -1,12 +1,12 @@
 package com.androidvizlab.bachelor.Sockets;
 
-import com.androidvizlab.bachelor.datamodels.VizlabOutputData;
-import com.androidvizlab.bachelor.datamodels.VizlabInputData;
-import com.androidvizlab.bachelor.FileWriterAndReader.folder.OptionsFileWriter;
-import com.androidvizlab.bachelor.FileWriterAndReader.folder.CameraFileReader;
+import com.androidvizlab.bachelor.FileWriterAndReader.CameraFileReader;
+import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileWriter;
 import com.androidvizlab.bachelor.Interface.DataChangeEvent;
 import com.androidvizlab.bachelor.Interface.Observer;
 import com.androidvizlab.bachelor.MQTT.MessagePublisher;
+import com.androidvizlab.bachelor.datamodels.VizlabInputData;
+import com.androidvizlab.bachelor.datamodels.VizlabOutputData;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;

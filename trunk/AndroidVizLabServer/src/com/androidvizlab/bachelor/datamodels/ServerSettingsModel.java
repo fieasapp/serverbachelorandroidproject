@@ -1,6 +1,6 @@
 package com.androidvizlab.bachelor.datamodels;
 
-import com.androidvizlab.bachelor.FileWriterAndReader.folder.FileAccessUtility;
+import com.androidvizlab.bachelor.FileWriterAndReader.FileAccessUtility;
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import com.androidvizlab.bachelor.utilities.NumberConverter;
 import java.util.HashMap;
