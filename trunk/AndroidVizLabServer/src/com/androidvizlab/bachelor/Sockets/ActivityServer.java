@@ -146,13 +146,6 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         start(); //
     }
     
-    //JUST FOR TESTING
-    public static void main(String args[])
-    {
-        ActivityServer as = new ActivityServer();
-        as.start();
-    }
-    
     //*** SERVER STATE ENUM ***//
     
     public enum SERVERSTATE
@@ -196,4 +189,11 @@ public class ActivityServer extends SimpleObservable implements Runnable{
             return value;
         }
     }
+    
+    //JUST FOR TESTING
+    /*public static void main(String args[])
+    {
+        ActivityServer as = new ActivityServer();
+        as.start();
+    }*/
 }
