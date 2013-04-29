@@ -70,6 +70,7 @@ Observer, ItemListener{
         mainGui.setServerPortText(Integer.toString(settingsModel.getServerPort()));
         mainGui.setBrokerAddressText(settingsModel.getBrokerAddress());
         mainGui.setBrokerPortText(Integer.toString(settingsModel.getBrokerPort()));
+        mainGui.setServerStatus(activityServer.getServerState().getValue(),activityServer.getServerState().getCode());
     }
     
     /**
@@ -196,6 +197,31 @@ Observer, ItemListener{
         return name;
     }
     
+    /**
+     * Start the socket server in a new thread
+     */
+    public void startServer()
+    {
+        mainGui.setEnableStartBtn(false);
+        activityServer.setPORTNR(settingsModel.getServerPort());
+        activityServer.setBrokerAddress(settingsModel.getBrokerAddress());
+        activityServer.setBrokerPort(settingsModel.getBrokerPort());
+        thread = new Thread(activityServer);
+        thread.start();
+        mainGui.setEnableStopBtn(true);
+    }
+    
+    /**
+     * Calls the stop function in ActivityServer and interrupt the thread.
+     */
+    public void stopServer()
+    {
+        mainGui.setEnableStopBtn(false);
+        activityServer.stop();
+        thread.interrupt();
+        mainGui.setEnableStartBtn(true);
+    }
+    
     //*** COMPONENT LISTENER  ***//
     
     @Override
@@ -255,45 +281,32 @@ Observer, ItemListener{
         
         String command = ae.getActionCommand();
         
-        if(command.equals(COMMAND_START))
+        switch (command) 
         {
-            mainGui.setEnableStartBtn(false);
-            
-            thread = new Thread(activityServer);
-            thread.start();
-            
-            mainGui.setServerStatus(ActivityServer.SERVER_STATE_RUNNING,1);
-            
-            mainGui.setEnableStopBtn(true);
-        }
-        else if(command.equals(COMMAND_STOP))
-        {
-            mainGui.setEnableStopBtn(false);
-            
-            activityServer.setContinueRunning(false);
-            activityServer.stop();
-            thread.interrupt();
-            
-            mainGui.setServerStatus(ActivityServer.SERVER_STATE_STOP, 2);
-            
-            mainGui.setEnableStartBtn(true);
-        }
-        else if(command.equals(COMMAND_CLEAR))
-        {
-            mainGui.getSettingsForm().clearForm();
-        }
-        else if(command.equals(COMMAND_SAVE))
-        {
-            saveServerSettings();
-        }
-        else if(command.equals(COMMAND_EXIT))
-        {
-            mainGui.exit();
-        }
-        else if(command.equals(COMMAND_SERVER_SETTINGS))
-        {
-            mainGui.openSettingsDialog(settingsModel.getServerAddress(), settingsModel.getServerPort(),
-                    settingsModel.getBrokerAddress(), settingsModel.getBrokerPort());
+            case COMMAND_START:
+                startServer();
+                break;
+                
+            case COMMAND_STOP:
+                stopServer();
+                break;
+                
+            case COMMAND_CLEAR:
+                mainGui.getSettingsForm().clearForm();
+                break;
+                
+            case COMMAND_SAVE:
+                saveServerSettings();
+                break;
+                
+            case COMMAND_EXIT:
+                mainGui.exit();
+                break;
+                
+            case COMMAND_SERVER_SETTINGS:
+                mainGui.openSettingsDialog(settingsModel.getServerAddress(), settingsModel.getServerPort(),
+                        settingsModel.getBrokerAddress(), settingsModel.getBrokerPort());
+                break;
         }
     }
 
@@ -307,7 +320,7 @@ Observer, ItemListener{
 
     @Override
     public void update(DataChangeEvent<?> e, Object obj) {
-        
+        mainGui.setServerMessage((String)obj);
     }
     
     //*** GETTERS AND SETTERS ***//

@@ -8,10 +8,6 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /*
  * To change this template, choose Tools | Templates
@@ -69,19 +65,40 @@ public class ServerMainGui extends javax.swing.JFrame {
         dfServerPort.setText(input);
     }
     
+    /**
+     * Notify user on the server status in the status text field.
+     * 
+     * @param input server status text.
+     * @param modes sets the colour of the text accordingly.
+     */
     public void setServerStatus(String input,int modes)
     {
         dfStatus.setText(input);
         
         switch(modes)
         {
-            case 1:
+            case 1000:
                 dfStatus.setForeground(Color.GREEN);
                 break;
-            case 2:
+            case 1001:
                 dfStatus.setForeground(Color.RED);
                 break;
+            case 1002:
+                dfStatus.setForeground(Color.CYAN);
+                break;
+            case 1003:
+                dfStatus.setForeground(Color.ORANGE);
+                break;
         }
+    }
+    
+    /**
+     * Adds the message from the server to be viewed by user.
+     * @param input server message.
+     */
+    public void setServerMessage(String input)
+    {
+        serverMsgList.add(input);
     }
     
     //*** GET VALUE FROM TEXT FIELD ***//
@@ -184,6 +201,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         dfServerPort = new javax.swing.JTextField();
         panel1 = new java.awt.Panel();
         scrollPane1 = new java.awt.ScrollPane();
+        serverMsgList = new java.awt.List();
         jLabel3 = new javax.swing.JLabel();
         dfStatus = new javax.swing.JTextField();
         btnStart = new javax.swing.JButton();
@@ -213,6 +231,8 @@ public class ServerMainGui extends javax.swing.JFrame {
 
         dfServerPort.setEditable(false);
         dfServerPort.setFocusable(false);
+
+        scrollPane1.add(serverMsgList);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -377,22 +397,28 @@ public class ServerMainGui extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ServerMainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-           
+        
+        //**** MVC ***//
+         
+        //** Controller (Observer,Listener)**//
         ServerSettingsController controller = new ServerSettingsController();
         
+        //** Main View **//
         final ServerMainGui gui = new ServerMainGui(controller,controller,
                 controller);
-        gui.setComponentListener(controller);
+        gui.setComponentListener(controller); //Set Listener
         
+        //** Model (Observable)**//
         ServerSettingsModel model = new ServerSettingsModel();
-        model.addObserver(controller);
+        model.addObserver(controller); //add/registre an observer
         
+        //** Model (Observable)**//
         ActivityServer activityServer = new ActivityServer();
-        activityServer.addObserver(controller);
+        activityServer.addObserver(controller); //add/registre an observer
         
-        controller.setMainGui(gui);
-        controller.setSettingsModel(model);
-        controller.setActivityServer(activityServer);
+        controller.setMainGui(gui); //add a reference of the View
+        controller.setSettingsModel(model); //add a reference of a model
+        controller.setActivityServer(activityServer); //add a reference of a model
         
         
         
@@ -423,6 +449,7 @@ public class ServerMainGui extends javax.swing.JFrame {
     private javax.swing.JMenuBar mainMenuBar;
     private java.awt.Panel panel1;
     private java.awt.ScrollPane scrollPane1;
+    private java.awt.List serverMsgList;
     private javax.swing.JMenuItem serverSettingsMenuItem;
     private javax.swing.JMenu settingsMenu;
     // End of variables declaration//GEN-END:variables

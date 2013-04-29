@@ -200,6 +200,10 @@
         <Container class="java.awt.ScrollPane" name="scrollPane1">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.ScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="java.awt.List" name="serverMsgList">
+            </Component>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
