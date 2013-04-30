@@ -36,6 +36,9 @@ public class ClientHandler implements Runnable, Observer{
     private VizlabInputData data = new VizlabInputData();
     private VizlabInputData input = new VizlabInputData();
     
+    //READ CONTINUOUSLY
+    private boolean continueReading = true;
+    
     //VizlaOutputData
     //private VizlabOutputData output = null;
     //private CameraGroup output = null;
@@ -55,7 +58,7 @@ public class ClientHandler implements Runnable, Observer{
     /**
      * Constructor that accepts server socket connection
      * 
-     * @param socketAccept
+     * @param socketAccept socket accepted by the server
      */
     public ClientHandler(Socket socketAccept)
     {
@@ -129,7 +132,7 @@ public class ClientHandler implements Runnable, Observer{
     @Override
     public void run() 
     {    
-        while(true)
+        while(continueReading)
         {
             try
             {
@@ -190,6 +193,7 @@ public class ClientHandler implements Runnable, Observer{
             }
             catch(Exception e)
             {
+                continueReading = false;
                 e.printStackTrace();
                 System.out.println("Error: " + e);
             }

@@ -9,14 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author Interconnect
+ * @author The Hive
  */
 public class ServerMainGui extends javax.swing.JFrame {
     
