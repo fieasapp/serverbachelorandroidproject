@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * 
+ * @author Jakob
+ */
 public class CameraFileReader{
 
 	/**

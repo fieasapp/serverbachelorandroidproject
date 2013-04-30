@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * 
+ * @author The Hive
+ */
 public class SimpleObservable implements IObservable{
 
     private Set<Observer> observers;

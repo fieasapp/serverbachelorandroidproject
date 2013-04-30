@@ -6,7 +6,7 @@ package com.androidvizlab.bachelor.Sockets;
 
 /**
  *
- * @author Interconnect
+ * @author The Hive
  */
 public class IncomingDataProcessor {
     

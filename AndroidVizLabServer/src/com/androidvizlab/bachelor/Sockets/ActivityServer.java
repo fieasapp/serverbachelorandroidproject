@@ -19,39 +19,39 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     private int brokerPort = 1883;
     
     //Server STATE
-    private SERVERSTATE serverState = SERVERSTATE.SERVER_STATE_READY;
+    private ServerState serverState = ServerState.SERVER_STATE_READY;
     
     //RUNNING
     private boolean continueRunning = true;
     
     public ActivityServer()
     {
-        setServerState(SERVERSTATE.SERVER_STATE_READY);
+        setServerState(ServerState.SERVER_STATE_READY);
     }
     
-    public SERVERSTATE getServerState()
+    public ServerState getServerState()
     {
         return serverState;
     }
     
-    public void setServerState(SERVERSTATE state)
+    public void setServerState(ServerState state)
     {
         switch(state)
         {
             case SERVER_STATE_READY:
-                serverState = SERVERSTATE.SERVER_STATE_READY;
+                serverState = ServerState.SERVER_STATE_READY;
                 notifyObservers();
                 break;
             case SERVER_STATE_RUNNING:
-                serverState = SERVERSTATE.SERVER_STATE_RUNNING;
+                serverState = ServerState.SERVER_STATE_RUNNING;
                 notifyObservers();
                 break;
             case SERVER_STATE_ACCEPTING:
-                serverState = SERVERSTATE.SERVER_STATE_ACCEPTING;
+                serverState = ServerState.SERVER_STATE_ACCEPTING;
                 notifyObservers();
                 break;
             case SERVER_STATE_STOP:
-                serverState = SERVERSTATE.SERVER_STATE_STOP;
+                serverState = ServerState.SERVER_STATE_STOP;
                 notifyObservers();
                 break;
         }
@@ -71,7 +71,7 @@ public class ActivityServer extends SimpleObservable implements Runnable{
             stop();
         }    
         
-        setServerState(SERVERSTATE.SERVER_STATE_RUNNING); //Set server state
+        setServerState(ServerState.SERVER_STATE_RUNNING); //Set server state
             
         while(continueRunning)
         {
@@ -82,7 +82,10 @@ public class ActivityServer extends SimpleObservable implements Runnable{
 
                 if(serverSocket != null && !serverSocket.isClosed())
                 {
-                    socketAccept = serverSocket.accept();
+                    if(continueRunning == true)
+                    {
+                        socketAccept = serverSocket.accept();
+                    }
                 }
                 
                 clientHandler = new ClientHandler(socketAccept);
@@ -115,7 +118,7 @@ public class ActivityServer extends SimpleObservable implements Runnable{
                 serverSocket.close();
             }
         
-            setServerState(SERVERSTATE.SERVER_STATE_STOP); //Set server state
+            setServerState(ServerState.SERVER_STATE_STOP); //Set server state
         }
         catch(Exception e)
         {
@@ -172,7 +175,7 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     
     //*** SERVER STATE ENUM ***//
     
-    public enum SERVERSTATE
+    public enum ServerState
     {
         SERVER_STATE_READY(1000),
         SERVER_STATE_RUNNING(1001),
@@ -181,7 +184,7 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         
         private int code;
         
-        private SERVERSTATE(int code)
+        private ServerState(int code)
         {
             this.code = code;
         }

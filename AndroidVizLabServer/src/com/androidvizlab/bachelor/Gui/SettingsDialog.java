@@ -6,7 +6,7 @@ import javax.swing.JCheckBox;
 
 /**
  *
- * @author Interconnect
+ * @author The Hive
  */
 public class SettingsDialog extends javax.swing.JDialog {
 

@@ -2,6 +2,10 @@ package com.androidvizlab.bachelor.Interface;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author The Hive
+ */
 public interface IObservable {
     public void addObserver(Observer observer);
     public void addObservers(ArrayList<Observer> list);
