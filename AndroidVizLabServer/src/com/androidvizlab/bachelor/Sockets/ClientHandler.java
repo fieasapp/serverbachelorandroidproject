@@ -1,5 +1,6 @@
 package com.androidvizlab.bachelor.Sockets;
 
+import com.androidvizlab.bachelor.Enums.SocketComMessage;
 import com.androidvizlab.bachelor.FileWriterAndReader.CameraFileReader;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileWriter;
 import com.androidvizlab.bachelor.Interface.DataChangeEvent;
@@ -96,9 +97,9 @@ public class ClientHandler implements Runnable, Observer{
         eph.addObserver(this); //Add an Observer
         
         try
-        {
-            inputstream = new ObjectInputStream(conSocket.getInputStream());
+        {   
             outputstream = new ObjectOutputStream(conSocket.getOutputStream());
+            inputstream = new ObjectInputStream(conSocket.getInputStream());
             
             t = new Thread(this);
             t.start();
@@ -117,7 +118,7 @@ public class ClientHandler implements Runnable, Observer{
             {
                 conSocket.close();
             }
-            t.interrupt();
+            t.join();
             t = null;
         }
         catch(Exception e)
@@ -136,6 +137,11 @@ public class ClientHandler implements Runnable, Observer{
         {
             try
             {
+                if(conSocket.isClosed() || conSocket == null)
+                {
+                    continue;
+                }
+                
                 Object obj = inputstream.readObject();
                 
                 /*
@@ -190,10 +196,18 @@ public class ClientHandler implements Runnable, Observer{
                     optionsFileWriter.writeToFile();
                     executeExternalProcess();       
                 }
+                else if(obj instanceof SocketComMessage)
+                {
+                    SocketComMessage msg = (SocketComMessage) obj;
+                    if(msg.equals(SocketComMessage.SocketMessage.GET_OPTIONSFILE))
+                    {
+                        System.out.println("DUH"+msg.getMessage().toString());
+                    }
+                }
             }
             catch(Exception e)
             {
-                continueReading = false;
+                //continueReading = false;
                 e.printStackTrace();
                 System.out.println("Error: " + e);
             }

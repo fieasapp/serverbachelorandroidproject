@@ -96,6 +96,15 @@ public class ServerMainGui extends javax.swing.JFrame {
         serverMsgList.add(input);
     }
     
+    /**
+     * Adds the message from the client to be viewed by user.
+     * @param input client message.
+     */
+    public void setClientMessage(String input)
+    {
+        clientMsgList.add(input);        
+    }
+    
     //*** GET VALUE FROM TEXT FIELD ***//
     
     public String getServerNameText()
@@ -127,6 +136,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         btnStop.addActionListener(actionListener);
         exitFileMenuItem.addActionListener(actionListener);
         serverSettingsMenuItem.addActionListener(actionListener);
+        helpContentHelpMenuItem.addActionListener(actionListener);
     }
     
     public void setComponentListener(ComponentListener listener)
@@ -149,6 +159,17 @@ public class ServerMainGui extends javax.swing.JFrame {
         form.addComponentListener(componentListener);
         form.pack();
         form.setVisible(true);
+    }
+    
+    /**
+     * Open the help window
+     */
+    public void openHelpWindow()
+    {
+        HelpWindow helpWindow = new HelpWindow();
+        helpWindow.setLocationRelativeTo(null);
+        helpWindow.pack();
+        helpWindow.setVisible(true);
     }
     
     /**
@@ -194,9 +215,6 @@ public class ServerMainGui extends javax.swing.JFrame {
         dfServerName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         dfServerPort = new javax.swing.JTextField();
-        panel1 = new java.awt.Panel();
-        scrollPane1 = new java.awt.ScrollPane();
-        serverMsgList = new java.awt.List();
         jLabel3 = new javax.swing.JLabel();
         dfStatus = new javax.swing.JTextField();
         btnStart = new javax.swing.JButton();
@@ -205,6 +223,9 @@ public class ServerMainGui extends javax.swing.JFrame {
         dfBrokerAddress = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         dfBrokerPort = new javax.swing.JTextField();
+        jTabbedPane4 = new javax.swing.JTabbedPane();
+        serverMsgList = new java.awt.List();
+        clientMsgList = new java.awt.List();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         fileFileMenuItem = new javax.swing.JMenuItem();
@@ -212,6 +233,9 @@ public class ServerMainGui extends javax.swing.JFrame {
         settingsMenu = new javax.swing.JMenu();
         serverSettingsMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
+        helpContentHelpMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        aboutHelpMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -227,25 +251,6 @@ public class ServerMainGui extends javax.swing.JFrame {
         dfServerPort.setEditable(false);
         dfServerPort.setFocusable(false);
 
-        scrollPane1.add(serverMsgList);
-
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 924, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Status:");
 
@@ -260,6 +265,7 @@ public class ServerMainGui extends javax.swing.JFrame {
 
         btnStop.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnStop.setText("STOP");
+        btnStop.setEnabled(false);
         btnStop.setMaximumSize(new java.awt.Dimension(70, 25));
         btnStop.setMinimumSize(new java.awt.Dimension(70, 25));
         btnStop.setPreferredSize(new java.awt.Dimension(70, 25));
@@ -275,6 +281,11 @@ public class ServerMainGui extends javax.swing.JFrame {
 
         dfBrokerPort.setEditable(false);
         dfBrokerPort.setFocusable(false);
+
+        jTabbedPane4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTabbedPane4.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane4.addTab("Server Messages", serverMsgList);
+        jTabbedPane4.addTab("Client Messages", clientMsgList);
 
         fileMenu.setText("File");
 
@@ -296,6 +307,16 @@ public class ServerMainGui extends javax.swing.JFrame {
         mainMenuBar.add(settingsMenu);
 
         helpMenu.setText("Help");
+
+        helpContentHelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        helpContentHelpMenuItem.setText("Help Content");
+        helpMenu.add(helpContentHelpMenuItem);
+        helpMenu.add(jSeparator1);
+
+        aboutHelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        aboutHelpMenuItem.setText("About");
+        helpMenu.add(aboutHelpMenuItem);
+
         mainMenuBar.add(helpMenu);
 
         setJMenuBar(mainMenuBar);
@@ -306,7 +327,8 @@ public class ServerMainGui extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 933, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -335,9 +357,8 @@ public class ServerMainGui extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(dfBrokerAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                            .addComponent(dfBrokerPort)))
-                    .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                            .addComponent(dfBrokerPort))))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,9 +379,9 @@ public class ServerMainGui extends javax.swing.JFrame {
                     .addComponent(btnStop, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(dfBrokerPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -425,8 +446,10 @@ public class ServerMainGui extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutHelpMenuItem;
     private javax.swing.JButton btnStart;
     private javax.swing.JButton btnStop;
+    private java.awt.List clientMsgList;
     private javax.swing.JTextField dfBrokerAddress;
     private javax.swing.JTextField dfBrokerPort;
     private javax.swing.JTextField dfServerName;
@@ -435,15 +458,16 @@ public class ServerMainGui extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitFileMenuItem;
     private javax.swing.JMenuItem fileFileMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem helpContentHelpMenuItem;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JMenuBar mainMenuBar;
-    private java.awt.Panel panel1;
-    private java.awt.ScrollPane scrollPane1;
     private java.awt.List serverMsgList;
     private javax.swing.JMenuItem serverSettingsMenuItem;
     private javax.swing.JMenu settingsMenu;
