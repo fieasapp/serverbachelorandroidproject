@@ -43,6 +43,7 @@ Observer, ItemListener{
     private final String COMMAND_SAVE = "Save";
     private final String COMMAND_EXIT = "Exit";
     private final String COMMAND_SERVER_SETTINGS = "Server settings";
+    private final String COMMAND_HELP = "Help Content";
     
     public ServerSettingsController()
     {
@@ -302,6 +303,10 @@ Observer, ItemListener{
             case COMMAND_SERVER_SETTINGS:
                 mainGui.openSettingsDialog(settingsModel.getServerAddress(), settingsModel.getServerPort(),
                         settingsModel.getBrokerAddress(), settingsModel.getBrokerPort());
+                break;
+                
+            case COMMAND_HELP:
+                mainGui.openHelpWindow();
                 break;
         }
     }

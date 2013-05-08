@@ -11,7 +11,6 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     // SERVER CONNECTION VARIABLES
     private int PORTNR = 1330;
     private ServerSocket serverSocket = null;
-    private Socket socketAccept = null;
     private ClientHandler clientHandler = null;
 
     // MQTT CONNECTION VARIABLES
@@ -77,25 +76,31 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         {
             try{
                 
-                System.out.println("Server: Waiting for client. . .");
-                this.notifyObservers("Server: Waiting for client. . .");
-
-                if(serverSocket != null && !serverSocket.isClosed())
+                if(serverSocket.isClosed()|| serverSocket == null)
                 {
-                    if(continueRunning == true)
-                    {
-                        socketAccept = serverSocket.accept();
-                    }
+                    continue;
                 }
                 
-                clientHandler = new ClientHandler(socketAccept);
-
-
+                System.out.println("Server: Waiting for client. . .");
+                this.notifyObservers("Server: Waiting for client. . .");
+                        
+                clientHandler = new ClientHandler(serverSocket.accept());
+                
                 System.out.println("Server: A Client has connected.");
                 this.notifyObservers("Server: A Client has connected.");
             }
             catch(Exception ex)
             {
+                this.notifyObservers("Server: Closing socket connection...");
+                try
+                {
+                    Thread.sleep(10000);
+                }
+                catch(InterruptedException ie)
+                {
+                    
+                }
+                this.notifyObservers("Server: Connection closed.");
                 ex.printStackTrace();
             }
         }
@@ -219,9 +224,9 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     }
     
     //JUST FOR TESTING
-    /*public static void main(String args[])
+    public static void main(String args[])
     {
         ActivityServer as = new ActivityServer();
         as.start();
-    }*/
+    }
 }
