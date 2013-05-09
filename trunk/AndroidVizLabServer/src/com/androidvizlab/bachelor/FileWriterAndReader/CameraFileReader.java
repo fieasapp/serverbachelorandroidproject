@@ -1,6 +1,8 @@
 package com.androidvizlab.bachelor.FileWriterAndReader;
 import com.androidvizlab.bachelor.datamodels.Camera;
 import com.androidvizlab.bachelor.datamodels.CameraGroup;
+import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.formatSentence;
+import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.removeChars;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +30,7 @@ public class CameraFileReader{
 	private ArrayList<Double> mean;
 	private ArrayList<Double> max;
 	private ArrayList<Integer> noOfFramesUsed;
+	private ArrayList<CameraGroup> cameraGroups;
 
 
 	BufferedReader in;
@@ -41,6 +44,7 @@ public class CameraFileReader{
 		mean = new ArrayList<Double>();
 		max = new ArrayList<Double>();
 		noOfFramesUsed = new ArrayList<Integer>();
+		cameraGroups = new ArrayList<CameraGroup>();
 	}
 	
 	public void readCalibrationCombFile(File file){
@@ -71,7 +75,7 @@ public class CameraFileReader{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		addAllCameras();
+		cameraGroups.add(addCameraGroup());
 		
 	}
 	
@@ -219,13 +223,34 @@ public class CameraFileReader{
 			System.out.println(s);
 		}
 	}
+	//Fra calib_cobFiler
+	public CameraGroup addCameraGroup(){
+		double s0 = 0.0;
+		double mean = 0.0;
+		double max = 0.0;
+		for (int i = 0; i < allLinesCameraCombinationsFile.size(); i++) {
+			String temp = allLinesCameraCombinationsFile.get(i);
+			if(formatSentence(temp, 1, 0).equals("S0")){
+				s0 = Double.parseDouble(removeChars(formatSentence(temp, 1, 2)));
+				mean = Double.parseDouble(removeChars(formatSentence(temp, 1, 4)));
+				max = Double.parseDouble(removeChars(formatSentence(temp, 1, 6)));		
+				break;
+			}
+		}
+		CameraGroup c = new CameraGroup(mean, max, s0, addAllCameras());
+		allLinesCameraCombinationsFile.clear();
+		return c;
+	}
 	
-	public void addAllCameras(){
+	public ArrayList<Camera> addAllCameras(){
+		ArrayList<Camera> cams = new ArrayList<Camera>();
 		ArrayList<Integer> indexes = findIndices("Camno");
 		for(int i = 0; i<indexes.size(); i++){
-			addCamera(indexes.get(i));
+			cams.add(addCamera(indexes.get(i)));
 		}
-		Collections.sort(cameras);
+		//Collections.sort(cameras);
+		Collections.sort(cams);
+		return cams;
 	}
 	/**
 	 * This method iterates through the allLinesCameraCombinationsFile list, picks up the parameters needed to make a cameraInfo object
@@ -233,8 +258,7 @@ public class CameraFileReader{
 	 * @param start
 	 * The index of the list it will start the iteration.
 	 */
-	private void addCamera(int start){
-		
+	private Camera addCamera(int start){
 		int camNo = 0;
 		double c = 0.0;
 		double xh = 0.0;
@@ -281,10 +305,11 @@ public class CameraFileReader{
 			}
 			
 		}
-		if(!isCameraAdded(camNo)){
+/*		if(!isCameraAdded(camNo)){
 			cameras.add(new Camera(camNo, c, xh, yh, ort, f1, f2, p1, p2));
 			
-		}
+		}*/
+		return new Camera(camNo, c, xh, yh, ort, f1, f2, p1, p2);
 	}
 	/**
 	 * Iterates through the allLinesCameraCombinationsFile list and removes the everything but the first word at every index.
@@ -306,7 +331,10 @@ public class CameraFileReader{
 	public ArrayList<Camera> getCameras(){
 		return cameras;
 	}
-
+	
+	public ArrayList<CameraGroup> getCameraGroups(){
+		return cameraGroups;
+	}
 	
 	public ArrayList<CameraGroup> getCameraCombInfo(){
 		ArrayList<CameraGroup> list = new ArrayList<CameraGroup>();
@@ -347,7 +375,7 @@ public class CameraFileReader{
 	
 	public ArrayList<CameraGroup> getRecommendedCameraGroups(){
 		ArrayList<CameraGroup> output = new ArrayList<CameraGroup>();
-		ArrayList<CameraGroup> input = getCameraCombInfo();
+		ArrayList<CameraGroup> input = getCameraGroups();
 		Collections.sort(input);
 		output.add(input.get(0));
 		boolean b = false;
@@ -368,13 +396,22 @@ public class CameraFileReader{
 	
 	public static void main(String[] args){
 		CameraFileReader cfr = new CameraFileReader();
-		cfr.realCalibrationSummaryFile(new File("src//calibration_summary.dat"));
-		cfr.readCalibrationCombFile(new File("src//calibrationcob.dat"));
-		cfr.readCalibrationCombFile(new File("src//calibrationcob2.dat"));
-		cfr.readCalibrationCombFile(new File("src//calibrationcob3.dat"));
-		ArrayList<CameraGroup> hei = cfr.getRecommendedCameraGroups();
-		for(CameraGroup c : hei){
-			System.out.println(c.toString());
+		cfr.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob.dat"));	
+		cfr.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob2.dat"));	
+		cfr.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob3.dat"));	
+		cfr.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob4.dat"));	
+		cfr.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob5.dat"));	
+		cfr.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob6.dat"));	
+		ArrayList<CameraGroup> ccc = cfr.getCameraGroups();
+		System.out.println("tabsize: " + ccc.size());
+		for(CameraGroup c : ccc){
+			System.out.println(c.getGroupName() + " " + c.getS0());
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println("Anbefalte kameragrupper:");
+		for(CameraGroup c : cfr.getRecommendedCameraGroups()){
+			System.out.println(c.getGroupName() + " " + c.getS0());
 		}
 	}
 
