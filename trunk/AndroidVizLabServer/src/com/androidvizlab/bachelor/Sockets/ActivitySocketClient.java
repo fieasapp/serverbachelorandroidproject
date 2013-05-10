@@ -1,6 +1,6 @@
 package com.androidvizlab.bachelor.Sockets;
 
-import com.androidvizlab.bachelor.Enums.SocketComMessage;
+import com.androidvizlab.bachelor.Enums.SocketMessage;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -270,8 +270,7 @@ public class ActivitySocketClient implements Runnable{
 		VizlabInputData input = new VizlabInputData();
 		ActivitySocketClient client = new ActivitySocketClient();
 		client.initConnection();
-                SocketComMessage msg = new SocketComMessage();
-                msg.setMessage(SocketComMessage.SocketMessage.GET_OPTIONSFILE);
-		client.sendData(msg);
+                SocketMessage msg = SocketMessage.GET_OPTIONSFILE;
+                client.sendData(msg);
 	}
 }
