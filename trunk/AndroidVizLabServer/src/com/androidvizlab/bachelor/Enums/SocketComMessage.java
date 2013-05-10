@@ -7,12 +7,12 @@ import java.io.Serializable;
  * @author The Hive
  */
 public class SocketComMessage 
-implements Serializable{
+implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     public enum SocketMessage
-    implements Serializable{
+    {
         GET_OPTIONSFILE,
         GET_RESULT_DATA,
         PROCESS_STARTED,
