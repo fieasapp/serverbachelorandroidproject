@@ -47,8 +47,6 @@ public class ClientHandler implements Runnable, Observer{
     //MQTT
     private MessagePublisher publisher = null;
     
-    private static final String CLIENT_REQUEST_MSG[] = {"GET_OPTIONSFILE","GET_RESULT_DATA","ABORT"};
-    
     //AN EXTERNAL PROCESS TO BE EXECUTED
     ExternalProcessHandler eph = null;
     
@@ -149,11 +147,11 @@ public class ClientHandler implements Runnable, Observer{
                  * execute appropriate action accordingly
                  */
                 
-                if(obj instanceof String)
+                if(obj instanceof SocketMessage) 
                 {
-                    String msg = (String)obj;
+                    SocketMessage msg = (SocketMessage) obj;
                     
-                    if(msg.equals(CLIENT_REQUEST_MSG[0])) // Get the current options file
+                    if(msg == SocketMessage.GET_OPTIONSFILE) // Get the current options file
                     {
                         //TODO read optionfile, send the optionfile as VizlabInput
                         //data = new VizlabInputData();
@@ -161,7 +159,7 @@ public class ClientHandler implements Runnable, Observer{
                         System.out.println("Request received, sending options.txt file...");
                         sendData(data);
                     }
-                    else if(msg.equals(CLIENT_REQUEST_MSG[1])) //Get the result of the calibration
+                    else if(msg == SocketMessage.GET_RESULT_DATA) //Get the result of the calibration
                     {
                         //TODO send the camera combination and camera info as Vizlab output (CameraGroup)
                         //output = new CameraGroup();
@@ -195,15 +193,6 @@ public class ClientHandler implements Runnable, Observer{
                     }
                     optionsFileWriter.writeToFile();
                     executeExternalProcess();       
-                }
-                else if(obj instanceof SocketMessage)
-                {
-                    System.out.println("REACHED!!");
-                    SocketMessage msg = (SocketMessage) obj;
-                    if(msg == SocketMessage.GET_OPTIONSFILE)
-                    {
-                        System.out.println("DUH"+msg.toString());
-                    }
                 }
             }
             catch(Exception e)
