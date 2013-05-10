@@ -1,6 +1,6 @@
 package com.androidvizlab.bachelor.Sockets;
 
-import com.androidvizlab.bachelor.Enums.SocketComMessage;
+import com.androidvizlab.bachelor.Enums.SocketMessage;
 import com.androidvizlab.bachelor.FileWriterAndReader.CameraFileReader;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileWriter;
 import com.androidvizlab.bachelor.Interface.DataChangeEvent;
@@ -196,13 +196,13 @@ public class ClientHandler implements Runnable, Observer{
                     optionsFileWriter.writeToFile();
                     executeExternalProcess();       
                 }
-                else if(obj instanceof SocketComMessage)
+                else if(obj instanceof SocketMessage)
                 {
                     System.out.println("REACHED!!");
-                    SocketComMessage msg = (SocketComMessage) obj;
-                    if(msg.getMessage() == SocketComMessage.SocketMessage.GET_OPTIONSFILE)
+                    SocketMessage msg = (SocketMessage) obj;
+                    if(msg == SocketMessage.GET_OPTIONSFILE)
                     {
-                        System.out.println("DUH"+msg.getMessage().toString());
+                        System.out.println("DUH"+msg.toString());
                     }
                 }
             }
