@@ -14,12 +14,12 @@ import java.io.IOException;
 
 public class ActivitySocketClient implements Runnable{
 	
-	//CLIENT SOCKET & PORTNR
-	private Socket clientSocket = null; //socket use to connect to server
+    //CLIENT SOCKET & PORTNR
+    private Socket clientSocket = null; //socket use to connect to server
     private int PORTNR = 1330; //default
     
     //IP ADDRESS
-    private String SERVER_IP = "192.168.1.90"; //server IP address
+    private String SERVER_IP = "158.38.185.49"; //server IP address
     private InetAddress serverAddress = null; //server name
     private boolean isConnected = false;
     private boolean isWaitingForResponse = false;
@@ -265,11 +265,13 @@ public class ActivitySocketClient implements Runnable{
 	}
 	
 	//*** FOR TESTING PURPOSE ONLY ***//
-	/*public static void main(String args[])
+	public static void main(String args[])
 	{
 		VizlabInputData input = new VizlabInputData();
 		ActivitySocketClient client = new ActivitySocketClient();
 		client.initConnection();
-		client.sendData(input);
-	}*/
+                SocketComMessage msg = new SocketComMessage();
+                msg.setMessage(SocketComMessage.SocketMessage.GET_OPTIONSFILE);
+		client.sendData(msg);
+	}
 }

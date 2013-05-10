@@ -198,8 +198,9 @@ public class ClientHandler implements Runnable, Observer{
                 }
                 else if(obj instanceof SocketComMessage)
                 {
+                    System.out.println("REACHED!!");
                     SocketComMessage msg = (SocketComMessage) obj;
-                    if(msg.equals(SocketComMessage.SocketMessage.GET_OPTIONSFILE))
+                    if(msg.getMessage() == SocketComMessage.SocketMessage.GET_OPTIONSFILE)
                     {
                         System.out.println("DUH"+msg.getMessage().toString());
                     }
