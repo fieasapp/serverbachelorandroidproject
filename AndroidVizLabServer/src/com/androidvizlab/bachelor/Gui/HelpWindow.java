@@ -41,9 +41,15 @@ public class HelpWindow extends javax.swing.JFrame {
         jEditorPane1.setPreferredSize(new java.awt.Dimension(475, 690));
         jScrollPane1.setViewportView(jEditorPane1);
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowback.png"))); // NOI18N
         btnBack.setContentAreaFilled(false);
+        btnBack.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowbackfocused.png"))); // NOI18N
+        btnBack.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowbackfocused.png"))); // NOI18N
 
+        btnforward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrow.png"))); // NOI18N
         btnforward.setContentAreaFilled(false);
+        btnforward.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
+        btnforward.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -52,12 +58,13 @@ public class HelpWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnforward, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 374, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
