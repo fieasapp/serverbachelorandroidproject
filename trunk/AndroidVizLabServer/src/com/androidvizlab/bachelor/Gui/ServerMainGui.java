@@ -137,6 +137,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         exitFileMenuItem.addActionListener(actionListener);
         serverSettingsMenuItem.addActionListener(actionListener);
         helpContentHelpMenuItem.addActionListener(actionListener);
+        aboutHelpMenuItem.addActionListener(actionListener);
     }
     
     public void setComponentListener(ComponentListener listener)
@@ -170,6 +171,17 @@ public class ServerMainGui extends javax.swing.JFrame {
         helpWindow.setLocationRelativeTo(null);
         helpWindow.pack();
         helpWindow.setVisible(true);
+    }
+    
+    /**
+     * Open About window
+     */
+    public void openAboutWindow()
+    {
+        AboutDialog about = new AboutDialog(this,true);
+        about.setLocationRelativeTo(null);
+        about.pack();
+        about.setVisible(true);
     }
     
     /**

@@ -32,6 +32,7 @@ public class HelpWindow extends javax.swing.JFrame {
         btnforward = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Help");
         setMinimumSize(new java.awt.Dimension(500, 700));
         setPreferredSize(new java.awt.Dimension(500, 700));
         setResizable(false);
@@ -40,14 +41,9 @@ public class HelpWindow extends javax.swing.JFrame {
         jEditorPane1.setPreferredSize(new java.awt.Dimension(475, 690));
         jScrollPane1.setViewportView(jEditorPane1);
 
-        btnBack.setIcon(new javax.swing.ImageIcon("C:\\Users\\The Hive\\Documents\\NetBeansProjects\\AndroidVizLabServer\\images\\btnbackward.png")); // NOI18N
         btnBack.setContentAreaFilled(false);
-        btnBack.setRolloverIcon(new javax.swing.ImageIcon("C:\\Users\\The Hive\\Documents\\NetBeansProjects\\AndroidVizLabServer\\images\\btnbackwardfocused.png")); // NOI18N
 
-        btnforward.setIcon(new javax.swing.ImageIcon("C:\\Users\\The Hive\\Documents\\NetBeansProjects\\AndroidVizLabServer\\images\\btnforward.png")); // NOI18N
         btnforward.setContentAreaFilled(false);
-        btnforward.setRolloverIcon(new javax.swing.ImageIcon("C:\\Users\\The Hive\\Documents\\NetBeansProjects\\AndroidVizLabServer\\images\\btnforwardfocused.png")); // NOI18N
-        btnforward.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\The Hive\\Documents\\NetBeansProjects\\AndroidVizLabServer\\images\\btnforwardfocused.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
