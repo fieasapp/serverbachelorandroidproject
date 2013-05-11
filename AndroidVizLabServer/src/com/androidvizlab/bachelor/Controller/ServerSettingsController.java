@@ -44,6 +44,7 @@ Observer, ItemListener{
     private final String COMMAND_EXIT = "Exit";
     private final String COMMAND_SERVER_SETTINGS = "Server settings";
     private final String COMMAND_HELP = "Help Content";
+    private final String COMMAND_ABOUT = "About";
     
     public ServerSettingsController()
     {
@@ -307,6 +308,10 @@ Observer, ItemListener{
                 
             case COMMAND_HELP:
                 mainGui.openHelpWindow();
+                break;
+                
+            case COMMAND_ABOUT:
+                mainGui.openAboutWindow();
                 break;
         }
     }
