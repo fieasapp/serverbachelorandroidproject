@@ -4,6 +4,8 @@
  */
 package com.androidvizlab.bachelor.Gui;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author The Hive
@@ -14,6 +16,7 @@ public class HelpWindow extends javax.swing.JFrame {
      * Creates new form HelpWindow
      */
     public HelpWindow() {
+         super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
         initComponents();
     }
 
