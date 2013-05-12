@@ -1,4 +1,4 @@
-10 ! The no. of lines to skip in the beginning
+﻿10 ! The no. of lines to skip in the beginning
 !
 ! INPUT to TrackPoint program
 ! ===========================
@@ -52,7 +52,7 @@ COM4
 ! Area of search along epipolar line (pixels): InputDef::epilim
 50
 ! Max. error (mm) in 'ellemelle'-function: InputDef::maxerr
-0
+2
 ! Parameter for identifying possible next point in trajectory: Max. hor.dist. (mm): InputDef::maxdist2
 200.0
 ! Parameter for identifying possible next point in trajectory: Max. vert. dist. (mm): InputDef::maxdeltaz (ML: M� v�re >0, men ellers ingen effekt)
