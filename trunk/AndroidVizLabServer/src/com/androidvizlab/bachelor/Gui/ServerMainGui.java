@@ -169,7 +169,7 @@ public class ServerMainGui extends javax.swing.JFrame {
      */
     public void openHelpWindow()
     {
-        HelpWindow helpWindow = new HelpWindow();
+        HelpWindow helpWindow = new HelpWindow("");
         helpWindow.setLocationRelativeTo(null);
         helpWindow.pack();
         helpWindow.setVisible(true);
