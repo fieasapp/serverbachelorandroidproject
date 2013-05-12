@@ -4,7 +4,15 @@
  */
 package com.androidvizlab.bachelor.Gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 /**
  *
@@ -12,12 +20,72 @@ import javax.swing.ImageIcon;
  */
 public class HelpWindow extends javax.swing.JFrame {
 
+    private URL helpURL;
+    
     /**
      * Creates new form HelpWindow
      */
-    public HelpWindow() {
-         super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
+    public HelpWindow(String helpFileURL) {
+        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
+        
+        URL page = ClassLoader.getSystemResource(helpFileURL);
+        
         initComponents();
+        
+        viewHelpFile(page);
+    }
+    
+    public void viewHelpFile(URL pageURL)
+    {
+        helpURL = pageURL;
+        try {
+            mainEditorPane.setPage(helpURL);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        
+        mainEditorPane.addHyperlinkListener(new HyperlinkListener() 
+        {
+        
+            public void hyperlinkUpdate(HyperlinkEvent ev) 
+            {
+                try 
+                {
+                    if (ev.getEventType() == HyperlinkEvent.EventType.ACTIVATED) 
+                    {
+                        mainEditorPane.setPage(ev.getURL());
+                    }
+                } catch (IOException ex) 
+                {
+                    //put message in window
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+    }
+    
+    public void actionPerformed(ActionEvent e) 
+    {
+        String strAction = e.getActionCommand();
+        URL tempURL;
+        
+        try 
+        {
+            if (strAction == "Contents") 
+            {
+                tempURL = mainEditorPane.getPage();
+                mainEditorPane.setPage(helpURL);
+            }
+            
+            if (strAction == "Close") {
+                // more portable if delegated
+                 processWindowEvent(new WindowEvent(this,
+                 WindowEvent.WINDOW_CLOSING));
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -30,7 +98,7 @@ public class HelpWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jEditorPane1 = new javax.swing.JEditorPane();
+        mainEditorPane = new javax.swing.JEditorPane();
         btnBack = new javax.swing.JButton();
         btnforward = new javax.swing.JButton();
 
@@ -40,9 +108,10 @@ public class HelpWindow extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(500, 700));
         setResizable(false);
 
-        jEditorPane1.setMinimumSize(new java.awt.Dimension(475, 690));
-        jEditorPane1.setPreferredSize(new java.awt.Dimension(475, 690));
-        jScrollPane1.setViewportView(jEditorPane1);
+        mainEditorPane.setEditable(false);
+        mainEditorPane.setMinimumSize(new java.awt.Dimension(475, 690));
+        mainEditorPane.setPreferredSize(new java.awt.Dimension(475, 690));
+        jScrollPane1.setViewportView(mainEditorPane);
 
         btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowback.png"))); // NOI18N
         btnBack.setContentAreaFilled(false);
@@ -115,14 +184,14 @@ public class HelpWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HelpWindow().setVisible(true);
+                new HelpWindow("src/resources/helppages/index.html").setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnforward;
-    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JEditorPane mainEditorPane;
     // End of variables declaration//GEN-END:variables
 }
