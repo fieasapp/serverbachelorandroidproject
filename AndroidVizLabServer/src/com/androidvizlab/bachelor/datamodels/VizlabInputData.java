@@ -237,4 +237,35 @@ public class VizlabInputData implements Serializable {
     public void setMaxerr(int maxerr) {
         this.maxerr = maxerr;
     }
+
+	@Override
+	public String toString() {
+		return "VizlabInputData [calibrationFilePath=" + calibrationFilePath
+				+ ", runType=" + runType + ", calibrationFileName="
+				+ calibrationFileName + ", triggingInterval="
+				+ triggingInterval + ", numTripletCamGrp=" + numTripletCamGrp
+				+ ", numTimePts=" + numTimePts + ", numMarkers=" + numMarkers
+				+ ", programOutputSocketConnection="
+				+ programOutputSocketConnection + ", mixpix=" + mixpix
+				+ ", maxpix=" + maxpix + ", minsep=" + minsep + ", maxerr="
+				+ maxerr + ", imgFileInputTriplets=" + imgFileInputTriplets
+				+ ", imgFileInputTripletsTurnedRight="
+				+ imgFileInputTripletsTurnedRight
+				+ ", imgFileOutputOriginalImg=" + imgFileOutputOriginalImg
+				+ ", imgFileOutputGeneratedTriplets="
+				+ imgFileOutputGeneratedTriplets
+				+ ", imgFileOutputGeneratedTripletsTurnedRight="
+				+ imgFileOutputGeneratedTripletsTurnedRight
+				+ ", helpFileOutputImageDetectPoints="
+				+ helpFileOutputImageDetectPoints
+				+ ", helpFileOutputDuplicatePoints="
+				+ helpFileOutputDuplicatePoints + ", helpFileOutputMatch3="
+				+ helpFileOutputMatch3 + ", helpFileOutputdobbelMatch="
+				+ helpFileOutputdobbelMatch + ", helpFileOutputConnectPoints="
+				+ helpFileOutputConnectPoints + ", helpFileOutputTimeseries="
+				+ helpFileOutputTimeseries + ", approxFrameMarkerLimit="
+				+ approxFrameMarkerLimit + "]";
+	}
+    
+    
 }
