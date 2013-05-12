@@ -2,6 +2,7 @@ package com.androidvizlab.bachelor.Gui;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 
 /**
@@ -20,6 +21,7 @@ public class SettingsDialog extends javax.swing.JDialog {
     public SettingsDialog(java.awt.Frame parent, boolean modal, 
             ActionListener actionListener, ItemListener itemListener) {
         super(parent, modal);
+         super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
         this.actionListener = actionListener;
         this.itemListener = itemListener;
         initComponents();
@@ -185,6 +187,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         cbBrokerAddress = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Settings");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -33,6 +34,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         this.actionListener = actionListener;
         this.itemListener = itemListener;
         this.componentListener = componentListener;
+        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
         initComponents();
         setActionListener();
         this.setLocationRelativeTo(null);
@@ -240,7 +242,6 @@ public class ServerMainGui extends javax.swing.JFrame {
         clientMsgList = new java.awt.List();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        fileFileMenuItem = new javax.swing.JMenuItem();
         exitFileMenuItem = new javax.swing.JMenuItem();
         settingsMenu = new javax.swing.JMenu();
         serverSettingsMenuItem = new javax.swing.JMenuItem();
@@ -250,6 +251,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         aboutHelpMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("3D Motion Tech - Socket Server");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Server Name:");
@@ -301,10 +303,8 @@ public class ServerMainGui extends javax.swing.JFrame {
 
         fileMenu.setText("File");
 
-        fileFileMenuItem.setText("File");
-        fileMenu.add(fileFileMenuItem);
-
         exitFileMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        exitFileMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
         exitFileMenuItem.setText("Exit");
         fileMenu.add(exitFileMenuItem);
 
@@ -313,6 +313,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         settingsMenu.setText("Settings");
 
         serverSettingsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        serverSettingsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
         serverSettingsMenuItem.setText("Server settings");
         settingsMenu.add(serverSettingsMenuItem);
 
@@ -321,11 +322,13 @@ public class ServerMainGui extends javax.swing.JFrame {
         helpMenu.setText("Help");
 
         helpContentHelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        helpContentHelpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
         helpContentHelpMenuItem.setText("Help Content");
         helpMenu.add(helpContentHelpMenuItem);
         helpMenu.add(jSeparator1);
 
         aboutHelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        aboutHelpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
         aboutHelpMenuItem.setText("About");
         helpMenu.add(aboutHelpMenuItem);
 
@@ -468,7 +471,6 @@ public class ServerMainGui extends javax.swing.JFrame {
     private javax.swing.JTextField dfServerPort;
     private javax.swing.JTextField dfStatus;
     private javax.swing.JMenuItem exitFileMenuItem;
-    private javax.swing.JMenuItem fileFileMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem helpContentHelpMenuItem;
     private javax.swing.JMenu helpMenu;

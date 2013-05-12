@@ -4,6 +4,8 @@
  */
 package com.androidvizlab.bachelor.Gui;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Interconnect
@@ -15,6 +17,7 @@ public class AboutDialog extends javax.swing.JDialog {
      */
     public AboutDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+         super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
         initComponents();
     }
 
