@@ -31,16 +31,7 @@ public class ActivitySocketClient implements Runnable{
     //custom serialised objects
     private VizlabInputData data = null;
     private VizlabOutputData recievedData =  null;
-    
-    //CLIENT-SERVER MESSAGES & RESPONSES
-    public static final String[] MODES = {"FROM_ACTIVITY","FROM_SERVICE"};
-    
-    public static final String[] SERVER_RESPONSES = {"PROCESS_STARTED",
-    		"PROCESS_DONE","INPROGRESS","",""};
-    
-    //public static final String[] CLIENT_QUERY = {"AVAILABLE_DATA","FETCH_DATA",
-    //		"GET_OPTIONSFILE","GET_RESULT_DATA","ABORT"};
-    
+     
     //NUMBER OF ATTEMPTS TO CONNECT
     private static final int MAX_ATTEMPTS = 5;
     private static final int WAIT_FOR = 2000; // milliseconds
