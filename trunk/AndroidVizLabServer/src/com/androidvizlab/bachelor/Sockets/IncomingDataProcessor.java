@@ -4,19 +4,29 @@
  */
 package com.androidvizlab.bachelor.Sockets;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
  *
  * @author The Hive
  */
 public class IncomingDataProcessor {
     
-    public IncomingDataProcessor()
-    {
     
+    private ObjectInputStream inputstream = null;
+    private ObjectOutputStream outputstream = null;
+    
+    public IncomingDataProcessor(ObjectInputStream inputstream,
+            ObjectOutputStream outputstream)
+    {
+        this.inputstream = inputstream;
+        this.outputstream = outputstream;
     }
     
     public void processData(Object data)
     {
+        
     
     }
     

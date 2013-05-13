@@ -15,7 +15,7 @@ public class VizlabOutputData implements Serializable{
 
     public VizlabOutputData()
     {
-        ArrayList<CameraInfo> test = new ArrayList<CameraInfo>();
+        /*ArrayList<CameraInfo> test = new ArrayList<CameraInfo>();
         test.add(new CameraInfo(1,550.823,43.896,-2.366,0.003494,1.0f,1.0f,1.0f,1.0f));
         test.add(new CameraInfo(2,549.653,43.896,-2.366,0.003494,1.0f,1.0f,1.0f,1.0f));
         test.add(new CameraInfo(3,536.283,43.896,-2.366,0.003494,1.0f,1.0f,1.0f,1.0f));
@@ -26,7 +26,7 @@ public class VizlabOutputData implements Serializable{
         resultData.add(new CamCombination("3_4_5",0.0674,0.38,0.48,55,test));
         resultData.add(new CamCombination("5_6_1",0.0674,0.38,0.48,55,test));
         resultData.add(new CamCombination("6_1_2",0.0674,0.38,0.48,55,test));
-        resultData.add(new CamCombination("2_5_6",0.0674,0.38,0.48,55,test));
+        resultData.add(new CamCombination("2_5_6",0.0674,0.38,0.48,55,test));*/
     }
     
     public ArrayList<CamCombination> getResultData()
