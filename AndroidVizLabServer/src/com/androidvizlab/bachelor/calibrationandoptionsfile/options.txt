@@ -14,7 +14,7 @@ input/
 ! path for output  (incl. slash)- subdirectories not allowed, that is helpfiles, socket file and log file: BasicsDef::theOutpath
 output/
 !path for calibration files
-C://direct/ffaff.dat
+calibration_summary_2013012208_5420.dat
 ! Run type. Type C for calibration run, P for production run, and R for recalculation calibration values
 C
 ! Camera type. RGB24 or RGB8
@@ -24,21 +24,21 @@ ORIGINAL
 ! name of calibration summary file, for recalculating calibration values. The file has to be in the calibration directory.
 calibration_summary_2012062311_3540.dat
 ! path and name of calibration file, the file has to be placed in the input directory: BasicsDef::calibrationFilename = BasicsDef::theInpath + ... calibration_summary_2012122008_5133.dat
-C://direct/
+C:/CalPoint_des2012/
 ! path and name of trigger program (only relevant if all image file input options are false)
-gegrte
+k:/4dviz/Programvare/kode/TTL_PortNoInput/Release/TTL_PortNoInput.exe
 ! trigging interval, millisec: InputDef::triggingIntervalMs
 0
 ! trigger port (COM3 or COM4)
 COM4
 ! no. of triplet groups of cameras: BasicsDef:noOfTripletsCameras: InputDef::numcameras = LimitsDef::IM_FACTOR * ...
-2
+6
 ! no of time pts, this run: InputDef::noOfTimePts
-200
+2
 ! no of time points looking back after initial section
 10
 ! no of markers (time tracks): InputDef::noOfTracks
-5
+10
 ! Parameter for point detection: Offset pixel value (from median) to separate background from particles: InputDef::imlimit
 100
 ! Parameter for point detection: Minimum number of pixels in the x- and y-direction to identify a point: InputDef::minpix
@@ -52,7 +52,7 @@ COM4
 ! Area of search along epipolar line (pixels): InputDef::epilim
 50
 ! Max. error (mm) in 'ellemelle'-function: InputDef::maxerr
-2
+0
 ! Parameter for identifying possible next point in trajectory: Max. hor.dist. (mm): InputDef::maxdist2
 200.0
 ! Parameter for identifying possible next point in trajectory: Max. vert. dist. (mm): InputDef::maxdeltaz (ML: M� v�re >0, men ellers ingen effekt)

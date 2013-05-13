@@ -2,6 +2,7 @@ package com.androidvizlab.bachelor.Sockets;
 
 import com.androidvizlab.bachelor.Enums.SocketMessage;
 import com.androidvizlab.bachelor.FileWriterAndReader.CameraFileReader;
+import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileReader;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileWriter;
 import com.androidvizlab.bachelor.Interface.DataChangeEvent;
 import com.androidvizlab.bachelor.Interface.Observer;
@@ -52,7 +53,14 @@ public class ClientHandler implements Runnable, Observer{
     
     //READ AND WRITE OPTIONSFILE
     private OptionsFileWriter optionsFileWriter = null;
+    private OptionsFileReader optionsFileReader = null;
     private CameraFileReader camFileReader = null;
+    
+    
+    
+    //FILE PATH AND FILENAMES
+    private static final String OPTIONS_FILE = 
+            "src//com//androidvizlab//bachelor//calibrationandoptionsfile//options.txt";
    
     /**
      * Constructor that accepts server socket connection
@@ -61,7 +69,7 @@ public class ClientHandler implements Runnable, Observer{
      */
     public ClientHandler(Socket socketAccept)
     {
-        data.setCalibrationFilePath("C://direct/");
+        /*data.setCalibrationFilePath("C://direct/");
         data.setCalibrationFileName("C://direct/ffaff.dat");
         data.setRunType("C");
         data.setTriggingInterval(200);
@@ -80,9 +88,11 @@ public class ClientHandler implements Runnable, Observer{
         data.setHelpFileOutputDuplicatePoints("T");
         data.setHelpFileOutputConnectPoints("T");
         data.setHelpFileOutputTimeseries("T");
-        data.setApproxFrameMarkerLimit(1000.0);
+        data.setApproxFrameMarkerLimit(1000.0);*/
         
         camFileReader = new CameraFileReader();
+        
+        optionsFileReader = new OptionsFileReader(new File(OPTIONS_FILE));
         
         //SERVER SOCKET ACCEPT
         conSocket = socketAccept;
@@ -143,7 +153,7 @@ public class ClientHandler implements Runnable, Observer{
                 Object obj = inputstream.readObject();
                 
                 /*
-                 * Filter out what type of object was received and
+                 * Filters out what type of object was received and
                  * execute appropriate action accordingly
                  */
                 
@@ -156,6 +166,7 @@ public class ClientHandler implements Runnable, Observer{
                         //TODO read optionfile, send the optionfile as VizlabInput
                         //data = new VizlabInputData();
                         //sendData(data);
+                        data = optionsFileReader.getData();
                         System.out.println("Request received, sending options.txt file...");
                         sendData(data);
                     }
@@ -165,17 +176,18 @@ public class ClientHandler implements Runnable, Observer{
                         //output = new CameraGroup();
                         //sendData(output);
                         
-                        camFileReader.realCalibrationSummaryFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibration_summary.dat"));
+                        //camFileReader.realCalibrationSummaryFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibration_summary.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibrationcob.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibrationcob2.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab.bachelor//calibrationandoptionsfile//calibrationcob2.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibrationcob3.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab.bachelor//calibrationandoptionsfile//calibrationcob3.dat"));
                         
                         VizlabOutputData output = new VizlabOutputData();
-                        output.setListCamGrp(camFileReader.getCameraCombInfo());
-                        output.setListCamGrp(camFileReader.getRecommendedCameraGroups());
+                        //output.setListCamGrp(camFileReader.getCameraCombInfo());
+                        output.setListCamGrp(camFileReader.getCameraGroups());
+                        //output.setListCamGrp(camFileReader.getRecommendedCameraGroups());
                         sendData(output);
                     }
                 }
@@ -186,8 +198,9 @@ public class ClientHandler implements Runnable, Observer{
                     
                     input = (VizlabInputData) obj;
                     
-                    try {
-                        optionsFileWriter = new OptionsFileWriter(new File("src//options.txt"),input);
+                    try 
+                    {
+                        optionsFileWriter = new OptionsFileWriter(new File(OPTIONS_FILE),input);
                     } catch (IOException ex) {
                         Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }

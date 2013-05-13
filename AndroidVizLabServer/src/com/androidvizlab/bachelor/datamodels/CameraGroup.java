@@ -1,8 +1,5 @@
 package com.androidvizlab.bachelor.datamodels;
 
-import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.formatSentence;
-import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.removeChars;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -13,7 +10,7 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String groupName = "";
-    private double mean = 0.0;
+        private double mean = 0.0;
 	private double max = 0.0;
 	private double s0 = 0.0;
 	private ArrayList<Integer> cameraNumbers;
