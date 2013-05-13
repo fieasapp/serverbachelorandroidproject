@@ -42,8 +42,7 @@ public class ClientHandler implements Runnable, Observer{
     private boolean continueReading = true;
     
     //VizlaOutputData
-    //private VizlabOutputData output = null;
-    //private CameraGroup output = null;
+    private VizlabOutputData output = null;
     
     //MQTT
     private MessagePublisher publisher = null;
@@ -51,16 +50,16 @@ public class ClientHandler implements Runnable, Observer{
     //AN EXTERNAL PROCESS TO BE EXECUTED
     ExternalProcessHandler eph = null;
     
-    //READ AND WRITE OPTIONSFILE
+    //READERS AND WRITERS(OPTIONSFILE & CALIBRATION FILES)
     private OptionsFileWriter optionsFileWriter = null;
     private OptionsFileReader optionsFileReader = null;
     private CameraFileReader camFileReader = null;
     
-    
-    
     //FILE PATH AND FILENAMES
-    private static final String OPTIONS_FILE = 
+    private static final String OPTIONS_FILE_PATH = 
             "src//com//androidvizlab//bachelor//calibrationandoptionsfile//options.txt";
+    
+    private static final String CALIBRATION_FILE_PATH = "";
    
     /**
      * Constructor that accepts server socket connection
@@ -69,30 +68,10 @@ public class ClientHandler implements Runnable, Observer{
      */
     public ClientHandler(Socket socketAccept)
     {
-        /*data.setCalibrationFilePath("C://direct/");
-        data.setCalibrationFileName("C://direct/ffaff.dat");
-        data.setRunType("C");
-        data.setTriggingInterval(200);
-        data.setNumTripletCamGrp(2);
-        data.setNumMarkers(5);
-        data.setNumTimePts(200);
-        data.setProgramOutputSocketConnection("T");
-        data.setImgFileInputTriplets("T");
-        data.setImgFileInputTripletsTurnedRight("T");
-        data.setImgFileOutputOriginalImg("T");
-        data.setImgFileOutputGeneratedTriplets("T");
-        data.setImgFileOutputGeneratedTripletsTurnedRight("T");
-        data.setHelpFileOutputImageDetectPoints("T");
-        data.setHelpFileOutputMatch3("T");
-        data.setHelpFileOutputdobbelMatch("T");
-        data.setHelpFileOutputDuplicatePoints("T");
-        data.setHelpFileOutputConnectPoints("T");
-        data.setHelpFileOutputTimeseries("T");
-        data.setApproxFrameMarkerLimit(1000.0);*/
-        
+        //FILE READERS
         camFileReader = new CameraFileReader();
         
-        optionsFileReader = new OptionsFileReader(new File(OPTIONS_FILE));
+        optionsFileReader = new OptionsFileReader(new File(OPTIONS_FILE_PATH));
         
         //SERVER SOCKET ACCEPT
         conSocket = socketAccept;
@@ -163,48 +142,68 @@ public class ClientHandler implements Runnable, Observer{
                     
                     if(msg == SocketMessage.GET_OPTIONSFILE) // Get the current options file
                     {
-                        //TODO read optionfile, send the optionfile as VizlabInput
-                        //data = new VizlabInputData();
-                        //sendData(data);
+                        //Read optionfile, send the optionfile as VizlabInput
+                     
                         data = optionsFileReader.getData();
+                        
                         System.out.println("Request received, sending options.txt file...");
+                        
                         sendData(data);
+                        
+                        System.out.println("File sent.");
                     }
                     else if(msg == SocketMessage.GET_RESULT_DATA) //Get the result of the calibration
                     {
-                        //TODO send the camera combination and camera info as Vizlab output (CameraGroup)
-                        //output = new CameraGroup();
-                        //sendData(output);
+                        //Sends the camera group and camera as Vizlab output (CameraGroup & Camera class)
                         
                         //camFileReader.realCalibrationSummaryFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibration_summary.dat"));
                         
+                        System.out.println("Fetching calibration results...");
+                        
+                        //READ FROM FILES
                         camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab.bachelor//calibrationandoptionsfile//calibrationcob2.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob2.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab.bachelor//calibrationandoptionsfile//calibrationcob3.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob3.dat"));
                         
-                        VizlabOutputData output = new VizlabOutputData();
-                        //output.setListCamGrp(camFileReader.getCameraCombInfo());
+                        //SEND as VizlabOutputData object
+                        output = new VizlabOutputData();
+                        
                         output.setListCamGrp(camFileReader.getCameraGroups());
-                        //output.setListCamGrp(camFileReader.getRecommendedCameraGroups());
+
+                        System.out.println("Sending calibration results...");
+                        
                         sendData(output);
+                        
+                        System.out.println("Requested data sent.");
                     }
                 }
                 else if(obj instanceof VizlabInputData)
                 {
+                    //Overwrite optionsfile.txt and execute external process/program(Vizlab)
+                    
                     System.out.println("VizlabInputData received.");
-                    //TODO rewrite optionsfile and execute external process/program(Vizlab)
+                    
+                    System.out.println("Overwriting optionsfile.txt . . .");
                     
                     input = (VizlabInputData) obj;
                     
                     try 
                     {
-                        optionsFileWriter = new OptionsFileWriter(new File(OPTIONS_FILE),input);
-                    } catch (IOException ex) {
+                        optionsFileWriter = new OptionsFileWriter(new File(OPTIONS_FILE_PATH),input);
+                        
+                        optionsFileWriter.writeToFile();
+                    } 
+                    catch (IOException ex)
+                    {
+                        System.out.println("Failed to overwrite file.");
+                    
                         Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    optionsFileWriter.writeToFile();
+                    
+                    System.out.println("File overwritten.\nExecuting external process...");
+                    
                     executeExternalProcess();       
                 }
             }
