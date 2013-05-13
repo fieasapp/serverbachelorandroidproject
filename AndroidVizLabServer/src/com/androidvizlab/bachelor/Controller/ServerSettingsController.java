@@ -6,6 +6,7 @@ import com.androidvizlab.bachelor.Interface.DataChangeEvent;
 import com.androidvizlab.bachelor.Interface.Observer;
 import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
+import com.androidvizlab.bachelor.utilities.CustomFileFilter;
 import com.androidvizlab.bachelor.utilities.NumberConverter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,6 +46,8 @@ Observer, ItemListener{
     private final String COMMAND_SERVER_SETTINGS = "Server settings";
     private final String COMMAND_HELP = "Help Content";
     private final String COMMAND_ABOUT = "About";
+    private final String COMMAND_CHOOSE_OPT_FILEPATH = "cOptFilePath";
+    private final String COMMAND_CHOOSE_CAL_FILEPATH = "cCalFilePath";
     
     public ServerSettingsController()
     {
@@ -312,6 +315,14 @@ Observer, ItemListener{
                 
             case COMMAND_ABOUT:
                 mainGui.openAboutWindow();
+                break;
+                
+            case COMMAND_CHOOSE_OPT_FILEPATH:
+                mainGui.openFileChooserWindow(command);
+                break;
+                
+            case COMMAND_CHOOSE_CAL_FILEPATH:
+                mainGui.openFileChooserWindow(command);
                 break;
         }
     }
