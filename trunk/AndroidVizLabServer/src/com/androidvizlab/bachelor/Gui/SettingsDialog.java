@@ -51,6 +51,10 @@ public class SettingsDialog extends javax.swing.JDialog {
         btnSave.addActionListener(actionListener);
         cbUseMachineName.addItemListener(itemListener);
         cbBrokerAddress.addItemListener(itemListener);
+        btnChooseOptionFilePath.addActionListener(actionListener);
+        btnChooseOptionFilePath.setActionCommand("cOptFilePath");
+        btnChooseCalibrationFilePath.addActionListener(actionListener);
+        btnChooseCalibrationFilePath.setActionCommand("cCalFilePath");
     }
     
     //*** SET TEXT TO TEXT FIELD ***//
@@ -193,8 +197,8 @@ public class SettingsDialog extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnChooseOptionFilePath = new javax.swing.JButton();
+        btnChooseCalibrationFilePath = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         errorLabelPaths = new javax.swing.JLabel();
@@ -368,9 +372,9 @@ public class SettingsDialog extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel9.setText("FIle path and Directories");
 
-        jButton1.setText("...");
+        btnChooseOptionFilePath.setText("...");
 
-        jButton2.setText("...");
+        btnChooseCalibrationFilePath.setText("...");
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setText("Save");
@@ -409,8 +413,8 @@ public class SettingsDialog extends javax.swing.JDialog {
                                     .addComponent(jTextField2))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnChooseOptionFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnChooseCalibrationFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -422,12 +426,12 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnChooseOptionFilePath))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnChooseCalibrationFilePath))
                 .addGap(98, 98, 98)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
@@ -436,6 +440,11 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addComponent(errorLabelPaths)
                 .addContainerGap(89, Short.MAX_VALUE))
         );
+
+        btnChooseOptionFilePath.getAccessibleContext().setAccessibleName("cOptFilePath");
+        btnChooseOptionFilePath.getAccessibleContext().setAccessibleDescription("");
+        btnChooseCalibrationFilePath.getAccessibleContext().setAccessibleName("cCalFilePath");
+        btnChooseCalibrationFilePath.getAccessibleContext().setAccessibleDescription("");
 
         jTabbedPane1.addTab("Files and Directories", jPanel2);
 
@@ -462,6 +471,8 @@ public class SettingsDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChooseCalibrationFilePath;
+    private javax.swing.JButton btnChooseOptionFilePath;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnSave;
     private javax.swing.JCheckBox cbBrokerAddress;
@@ -471,8 +482,6 @@ public class SettingsDialog extends javax.swing.JDialog {
     private javax.swing.JLabel errorLabelPaths;
     private javax.swing.JLabel errorLabelServerName;
     private javax.swing.JLabel errorLabelServerPort;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;

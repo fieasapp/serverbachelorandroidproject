@@ -4,6 +4,7 @@ package com.androidvizlab.bachelor.Gui;
 import com.androidvizlab.bachelor.Controller.ServerSettingsController;
 import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
+import com.androidvizlab.bachelor.utilities.CustomFileFilter;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
@@ -25,6 +26,7 @@ public class ServerMainGui extends javax.swing.JFrame {
     
     //Settings dialog
     private SettingsDialog form = null;
+    private CustomFileFilter fileFilter = null;
     
     /**
      * Creates new form ServerMainGui
@@ -184,6 +186,15 @@ public class ServerMainGui extends javax.swing.JFrame {
         about.setLocationRelativeTo(null);
         about.pack();
         about.setVisible(true);
+    }
+    
+    /**
+     * Choose file path and directories
+     */
+    public void openFileChooserWindow(String command)
+    {
+        fileFilter = new CustomFileFilter();
+        fileFilter.getFilePath();
     }
     
     /**
