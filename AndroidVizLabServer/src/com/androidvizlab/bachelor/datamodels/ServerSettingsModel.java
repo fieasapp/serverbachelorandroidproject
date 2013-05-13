@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
  */
 public class ServerSettingsModel extends SimpleObservable{
     
+    //SOCKET CONNECTION VARIABLES
     private String serverAddress = "localhost"; //default
     private int serverPort = 1330; //default
     private String brokerAddress = "localhost"; //default
@@ -20,6 +21,10 @@ public class ServerSettingsModel extends SimpleObservable{
     private boolean useLocalBrokerAddress = true; //default
     private boolean useLocalMachinename = true; //default
     
+    //FILE PATH AND DIRECTORIES
+    private String optionsFilePath = "";
+    private String calibrationFilePath = "";
+    
     //MAP KEYS
     public static final String KEY_SERVER_ADDRESS = "server_address";
     public static final String KEY_SERVER_PORT = "server_port";
@@ -27,6 +32,9 @@ public class ServerSettingsModel extends SimpleObservable{
     public static final String KEY_BROKER_PORT = "broker_port";
     public static final String KEY_LOCAL_BROKERADDRESS = "local_broker_address";
     public static final String KEY_LOCAL_MACHINENAME = "local_machinename";
+    
+    public static final String KEY_OPTIONSFILE_PATH = "options_file_path";
+    public static final String KEY_CALIBRATIONFILE_PATH = "calibration_file_path";
     
     //UTILITY FOR READING AND WRITING ON TO A TEXT FILE
     private FileAccessUtility fau = null;
@@ -134,5 +142,21 @@ public class ServerSettingsModel extends SimpleObservable{
     public void setUseLocalMachinename(boolean useLocalMachinename) {
         this.useLocalMachinename = useLocalMachinename;
         this.notifyObservers();
+    }
+
+    public String getOptionsFilePath() {
+        return optionsFilePath;
+    }
+
+    public void setOptionsFilePath(String optionsFilePath) {
+        this.optionsFilePath = optionsFilePath;
+    }
+
+    public String getCalibrationFilePath() {
+        return calibrationFilePath;
+    }
+
+    public void setCalibrationFilePath(String calibrationFilePath) {
+        this.calibrationFilePath = calibrationFilePath;
     }
 }
