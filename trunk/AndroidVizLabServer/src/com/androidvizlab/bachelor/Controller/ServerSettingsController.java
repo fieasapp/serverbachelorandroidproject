@@ -6,7 +6,6 @@ import com.androidvizlab.bachelor.Interface.DataChangeEvent;
 import com.androidvizlab.bachelor.Interface.Observer;
 import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
-import com.androidvizlab.bachelor.utilities.CustomFileFilter;
 import com.androidvizlab.bachelor.utilities.NumberConverter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
