@@ -184,7 +184,7 @@ public class HelpWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HelpWindow("src/resources/helppages/index.html").setVisible(true);
+                new HelpWindow("src//resources//helppages//index.html").setVisible(true);
             }
         });
     }
