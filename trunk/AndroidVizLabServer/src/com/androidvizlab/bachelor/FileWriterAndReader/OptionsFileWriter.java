@@ -49,6 +49,7 @@ public class OptionsFileWriter {
 		setNoOfTimePoints(inputData.getNumTimePts());
 		setNumOfMarkers(inputData.getNumMarkers());
 		setOutputOpt(inputData.getProgramOutputSocketConnection());
+		setOffsetPixel(inputData.getOffsetPix());
 		setMinNrOfPixels(inputData.getMixpix());
 		setMaxNrOfPixels(inputData.getMaxpix());
 		setMinDistanceBetweenPx(inputData.getMinsep());
@@ -168,6 +169,17 @@ public class OptionsFileWriter {
 				if (Helpmethods.formatSentence(tab.get(i), 5, 1).equals(
 						"output from program: Socket Connection")) {
 					tab.set(i + 1, opt);
+				}
+			}
+		}
+	}
+	
+	public void setOffsetPixel(int px){
+		if (px >= 0) {
+			for (int i = 0; i < tab.size(); i++) {
+				if (Helpmethods.formatSentence(tab.get(i), 1, 15).equals(
+						"InputDef::imlimit")) {
+					tab.set(i + 1, px + "");
 				}
 			}
 		}

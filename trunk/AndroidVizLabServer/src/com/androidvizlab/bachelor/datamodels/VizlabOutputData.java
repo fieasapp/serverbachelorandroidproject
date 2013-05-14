@@ -1,7 +1,5 @@
 package com.androidvizlab.bachelor.datamodels;
 
-import com.androidvizlab.bachelor.datamodels.CamCombination;
-import com.androidvizlab.bachelor.datamodels.CameraInfo;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -9,7 +7,7 @@ public class VizlabOutputData implements Serializable{
 	
     private static final long serialVersionUID = 2L;
 
-    private ArrayList<CamCombination> resultData = new ArrayList<CamCombination>();
+    //private ArrayList<CamCombination> resultData = new ArrayList<CamCombination>();
     private ArrayList<CameraGroup> listCamGrp = new ArrayList<CameraGroup>();
     private ArrayList<CameraGroup> recomListGrp = new ArrayList<CameraGroup>();
 
@@ -29,10 +27,6 @@ public class VizlabOutputData implements Serializable{
         resultData.add(new CamCombination("2_5_6",0.0674,0.38,0.48,55,test));*/
     }
     
-    public ArrayList<CamCombination> getResultData()
-    {
-            return resultData;
-    }
 
     public ArrayList<CameraGroup> getListCamGrp() {
         return listCamGrp;
