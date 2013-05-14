@@ -59,7 +59,11 @@ public class Helpmethods implements Serializable {
 	
 /*	public static boolean findMatch(String line, String match){
 		String[] lineTab = line.split(" ");
+		String[] matchTab = match.split(" ");
 		
+		for(int i = 0; i< matchTab.length; i++){
+			
+		}
 	}*/
 	
 
