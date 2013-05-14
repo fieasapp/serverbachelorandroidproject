@@ -15,10 +15,8 @@ import javax.swing.filechooser.FileFilter;
 
 public class CustomFileFilter extends FileFilter{
 
-    private String[] fileFormat = {"dat","txt"}; // file type(can add more supported file type)
-    private String[] descriptions = {"DAT file (*.dat) ", "TXT file (*.txt)"};
-    protected String description = "";
-    private boolean isDatFile = false;
+    private String fileFormat = "txt"; // file type(can add more supported file type)
+    protected String description = "TEXT file (*.txt)";
     
     private char dotIndex = '.';
     private String startingDirectory = "src/com/androidvizlab/bachelor/calibrationandoptionsfile"; //starting directory where the given file type is likely to be found.
@@ -36,13 +34,9 @@ public class CustomFileFilter extends FileFilter{
         }
         else if(f.isFile())
         {
-            for(int i = 0; i < fileFormat.length; i++)
+            if(f.getName().endsWith(fileFormat))
             {
-                if(f.getName().endsWith(fileFormat[i]))
-                {
-                    description = descriptions[i];
-                    return true;
-                }
+                return true;
             }
         }
         
@@ -60,6 +54,18 @@ public class CustomFileFilter extends FileFilter{
        return description;
     }
     
+    public void setDescription(String input)
+    {
+        description = input;
+    }
+
+    public String getFileFormat() {
+        return fileFormat;
+    }
+
+    public void setFileFormat(String fileFormat) {
+        this.fileFormat = fileFormat;
+    }
     
     /**
      * helper method to determined the extension of a file
@@ -90,7 +96,10 @@ public class CustomFileFilter extends FileFilter{
         String filename = "";
         JFileChooser fc = new JFileChooser(startingDirectory);
         fc.setDialogTitle("Select File");
-        fc.setFileFilter(new CustomFileFilter());
+        CustomFileFilter filter = new CustomFileFilter();
+        filter.setFileFormat(fileFormat);
+        filter.setDescription(description);
+        fc.setFileFilter(filter);
         
         int checker = fc.showOpenDialog(null);
         File f = fc.getSelectedFile();

@@ -193,8 +193,38 @@ public class ServerMainGui extends javax.swing.JFrame {
      */
     public void openFileChooserWindow(String command)
     {
-        fileFilter = new CustomFileFilter();
-        fileFilter.getFilePath();
+        String path = "";
+        
+        if(command.equals("cExtPrgPath"))
+        {
+            fileFilter = new CustomFileFilter();
+            fileFilter.setFileFormat("exe");
+            fileFilter.setDescription("EXE file (*.exe)");
+            
+            path = fileFilter.getFilePath();
+            
+            form.setExternalProgramPath(path);
+        }
+        else if(command.equals("cOptFilePath"))
+        {
+            fileFilter = new CustomFileFilter();
+            fileFilter.setFileFormat("txt");
+            fileFilter.setDescription("TEXT file (*.txt)");
+            
+            path = fileFilter.getFilePath();
+            
+            form.setOptionFilePath(path);
+        }
+        else if(command.equals("cCalFilePath"))
+        {
+            fileFilter = new CustomFileFilter();
+            fileFilter.setFileFormat("dat");
+            fileFilter.setDescription("DAT file (*.dat)");
+            
+            path = fileFilter.getFilePath();
+            
+            form.setCalibrationFilePath(path);
+        }
     }
     
     /**
