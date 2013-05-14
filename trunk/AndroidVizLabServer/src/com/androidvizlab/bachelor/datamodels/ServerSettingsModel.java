@@ -24,6 +24,7 @@ public class ServerSettingsModel extends SimpleObservable{
     //FILE PATH AND DIRECTORIES
     private String optionsFilePath = "";
     private String calibrationFilePath = "";
+    private String externalProgramPath = "";
     
     //MAP KEYS
     public static final String KEY_SERVER_ADDRESS = "server_address";
@@ -35,6 +36,7 @@ public class ServerSettingsModel extends SimpleObservable{
     
     public static final String KEY_OPTIONSFILE_PATH = "options_file_path";
     public static final String KEY_CALIBRATIONFILE_PATH = "calibration_file_path";
+    public static final String KEY_EXTERNALPROGRAM_PATH = "extprg_path";
     
     //UTILITY FOR READING AND WRITING ON TO A TEXT FILE
     private FileAccessUtility fau = null;
@@ -150,6 +152,7 @@ public class ServerSettingsModel extends SimpleObservable{
 
     public void setOptionsFilePath(String optionsFilePath) {
         this.optionsFilePath = optionsFilePath;
+        this.notifyObservers();
     }
 
     public String getCalibrationFilePath() {
@@ -158,5 +161,15 @@ public class ServerSettingsModel extends SimpleObservable{
 
     public void setCalibrationFilePath(String calibrationFilePath) {
         this.calibrationFilePath = calibrationFilePath;
+        this.notifyObservers();
+    }
+
+    public String getExternalProgramPath() {
+        return externalProgramPath;
+    }
+
+    public void setExternalProgramPath(String externalProgramPath) {
+        this.externalProgramPath = externalProgramPath;
+        this.notifyObservers();
     }
 }

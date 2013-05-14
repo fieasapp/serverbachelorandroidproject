@@ -48,6 +48,7 @@ Observer, ItemListener{
     private final String COMMAND_ABOUT = "About";
     private final String COMMAND_CHOOSE_OPT_FILEPATH = "cOptFilePath";
     private final String COMMAND_CHOOSE_CAL_FILEPATH = "cCalFilePath";
+    private final String COMMAND_CHOOSE_EXTPRG_PATH = "cExtPrgPath";
     
     public ServerSettingsController()
     {
@@ -322,6 +323,10 @@ Observer, ItemListener{
                 break;
                 
             case COMMAND_CHOOSE_CAL_FILEPATH:
+                mainGui.openFileChooserWindow(command);
+                break;
+                
+            case COMMAND_CHOOSE_EXTPRG_PATH:
                 mainGui.openFileChooserWindow(command);
                 break;
         }
