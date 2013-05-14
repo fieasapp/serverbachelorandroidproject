@@ -292,7 +292,7 @@ public class ClientHandler implements Runnable, Observer{
     {
         publisher = new MessagePublisher();
         publisher.setupConnection(); //Connect to broker
-        publisher.publish("new_data", "New data available"); //Publish on topic
+        publisher.publish("new_available_data", "New data available"); //Publish on topic
         publisher.disconnect(); //disconnect when done
     }
 
@@ -313,7 +313,9 @@ public class ClientHandler implements Runnable, Observer{
             
             if(procMsg.equalsIgnoreCase("PROCESS_STARTED"))
             {
-                sendMessage(procMsg);
+                //sendMessage(procMsg);
+                SocketMessage smsg = SocketMessage.PROCESS_STARTED;
+                sendData(smsg);
             }
             else if(procMsg.equalsIgnoreCase("PROCESS_EXITED_NORMAL"))
             {
