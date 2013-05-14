@@ -34,7 +34,7 @@ COM4
 ! no. of triplet groups of cameras: BasicsDef:noOfTripletsCameras: InputDef::numcameras = LimitsDef::IM_FACTOR * ...
 6
 ! no of time pts, this run: InputDef::noOfTimePts
-2
+6
 ! no of time points looking back after initial section
 10
 ! no of markers (time tracks): InputDef::noOfTracks
