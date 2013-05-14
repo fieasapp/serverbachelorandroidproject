@@ -218,10 +218,14 @@ Observer, ItemListener{
      */
     public void stopServer()
     {
-        mainGui.setEnableStopBtn(false);
-        activityServer.stop();
-        thread.interrupt();
-        mainGui.setEnableStartBtn(true);
+        try {
+            mainGui.setEnableStopBtn(false);
+            activityServer.stop();
+            thread.join();
+            mainGui.setEnableStartBtn(true);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ServerSettingsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     //*** COMPONENT LISTENER  ***//

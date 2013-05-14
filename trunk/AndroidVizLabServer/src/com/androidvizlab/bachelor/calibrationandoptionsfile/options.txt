@@ -28,7 +28,7 @@ C:/CalPoint_des2012/
 ! path and name of trigger program (only relevant if all image file input options are false)
 k:/4dviz/Programvare/kode/TTL_PortNoInput/Release/TTL_PortNoInput.exe
 ! trigging interval, millisec: InputDef::triggingIntervalMs
-0
+100
 ! trigger port (COM3 or COM4)
 COM4
 ! no. of triplet groups of cameras: BasicsDef:noOfTripletsCameras: InputDef::numcameras = LimitsDef::IM_FACTOR * ...
@@ -100,7 +100,7 @@ T
 ! help file, socketdata to file; output from Timeseries()
 T
 ! Approximation limit for frame markers
-0.0
+1000.0
 ! Approximate location for the frame markers (Only relevant in calibration runs) (12 lines pr camera group)
 470.687 304.156
 342.749 287.329
