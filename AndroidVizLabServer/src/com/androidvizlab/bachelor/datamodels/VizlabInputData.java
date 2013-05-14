@@ -15,6 +15,7 @@ public class VizlabInputData implements Serializable {
     private int numTimePts = 0;
     private int numMarkers = 0;
     private String programOutputSocketConnection = "F";
+    private int offsetPix;
     private int mixpix;
     private int maxpix;
     private int minsep;
@@ -237,6 +238,15 @@ public class VizlabInputData implements Serializable {
     public void setMaxerr(int maxerr) {
         this.maxerr = maxerr;
     }
+    
+
+	public int getOffsetPix() {
+		return offsetPix;
+	}
+
+	public void setOffsetPix(int offsetPix) {
+		this.offsetPix = offsetPix;
+	}
 
 	@Override
 	public String toString() {

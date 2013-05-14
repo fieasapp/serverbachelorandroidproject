@@ -56,6 +56,7 @@ public class OptionsFileReader {
 		data.setNumTripletCamGrp(readNoOfTripletGroups());
 		data.setNumTimePts(readNoOfTimePoints());
 		data.setNumMarkers(readNoOfMarkers());
+		data.setOffsetPix(readOffsetPixel());
 		data.setMixpix(readMinNrOfPixels());
 		data.setMaxpix(readMaxNrOfPixels());
 		data.setMinsep(readMinDistBetweenPixels());
@@ -168,6 +169,20 @@ public class OptionsFileReader {
 		}
 		return s;
 	}
+	//readOffsetPixel
+	private int readOffsetPixel(){
+		int s = -1;
+		for(int i = 0; i<optionsFile.size(); i++){
+			if(formatSentence(optionsFile.get(i), 1, 15).equals("InputDef::imlimit")){
+				s = Integer.parseInt(optionsFile.get(i+1));
+				break;
+			}
+		}
+		return s;
+	}
+	
+	
+	
 	//readMinNoOfPixels
 	private int readMinNrOfPixels(){
 		int s = -1;
