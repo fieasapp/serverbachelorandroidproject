@@ -1,0 +1,14 @@
+This application is developed as a bachelor project at Sør-Trøndelag University College. This application is a part of the Android App developed for the Vizlab's 3D motion tracking system commisioned by 3D Motion Technologies.
+
+Product Version: 1.1 @2013
+
+Development platform: Java
+
+Authors:
+               Ralfh Greggor Guerrero
+              Jakob Ladehaug
+
+Links:
+              3D Motion Technologies: www.3dmotech.com
+              Sør-Trøndelag University College: www.hist.no
+              Vizlab: www.vizlab.hist.no
