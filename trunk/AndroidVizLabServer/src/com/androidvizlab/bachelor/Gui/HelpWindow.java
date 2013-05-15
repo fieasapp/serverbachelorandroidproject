@@ -4,7 +4,9 @@
  */
 package com.androidvizlab.bachelor.Gui;
 
+import com.androidvizlab.bachelor.Controller.ServerSettingsController;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.io.StringReader;
@@ -25,95 +27,86 @@ import javax.swing.text.html.HTMLEditorKit;
  */
 public class HelpWindow extends javax.swing.JFrame {
 
-    private URL helpURL;
+    //URL to open
+    private String defaultURL;
+    
+    private URL currentPage = null;
+    private URL nextPage = null;
+    private URL prevPage = null;
+    
+    //Listeners
+    private HyperlinkListener linkListener = null;
+    private ActionListener actionListener = null;
     
     /**
-     * Creates new form HelpWindow
+     * Constructor for the HelpWindow class.
+     * Initialises various components and sets the page(html(s)) to be displayed
+     * to the Window/Frame
+     * 
+     * @param defaultURL the URL of the index page 
      */
-    public HelpWindow(String helpFileURL) {
-        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
-        
-        URL page = ClassLoader.getSystemResource(helpFileURL);
-        
-        initComponents();
-        
-        this.mainEditorPane.setContentType("text/html");
-        try {
-            //this.mainEditorPane.setText("");
-            insertHTML(mainEditorPane, "src/resources/helppages/index.html",1);
-            //viewHelpFile(page);
-        } catch (IOException ex) {
-            Logger.getLogger(HelpWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void insertHTML(JEditorPane editor, String html, int location)
-        throws IOException {
-        try {
-            //assumes editor is already set to "text/html" type
-            HTMLEditorKit kit =
-              (HTMLEditorKit) editor.getEditorKit();
-            Document doc = editor.getDocument();
-            StringReader reader = new StringReader(html);
-            kit.read(reader, doc, location);
-        } catch (BadLocationException ex) {
-            Logger.getLogger(HelpWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void viewHelpFile(URL pageURL)
+    public HelpWindow(String defaultURL) 
     {
-        helpURL = pageURL;
-        try {
-            mainEditorPane.setPage(helpURL);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        
-        mainEditorPane.addHyperlinkListener(new HyperlinkListener() 
-        {
-        
-            public void hyperlinkUpdate(HyperlinkEvent ev) 
-            {
-                try 
-                {
-                    if (ev.getEventType() == HyperlinkEvent.EventType.ACTIVATED) 
-                    {
-                        mainEditorPane.setPage(ev.getURL());
-                    }
-                } catch (IOException ex) 
-                {
-                    //put message in window
-                    ex.printStackTrace();
-                }
-            }
-        });
+        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage()); //window icon
 
-    }
-    
-    public void actionPerformed(ActionEvent e) 
-    {
-        String strAction = e.getActionCommand();
-        URL tempURL;
-        
+        this.defaultURL = defaultURL; //URL of the html to be displayed
+
+        this.initComponents(); //initialises various components
+
+        /*
+         * Set the page to the JEditorPane
+         */
         try 
         {
-            if (strAction == "Contents") 
-            {
-                tempURL = mainEditorPane.getPage();
-                mainEditorPane.setPage(helpURL);
-            }
-            
-            if (strAction == "Close") {
-                // more portable if delegated
-                 processWindowEvent(new WindowEvent(this,
-                 WindowEvent.WINDOW_CLOSING));
-            }
-        } catch (IOException ex) {
+            currentPage = new URL(defaultURL);
+            this.mainEditorPane.setContentType("txt/html");
+            //this.mainEditorPane.setText(defaultURL);
+            this.mainEditorPane.setPage(currentPage);
+        } 
+        catch (IOException ex) 
+        {
             ex.printStackTrace();
         }
     }
+    
+    /**
+     * Method to set the next page to be displayed
+     * This method is accessed by the controller class to set the next page
+     * with the URL that the user clicked on the link.
+     * 
+     * @param link link from the current page to the next page.
+     * @throws IOException exception thrown when the page cannot be set.
+     */
+    public void viePage(URL link) throws IOException
+    {
+        this.mainEditorPane.setPage(link);
+    }
+    
+    //GETTERS AND SETTERS
+    public String getDefaultURL() {
+        return defaultURL;
+    }
 
+    public void setDefaultURL(String defaultURL) {
+        this.defaultURL = defaultURL;
+    }
+    
+    public void setActionListeners(ActionListener actionListener)
+    {
+        this.actionListener = actionListener;
+        
+        btnForward.addActionListener(actionListener);
+        btnForward.setActionCommand(ServerSettingsController.COMMAND_NEXTPAGE);
+        btnBack.addActionListener(actionListener);
+        btnBack.setActionCommand(ServerSettingsController.COMMAND_PREVIOUSPAGE);
+    }
+    
+    public void setHyperLinkListener(HyperlinkListener linkListener)
+    {
+        this.linkListener = linkListener;
+        this.mainEditorPane.addHyperlinkListener(linkListener);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,7 +119,7 @@ public class HelpWindow extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         mainEditorPane = new javax.swing.JEditorPane();
         btnBack = new javax.swing.JButton();
-        btnforward = new javax.swing.JButton();
+        btnForward = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Help");
@@ -144,10 +137,10 @@ public class HelpWindow extends javax.swing.JFrame {
         btnBack.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowbackfocused.png"))); // NOI18N
         btnBack.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowbackfocused.png"))); // NOI18N
 
-        btnforward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrow.png"))); // NOI18N
-        btnforward.setContentAreaFilled(false);
-        btnforward.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
-        btnforward.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
+        btnForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrow.png"))); // NOI18N
+        btnForward.setContentAreaFilled(false);
+        btnForward.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
+        btnForward.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,7 +154,7 @@ public class HelpWindow extends javax.swing.JFrame {
                         .addGap(8, 8, 8)
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnforward, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnForward, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -171,7 +164,7 @@ public class HelpWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnforward, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnForward, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addContainerGap())
@@ -180,43 +173,9 @@ public class HelpWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HelpWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HelpWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HelpWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HelpWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HelpWindow("http://localhost/index.html").setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnforward;
+    private javax.swing.JButton btnForward;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JEditorPane mainEditorPane;
     // End of variables declaration//GEN-END:variables

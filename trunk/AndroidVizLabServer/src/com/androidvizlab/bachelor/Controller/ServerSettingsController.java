@@ -13,18 +13,21 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 /**
  *
  * @author The Hive
  */
 public class ServerSettingsController extends ComponentAdapter implements ActionListener,
-Observer, ItemListener{
+Observer, ItemListener, HyperlinkListener{
     
     private ServerMainGui mainGui = null; //Main View
     private SettingsDialog dialog = null; //Additional View
@@ -45,9 +48,11 @@ Observer, ItemListener{
     private final String COMMAND_SERVER_SETTINGS = "Server settings";
     private final String COMMAND_HELP = "Help Content";
     private final String COMMAND_ABOUT = "About";
-    private final String COMMAND_CHOOSE_OPT_FILEPATH = "cOptFilePath";
-    private final String COMMAND_CHOOSE_CAL_FILEPATH = "cCalFilePath";
-    private final String COMMAND_CHOOSE_EXTPRG_PATH = "cExtPrgPath";
+    public static final String COMMAND_CHOOSE_OPT_FILEPATH = "cOptFilePath";
+    public static final String COMMAND_CHOOSE_CAL_FILEPATH = "cCalFilePath";
+    public static final String COMMAND_CHOOSE_EXTPRG_PATH = "cExtPrgPath";
+    public static final String COMMAND_NEXTPAGE = "NEXTPAGE";
+    public static final String COMMAND_PREVIOUSPAGE = "PREVPAGE";
     
     public ServerSettingsController()
     {
@@ -80,7 +85,7 @@ Observer, ItemListener{
     }
     
     /**
-     * Updates the main gui 
+     * Updates the main GUI 
      */
     public void updateMainGui()
     {
@@ -332,6 +337,29 @@ Observer, ItemListener{
             case COMMAND_CHOOSE_EXTPRG_PATH:
                 mainGui.openFileChooserWindow(command);
                 break;
+        }
+    }
+    
+    //*** HYPERLINK LISTENER ***//
+    
+    /**
+     * Implemented method from HyperlinkListener interface
+     * Listens to event triggered by user when a link is click etc..
+     * @param e HyperlinkEvent
+     */
+    @Override
+    public void hyperlinkUpdate(HyperlinkEvent e) 
+    {
+        if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED)
+        {
+            try 
+            {
+                this.mainGui.getHelpWindow().viePage(e.getURL());
+            }
+            catch (IOException ex) 
+            {
+                ex.printStackTrace();
+            }
         }
     }
 
