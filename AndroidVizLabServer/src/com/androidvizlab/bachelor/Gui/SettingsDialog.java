@@ -1,5 +1,7 @@
 package com.androidvizlab.bachelor.Gui;
 
+import com.androidvizlab.bachelor.Controller.ServerSettingsController;
+import java.awt.Frame;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import javax.swing.ImageIcon;
@@ -18,15 +20,20 @@ public class SettingsDialog extends javax.swing.JDialog {
     /**
      * Creates new form SettingsDialog
      */
-    public SettingsDialog(java.awt.Frame parent, boolean modal, 
+    public SettingsDialog(Frame parent, boolean modal, 
             ActionListener actionListener, ItemListener itemListener) {
         super(parent, modal);
         super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
+        
         this.actionListener = actionListener;
         this.itemListener = itemListener;
+        
+        /*
+         * Initialises various components
+         */
         initComponents();
         setActionListener();
-        setAllErrorLabelsInvisibility();
+        setAllErrorLabelsInvisibility(); //make the error label invisible when the window loads.
     }
     
     /**
@@ -52,11 +59,11 @@ public class SettingsDialog extends javax.swing.JDialog {
         cbUseMachineName.addItemListener(itemListener);
         cbBrokerAddress.addItemListener(itemListener);
         btnChooseOptionFilePath.addActionListener(actionListener);
-        btnChooseOptionFilePath.setActionCommand("cOptFilePath");
+        btnChooseOptionFilePath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_OPT_FILEPATH);
         btnChooseCalibrationFilePath.addActionListener(actionListener);
-        btnChooseCalibrationFilePath.setActionCommand("cCalFilePath");
+        btnChooseCalibrationFilePath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_CAL_FILEPATH);
         btnChooseExtProgPath.addActionListener(actionListener);
-        btnChooseExtProgPath.setActionCommand("cExtPrgPath");
+        btnChooseExtProgPath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_EXTPRG_PATH);
     }
     
     //*** SET TEXT TO TEXT FIELD ***//

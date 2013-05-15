@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
 import javax.swing.ImageIcon;
+import javax.swing.event.HyperlinkListener;
 
 /**
  *
@@ -23,20 +24,32 @@ public class ServerMainGui extends javax.swing.JFrame {
     private ActionListener actionListener = null;
     private ItemListener itemListener = null;
     private ComponentListener componentListener = null;
+    private HyperlinkListener linkListener = null;
     
     //Settings dialog
     private SettingsDialog form = null;
     private CustomFileFilter fileFilter = null;
     
+    //Help window and help html related
+    private HelpWindow helpWindow = null;
+    private String defaultURL = "";
+    
+    //About window
+    private AboutDialog about = null;
+    
     /**
      * Creates new form ServerMainGui
      */
     public ServerMainGui(ActionListener actionListener,ItemListener itemListener,
-            ComponentListener componentListener) {
+            ComponentListener componentListener,HyperlinkListener linkListener)
+    {
+        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());//window icon
+        
         this.actionListener = actionListener;
         this.itemListener = itemListener;
         this.componentListener = componentListener;
-        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
+        this.linkListener = linkListener;
+        
         initComponents();
         setActionListener();
         this.setLocationRelativeTo(null);
@@ -62,6 +75,28 @@ public class ServerMainGui extends javax.swing.JFrame {
     public void setServerPortText(String input)
     {
         dfServerPort.setText(input);
+    }
+    
+    //*** GET VALUE FROM TEXT FIELD ***//
+    
+    public String getServerNameText()
+    {
+        return dfServerName.getText().trim();
+    }
+    
+    public String getServerPortText()
+    {
+        return dfServerPort.getText().trim();
+    }
+    
+    public String getBrokerAddressText()
+    {
+        return dfBrokerAddress.getText().trim();
+    }
+    
+    public String getBrokerPortText()
+    {
+        return dfBrokerPort.getText().trim();
     }
     
     /**
@@ -109,28 +144,6 @@ public class ServerMainGui extends javax.swing.JFrame {
         clientMsgList.add(input);        
     }
     
-    //*** GET VALUE FROM TEXT FIELD ***//
-    
-    public String getServerNameText()
-    {
-        return dfServerName.getText().trim();
-    }
-    
-    public String getServerPortText()
-    {
-        return dfServerPort.getText().trim();
-    }
-    
-    public String getBrokerAddressText()
-    {
-        return dfBrokerAddress.getText().trim();
-    }
-    
-    public String getBrokerPortText()
-    {
-        return dfBrokerPort.getText().trim();
-    }
-   
     /**
      * Sets action listener 
      */
@@ -171,7 +184,9 @@ public class ServerMainGui extends javax.swing.JFrame {
      */
     public void openHelpWindow()
     {
-        HelpWindow helpWindow = new HelpWindow("");
+        helpWindow = new HelpWindow(defaultURL);
+        helpWindow.setHyperLinkListener(linkListener);
+        helpWindow.setActionListeners(actionListener);
         helpWindow.setLocationRelativeTo(null);
         helpWindow.pack();
         helpWindow.setVisible(true);
@@ -182,7 +197,7 @@ public class ServerMainGui extends javax.swing.JFrame {
      */
     public void openAboutWindow()
     {
-        AboutDialog about = new AboutDialog(this,true);
+        about = new AboutDialog(this,true);
         about.setLocationRelativeTo(null);
         about.pack();
         about.setVisible(true);
@@ -255,6 +270,22 @@ public class ServerMainGui extends javax.swing.JFrame {
 
     public void setSettingsForm(SettingsDialog form) {
         this.form = form;
+    }
+
+    public String getDefaultURL() {
+        return defaultURL;
+    }
+
+    public void setDefaultURL(String defaultURL) {
+        this.defaultURL = defaultURL;
+    }
+
+    public HelpWindow getHelpWindow() {
+        return helpWindow;
+    }
+
+    public void setHelpWindow(HelpWindow helpWindow) {
+        this.helpWindow = helpWindow;
     }
     
     /**
@@ -477,8 +508,9 @@ public class ServerMainGui extends javax.swing.JFrame {
         
         //** Main View **//
         final ServerMainGui gui = new ServerMainGui(controller,controller,
-                controller);
+                controller,controller);
         gui.setComponentListener(controller); //Set Listener
+        gui.setDefaultURL("file:///E:/Interconnect/My%20Documents/NetBeansProjects/Bachelor/trunk/AndroidVizLabServer/src/resources/helppages/index.html"); //default URL for the help pages(local html files)
         
         //** Model (Observable)**//
         ServerSettingsModel model = new ServerSettingsModel();
