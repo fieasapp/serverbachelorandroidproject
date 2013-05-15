@@ -198,8 +198,8 @@ public class ServerMainGui extends javax.swing.JFrame {
         if(command.equals("cExtPrgPath"))
         {
             fileFilter = new CustomFileFilter();
-            fileFilter.setFileFormat("exe");
-            fileFilter.setDescription("EXE file (*.exe)");
+            fileFilter.setFileFormat(CustomFileFilter.FILE_EXTENSION_EXE);
+            fileFilter.setDescription(CustomFileFilter.FILE_DESC_EXE);
             
             path = fileFilter.getFilePath();
             
@@ -208,8 +208,8 @@ public class ServerMainGui extends javax.swing.JFrame {
         else if(command.equals("cOptFilePath"))
         {
             fileFilter = new CustomFileFilter();
-            fileFilter.setFileFormat("txt");
-            fileFilter.setDescription("TEXT file (*.txt)");
+            fileFilter.setFileFormat(CustomFileFilter.FILE_EXTENSION_TEXT);
+            fileFilter.setDescription(CustomFileFilter.FILE_DESC_TEXT);
             
             path = fileFilter.getFilePath();
             
@@ -218,8 +218,8 @@ public class ServerMainGui extends javax.swing.JFrame {
         else if(command.equals("cCalFilePath"))
         {
             fileFilter = new CustomFileFilter();
-            fileFilter.setFileFormat("dat");
-            fileFilter.setDescription("DAT file (*.dat)");
+            fileFilter.setFileFormat(CustomFileFilter.FILE_EXTENSION_DAT);
+            fileFilter.setDescription(CustomFileFilter.FILE_DESC_DAT);
             
             path = fileFilter.getFilePath();
             
