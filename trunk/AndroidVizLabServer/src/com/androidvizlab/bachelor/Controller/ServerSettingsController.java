@@ -13,9 +13,12 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -48,6 +51,8 @@ Observer, ItemListener, HyperlinkListener{
     private final String COMMAND_SERVER_SETTINGS = "Server settings";
     private final String COMMAND_HELP = "Help Content";
     private final String COMMAND_ABOUT = "About";
+    public static final String COMMAND_SAVE_FILEPATHS = "Save filepaths";
+    public static final String COMMAND_CLEAR_PATHS = "Clear filepaths";
     public static final String COMMAND_CHOOSE_OPT_FILEPATH = "cOptFilePath";
     public static final String COMMAND_CHOOSE_CAL_FILEPATH = "cCalFilePath";
     public static final String COMMAND_CHOOSE_EXTPRG_PATH = "cExtPrgPath";
@@ -336,6 +341,25 @@ Observer, ItemListener, HyperlinkListener{
                 
             case COMMAND_CHOOSE_EXTPRG_PATH:
                 mainGui.openFileChooserWindow(command);
+                break;
+                
+            case COMMAND_SAVE_FILEPATHS:
+                Properties props = new Properties();
+                
+                props.setProperty("test", "test");
+                try {
+                    props.store(new FileOutputStream("E:\\Interconnect\\My Documents\\NetBeansProjects\\Bachelor\\trunk\\AndroidVizLabServer\\src\\resources\\others\\test.properties"), null);
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+                
+                break;
+                
+            case COMMAND_CLEAR_PATHS:
+                
                 break;
         }
     }
