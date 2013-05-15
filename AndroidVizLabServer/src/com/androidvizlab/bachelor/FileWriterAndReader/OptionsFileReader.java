@@ -57,7 +57,7 @@ public class OptionsFileReader {
 		data.setNumTimePts(readNoOfTimePoints());
 		data.setNumMarkers(readNoOfMarkers());
 		data.setOffsetPix(readOffsetPixel());
-		data.setMixpix(readMinNrOfPixels());
+		data.setMinpix(readMinNrOfPixels());
 		data.setMaxpix(readMaxNrOfPixels());
 		data.setMinsep(readMinDistBetweenPixels());
 		data.setMaxerr(readMaxError());

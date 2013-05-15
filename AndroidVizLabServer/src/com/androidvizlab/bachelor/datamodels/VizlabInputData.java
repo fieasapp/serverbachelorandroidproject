@@ -15,14 +15,15 @@ public class VizlabInputData implements Serializable {
     private int numTimePts = 0;
     private int numMarkers = 0;
     private String programOutputSocketConnection = "F";
+    
+    //*** Advanced Option ***//
+
     private int offsetPix;
-    private int mixpix;
+    private int minpix;
     private int maxpix;
     private int minsep;
     private int maxerr;
-
-    //*** Advanced Option ***//
-
+    
     //Image file Input/Output
     private String imgFileInputTriplets = "T";
     private String imgFileInputTripletsTurnedRight = "T";
@@ -37,7 +38,7 @@ public class VizlabInputData implements Serializable {
     private String helpFileOutputdobbelMatch = "T";
     private String helpFileOutputConnectPoints = "T";
     private String helpFileOutputTimeseries = "T";
-    private double approxFrameMarkerLimit = 0;
+    private double approxFrameMarkerLimit = 1000;
 
     //GETTERS AND SETTERS
 
@@ -207,12 +208,12 @@ public class VizlabInputData implements Serializable {
         this.approxFrameMarkerLimit = approxFrameMarkerLimit;
     }
 
-    public int getMixpix() {
-        return mixpix;
+    public int getMinpix() {
+        return minpix;
     }
 
-    public void setMixpix(int mixpix) {
-        this.mixpix = mixpix;
+    public void setMinpix(int minpix) {
+        this.minpix = minpix;
     }
 
     public int getMaxpix() {
@@ -240,42 +241,40 @@ public class VizlabInputData implements Serializable {
     }
     
 
-	public int getOffsetPix() {
-		return offsetPix;
-	}
+    public int getOffsetPix() {
+            return offsetPix;
+    }
 
-	public void setOffsetPix(int offsetPix) {
-		this.offsetPix = offsetPix;
-	}
+    public void setOffsetPix(int offsetPix) {
+            this.offsetPix = offsetPix;
+    }
 
-	@Override
-	public String toString() {
-		return "VizlabInputData [calibrationFilePath=" + calibrationFilePath
-				+ ", runType=" + runType + ", calibrationFileName="
-				+ calibrationFileName + ", triggingInterval="
-				+ triggingInterval + ", numTripletCamGrp=" + numTripletCamGrp
-				+ ", numTimePts=" + numTimePts + ", numMarkers=" + numMarkers
-				+ ", programOutputSocketConnection="
-				+ programOutputSocketConnection + ", mixpix=" + mixpix
-				+ ", maxpix=" + maxpix + ", minsep=" + minsep + ", maxerr="
-				+ maxerr + ", imgFileInputTriplets=" + imgFileInputTriplets
-				+ ", imgFileInputTripletsTurnedRight="
-				+ imgFileInputTripletsTurnedRight
-				+ ", imgFileOutputOriginalImg=" + imgFileOutputOriginalImg
-				+ ", imgFileOutputGeneratedTriplets="
-				+ imgFileOutputGeneratedTriplets
-				+ ", imgFileOutputGeneratedTripletsTurnedRight="
-				+ imgFileOutputGeneratedTripletsTurnedRight
-				+ ", helpFileOutputImageDetectPoints="
-				+ helpFileOutputImageDetectPoints
-				+ ", helpFileOutputDuplicatePoints="
-				+ helpFileOutputDuplicatePoints + ", helpFileOutputMatch3="
-				+ helpFileOutputMatch3 + ", helpFileOutputdobbelMatch="
-				+ helpFileOutputdobbelMatch + ", helpFileOutputConnectPoints="
-				+ helpFileOutputConnectPoints + ", helpFileOutputTimeseries="
-				+ helpFileOutputTimeseries + ", approxFrameMarkerLimit="
-				+ approxFrameMarkerLimit + "]";
-	}
-    
-    
+    @Override
+    public String toString() {
+            return "VizlabInputData [calibrationFilePath=" + calibrationFilePath
+                            + ", runType=" + runType + ", calibrationFileName="
+                            + calibrationFileName + ", triggingInterval="
+                            + triggingInterval + ", numTripletCamGrp=" + numTripletCamGrp
+                            + ", numTimePts=" + numTimePts + ", numMarkers=" + numMarkers
+                            + ", programOutputSocketConnection="
+                            + programOutputSocketConnection + ", mixpix=" + minpix
+                            + ", maxpix=" + maxpix + ", minsep=" + minsep + ", maxerr="
+                            + maxerr + ", imgFileInputTriplets=" + imgFileInputTriplets
+                            + ", imgFileInputTripletsTurnedRight="
+                            + imgFileInputTripletsTurnedRight
+                            + ", imgFileOutputOriginalImg=" + imgFileOutputOriginalImg
+                            + ", imgFileOutputGeneratedTriplets="
+                            + imgFileOutputGeneratedTriplets
+                            + ", imgFileOutputGeneratedTripletsTurnedRight="
+                            + imgFileOutputGeneratedTripletsTurnedRight
+                            + ", helpFileOutputImageDetectPoints="
+                            + helpFileOutputImageDetectPoints
+                            + ", helpFileOutputDuplicatePoints="
+                            + helpFileOutputDuplicatePoints + ", helpFileOutputMatch3="
+                            + helpFileOutputMatch3 + ", helpFileOutputdobbelMatch="
+                            + helpFileOutputdobbelMatch + ", helpFileOutputConnectPoints="
+                            + helpFileOutputConnectPoints + ", helpFileOutputTimeseries="
+                            + helpFileOutputTimeseries + ", approxFrameMarkerLimit="
+                            + approxFrameMarkerLimit + "]";
+    }
 }

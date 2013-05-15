@@ -50,7 +50,7 @@ public class OptionsFileWriter {
 		setNumOfMarkers(inputData.getNumMarkers());
 		setOutputOpt(inputData.getProgramOutputSocketConnection());
 		setOffsetPixel(inputData.getOffsetPix());
-		setMinNrOfPixels(inputData.getMixpix());
+		setMinNrOfPixels(inputData.getMinpix());
 		setMaxNrOfPixels(inputData.getMaxpix());
 		setMinDistanceBetweenPx(inputData.getMinsep());
 		setMaxError(inputData.getMaxerr());
