@@ -8,8 +8,10 @@ import com.androidvizlab.bachelor.Controller.ServerSettingsController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +63,36 @@ public class HelpWindow extends javax.swing.JFrame {
             currentPage = new URL(defaultURL);
             this.mainEditorPane.setContentType("txt/html");
             //this.mainEditorPane.setText(defaultURL);
+            this.mainEditorPane.setPage(currentPage);
+        } 
+        catch (IOException ex) 
+        {
+            ex.printStackTrace();
+        }
+    }
+    
+    /**
+     * Overloaded Constructor
+     * Uses file absolute path to convert to URL of the html page to be viewed
+     * 
+     * @param file files absolute path is to be converted to URL
+     */
+    public HelpWindow(File file) 
+    {
+        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage()); //window icon
+         
+        this.initComponents(); //initialises various components
+
+        /*
+         * Set the page to the JEditorPane
+         */
+        try 
+        {
+            currentPage = file.toURI().toURL(); //URL of the html to be displayed
+            
+            this.mainEditorPane.setContentType("txt/html");
+            //this.mainEditorPane.setText(defaultURL);
+            
             this.mainEditorPane.setPage(currentPage);
         } 
         catch (IOException ex) 
