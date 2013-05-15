@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
+import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.event.HyperlinkListener;
 
@@ -32,7 +33,7 @@ public class ServerMainGui extends javax.swing.JFrame {
     
     //Help window and help html related
     private HelpWindow helpWindow = null;
-    private String defaultURL = "";
+    private String defaultURLorFilePath = "";
     
     //About window
     private AboutDialog about = null;
@@ -180,11 +181,18 @@ public class ServerMainGui extends javax.swing.JFrame {
     }
     
     /**
-     * Open the help window
+     * Open the help window. If you chose to use the URL you must use the
+     * HelpWindow constructor with string parameter otherwise use the constructor
+     * with a file as parameter.
      */
     public void openHelpWindow()
     {
-        helpWindow = new HelpWindow(defaultURL);
+        //helpWindow = new HelpWindow(defaultURLorFilePath);
+        
+        File file = new File(defaultURLorFilePath);
+        
+        helpWindow = new HelpWindow(file);
+        
         helpWindow.setHyperLinkListener(linkListener);
         helpWindow.setActionListeners(actionListener);
         helpWindow.setLocationRelativeTo(null);
@@ -272,12 +280,19 @@ public class ServerMainGui extends javax.swing.JFrame {
         this.form = form;
     }
 
-    public String getDefaultURL() {
-        return defaultURL;
+    public String getDefaultURLOrFilePath() {
+        return defaultURLorFilePath;
     }
 
-    public void setDefaultURL(String defaultURL) {
-        this.defaultURL = defaultURL;
+    /**
+     * Set a given URL or a File path for the help pages. Warning you must use the
+     * right constructor for the HelpWindow class depending on which what parameter
+     * is given to this method.
+     * 
+     * @param defaultURLorFilePath use a URL or a file path for the help pages. 
+     */
+    public void setDefaultURLOrFilePath(String defaultURLorFilePath) {
+        this.defaultURLorFilePath = defaultURLorFilePath;
     }
 
     public HelpWindow getHelpWindow() {
@@ -510,7 +525,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         final ServerMainGui gui = new ServerMainGui(controller,controller,
                 controller,controller);
         gui.setComponentListener(controller); //Set Listener
-        gui.setDefaultURL("file:///E:/Interconnect/My%20Documents/NetBeansProjects/Bachelor/trunk/AndroidVizLabServer/src/resources/helppages/index.html"); //default URL for the help pages(local html files)
+        gui.setDefaultURLOrFilePath("E:\\Interconnect\\My Documents\\NetBeansProjects\\Bachelor\\trunk\\AndroidVizLabServer\\src\\resources\\helppages\\index.html"); //default URL for the help pages(local html files)
         
         //** Model (Observable)**//
         ServerSettingsModel model = new ServerSettingsModel();
