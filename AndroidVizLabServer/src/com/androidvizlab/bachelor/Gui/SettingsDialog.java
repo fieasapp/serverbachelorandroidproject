@@ -64,6 +64,10 @@ public class SettingsDialog extends javax.swing.JDialog {
         btnChooseCalibrationFilePath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_CAL_FILEPATH);
         btnChooseExtProgPath.addActionListener(actionListener);
         btnChooseExtProgPath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_EXTPRG_PATH);
+        btnSaveFilePaths.addActionListener(actionListener);
+        btnSaveFilePaths.setActionCommand(ServerSettingsController.COMMAND_SAVE_FILEPATHS);
+        btnClearPaths.addActionListener(actionListener);
+        btnClearPaths.setActionCommand(ServerSettingsController.COMMAND_CLEAR_PATHS);
     }
     
     //*** SET TEXT TO TEXT FIELD ***//
