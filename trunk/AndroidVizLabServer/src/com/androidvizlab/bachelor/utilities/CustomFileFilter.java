@@ -15,8 +15,19 @@ import javax.swing.filechooser.FileFilter;
 
 public class CustomFileFilter extends FileFilter{
 
-    private String fileFormat = "txt"; // file type(can add more supported file type)
-    protected String description = "TEXT file (*.txt)";
+    //SOME STATIC CONSTANTS, FILE EXTENSIONS
+    public static final String FILE_EXTENSION_TEXT = "txt";
+    public static final String FILE_EXTENSION_DAT = "dat";
+    public static final String FILE_EXTENSION_EXE = "exe";
+    
+    //SOME STATIC CONSTANTS, FILE DESCRIPTIONS
+    public static final String FILE_DESC_TEXT = "TEXT file (*.txt)";
+    public static final String FILE_DESC_DAT = "DAT file (*.dat)";
+    public static final String FILE_DESC_EXE = "EXECUTABLE file (*.exe)";
+    
+    //FILE EXTENSION AND DESCRIPTIONS
+    private String fileFormat = ""; // file type(can add more supported file type)
+    protected String description = "";
     
     private char dotIndex = '.';
     private String startingDirectory = "src/com/androidvizlab/bachelor/calibrationandoptionsfile"; //starting directory where the given file type is likely to be found.
@@ -43,30 +54,6 @@ public class CustomFileFilter extends FileFilter{
         return false;
     }
 
-    
-    /**
-     * see FileFilter doc
-     * @return 
-     */
-    @Override
-    public String getDescription() 
-    {
-       return description;
-    }
-    
-    public void setDescription(String input)
-    {
-        description = input;
-    }
-
-    public String getFileFormat() {
-        return fileFormat;
-    }
-
-    public void setFileFormat(String fileFormat) {
-        this.fileFormat = fileFormat;
-    }
-    
     /**
      * helper method to determined the extension of a file
      * @param f
@@ -117,6 +104,30 @@ public class CustomFileFilter extends FileFilter{
         return filename;
     }
     
+    //GETTERS AND SETTERS
+    
+    /**
+     * see FileFilter doc
+     * @return 
+     */
+    @Override
+    public String getDescription() 
+    {
+       return description;
+    }
+    
+    public void setDescription(String input)
+    {
+        description = input;
+    }
+
+    public String getFileFormat() {
+        return fileFormat;
+    }
+
+    public void setFileFormat(String fileFormat) {
+        this.fileFormat = fileFormat;
+    }
     
     public String getStartingDirectory() {
         return startingDirectory;

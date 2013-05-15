@@ -7,12 +7,17 @@ package com.androidvizlab.bachelor.Gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.html.HTMLEditorKit;
 
 /**
  *
@@ -32,7 +37,28 @@ public class HelpWindow extends javax.swing.JFrame {
         
         initComponents();
         
-        viewHelpFile(page);
+        this.mainEditorPane.setContentType("text/html");
+        try {
+            //this.mainEditorPane.setText("");
+            insertHTML(mainEditorPane, "src/resources/helppages/index.html",1);
+            //viewHelpFile(page);
+        } catch (IOException ex) {
+            Logger.getLogger(HelpWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void insertHTML(JEditorPane editor, String html, int location)
+        throws IOException {
+        try {
+            //assumes editor is already set to "text/html" type
+            HTMLEditorKit kit =
+              (HTMLEditorKit) editor.getEditorKit();
+            Document doc = editor.getDocument();
+            StringReader reader = new StringReader(html);
+            kit.read(reader, doc, location);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(HelpWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void viewHelpFile(URL pageURL)
@@ -184,7 +210,7 @@ public class HelpWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HelpWindow("src//resources//helppages//index.html").setVisible(true);
+                new HelpWindow("http://localhost/index.html").setVisible(true);
             }
         });
     }
