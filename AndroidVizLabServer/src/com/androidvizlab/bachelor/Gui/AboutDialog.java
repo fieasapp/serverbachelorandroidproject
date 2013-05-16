@@ -37,10 +37,11 @@ public class AboutDialog extends javax.swing.JDialog {
         jTextPane1 = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("About");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resources/others/LabelsAndButtonTextBundle"); // NOI18N
+        setTitle(bundle.getString("aboutWindowTitle")); // NOI18N
         setResizable(false);
 
-        btnClose.setText("Close");
+        btnClose.setText(bundle.getString("btnClose")); // NOI18N
         btnClose.setAlignmentX(0.5F);
         btnClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnClose.addActionListener(new java.awt.event.ActionListener() {

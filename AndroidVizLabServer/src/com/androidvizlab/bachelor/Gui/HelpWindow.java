@@ -154,7 +154,8 @@ public class HelpWindow extends javax.swing.JFrame {
         btnForward = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Help");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resources/others/LabelsAndButtonTextBundle"); // NOI18N
+        setTitle(bundle.getString("helpWindowTitle")); // NOI18N
         setMinimumSize(new java.awt.Dimension(500, 700));
         setPreferredSize(new java.awt.Dimension(500, 700));
         setResizable(false);
