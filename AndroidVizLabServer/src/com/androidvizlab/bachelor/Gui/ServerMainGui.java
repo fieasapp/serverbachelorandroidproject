@@ -38,6 +38,9 @@ public class ServerMainGui extends javax.swing.JFrame {
     //About window
     private AboutDialog about = null;
     
+    //Field information
+    private FieldInfoDialog fieldInfo = null;
+    
     /**
      * Creates new form ServerMainGui
      */
@@ -151,11 +154,17 @@ public class ServerMainGui extends javax.swing.JFrame {
     public void setActionListener()
     {
         btnStart.addActionListener(actionListener);
+        btnStart.setActionCommand(ServerSettingsController.COMMAND_START);
         btnStop.addActionListener(actionListener);
+        btnStop.setActionCommand(ServerSettingsController.COMMAND_STOP);
         exitFileMenuItem.addActionListener(actionListener);
+        exitFileMenuItem.setActionCommand(ServerSettingsController.COMMAND_EXIT);
         serverSettingsMenuItem.addActionListener(actionListener);
+        serverSettingsMenuItem.setActionCommand(ServerSettingsController.COMMAND_SERVER_SETTINGS);
         helpContentHelpMenuItem.addActionListener(actionListener);
+        helpContentHelpMenuItem.setActionCommand(ServerSettingsController.COMMAND_HELP);
         aboutHelpMenuItem.addActionListener(actionListener);
+        aboutHelpMenuItem.setActionCommand(ServerSettingsController.COMMAND_ABOUT);
     }
     
     public void setComponentListener(ComponentListener listener)
@@ -248,6 +257,20 @@ public class ServerMainGui extends javax.swing.JFrame {
             
             form.setCalibrationFilePath(path);
         }
+    }
+    
+    /**
+     * Displays info about the given field
+     */
+    public void displayInfo(String info)
+    {
+        fieldInfo = new FieldInfoDialog(this,true);
+        
+        fieldInfo.setLocationRelativeTo(null);
+        
+        fieldInfo.displayInfo(info);
+        
+        fieldInfo.setVisible(true);
     }
     
     /**

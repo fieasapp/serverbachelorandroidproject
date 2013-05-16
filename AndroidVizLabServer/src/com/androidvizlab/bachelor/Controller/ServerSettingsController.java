@@ -43,21 +43,27 @@ Observer, ItemListener, HyperlinkListener{
     
     
     //ACTION COMMAND
-    private final String COMMAND_START = "START";
-    private final String COMMAND_STOP = "STOP";
-    private final String COMMAND_CLEAR = "Clear";
-    private final String COMMAND_SAVE = "Save";
-    private final String COMMAND_EXIT = "Exit";
-    private final String COMMAND_SERVER_SETTINGS = "Server Settings";
-    private final String COMMAND_HELP = "Help Content";
-    private final String COMMAND_ABOUT = "About";
-    public static final String COMMAND_SAVE_FILEPATHS = "Save filepaths";
-    public static final String COMMAND_CLEAR_PATHS = "Clear filepaths";
+    public static final String COMMAND_START = "START";
+    public static final String COMMAND_STOP = "STOP";
+    public static final String COMMAND_CLEAR = "CLEAR";
+    public static final String COMMAND_SAVE = "SAVE";
+    public static final String COMMAND_EXIT = "EXIT";
+    public static final String COMMAND_SERVER_SETTINGS = "SERVERSETTINGS";
+    public static final String COMMAND_HELP = "HELPCONTENT";
+    public static final String COMMAND_ABOUT = "ABOUT";
+    public static final String COMMAND_SAVE_FILEPATHS = "SAVEFILEPATH";
+    public static final String COMMAND_CLEAR_PATHS = "CLEARFILEPATH";
     public static final String COMMAND_CHOOSE_OPT_FILEPATH = "cOptFilePath";
     public static final String COMMAND_CHOOSE_CAL_FILEPATH = "cCalFilePath";
     public static final String COMMAND_CHOOSE_EXTPRG_PATH = "cExtPrgPath";
     public static final String COMMAND_NEXTPAGE = "NEXTPAGE";
     public static final String COMMAND_PREVIOUSPAGE = "PREVPAGE";
+    public static final String COMMAND_INFO_SERVERNAME = "infoServerName";
+    public static final String COMMAND_INFO_SERVERPORT = "infoServerPort";
+    public static final String COMMAND_INFO_MQTTBROKER = "infoMqttBrokerAddress";
+    public static final String COMMAND_INFO_BROKERPORT = "infoBrokerPort";
+    public static final String COMMAND_INFO_OPTNFILEPATH = "infoOptnsFilePath";
+    public static final String COMMAND_INFO_EXTPRGMPATH = "infoExtPrgmPath";
     
     public ServerSettingsController()
     {
@@ -77,7 +83,8 @@ Observer, ItemListener, HyperlinkListener{
      */
     public void setMainGuiInitialValues()
     {
-        settingsModel.loadServerPreferences();
+        //settingsModel.loadServerPreferences();
+        updateMainGui();
     }
     
     /*
@@ -94,7 +101,7 @@ Observer, ItemListener, HyperlinkListener{
      */
     public void updateMainGui()
     {
-        mainGui.setServerNameText(settingsModel.getServerAddress());
+        mainGui.setServerNameText(settingsModel.getServerName());
         mainGui.setServerPortText(Integer.toString(settingsModel.getServerPort()));
         mainGui.setBrokerAddressText(settingsModel.getBrokerAddress());
         mainGui.setBrokerPortText(Integer.toString(settingsModel.getBrokerPort()));
@@ -108,8 +115,8 @@ Observer, ItemListener, HyperlinkListener{
      */
     public boolean isValidSettingsData()
     {
-        if(mainGui.getSettingsForm().getServerAddressText() == null ||
-                mainGui.getSettingsForm().getServerAddressText().isEmpty())
+        if(mainGui.getSettingsForm().getServerNameText() == null ||
+                mainGui.getSettingsForm().getServerNameText().isEmpty())
         {
             mainGui.getSettingsForm().setError(1);
             return false;
@@ -152,6 +159,28 @@ Observer, ItemListener, HyperlinkListener{
             mainGui.getSettingsForm().setError(-4);
         }
         
+        if(mainGui.getSettingsForm().getOptionFilePath() == null 
+                || mainGui.getSettingsForm().getOptionFilePath().equals(""))
+        {
+            mainGui.getSettingsForm().setError(5);
+            return false;
+        }
+        else
+        {
+            mainGui.getSettingsForm().setError(-5);
+        }
+        
+        if(mainGui.getSettingsForm().getExternalProgramPath() == null 
+                || mainGui.getSettingsForm().getExternalProgramPath().equals(""))
+        {
+            mainGui.getSettingsForm().setError(6);
+            return false;
+        }
+        else
+        {
+            mainGui.getSettingsForm().setError(-6);
+        }
+        
         return true;
     }
     
@@ -163,13 +192,14 @@ Observer, ItemListener, HyperlinkListener{
     {
         if(isValidSettingsData())
         {
-            settingsModel.setServerAddress(mainGui.getSettingsForm().getServerAddressText());
+            settingsModel.setServerName(mainGui.getSettingsForm().getServerNameText());
             settingsModel.setServerPort(NumberConverter.converToInt(
                     mainGui.getSettingsForm().getServerPortText(), 1330));
             settingsModel.setBrokerAddress(mainGui.getSettingsForm().getBrokerAddressText());
             settingsModel.setBrokerPort(NumberConverter.converToInt(
                     mainGui.getSettingsForm().getBrokerPortText(), 1883));
-            settingsModel.saveServerSettings(); 
+            //settingsModel.saveServerSettings(); 
+            settingsModel.saveConfigurationSettings();
             mainGui.getSettingsForm().dispose();
         }
         else
@@ -319,7 +349,7 @@ Observer, ItemListener, HyperlinkListener{
                 break;
                 
             case COMMAND_SERVER_SETTINGS:
-                mainGui.openSettingsDialog(settingsModel.getServerAddress(), settingsModel.getServerPort(),
+                mainGui.openSettingsDialog(settingsModel.getServerName(), settingsModel.getServerPort(),
                         settingsModel.getBrokerAddress(), settingsModel.getBrokerPort());
                 break;
                 
@@ -344,22 +374,35 @@ Observer, ItemListener, HyperlinkListener{
                 break;
                 
             case COMMAND_SAVE_FILEPATHS:
-                Properties props = new Properties();
-                
-                props.setProperty("test", "test");
-                try {
-                    props.store(new FileOutputStream("E:\\Interconnect\\My Documents\\NetBeansProjects\\Bachelor\\trunk\\AndroidVizLabServer\\src\\resources\\others\\test.properties"), null);
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-                
+                saveServerSettings();
                 break;
                 
             case COMMAND_CLEAR_PATHS:
+                mainGui.getSettingsForm().clearFormPaths();
+                break;
                 
+            case COMMAND_INFO_SERVERNAME:
+                mainGui.displayInfo(settingsModel.getInfo(command));
+                break;
+                
+            case COMMAND_INFO_SERVERPORT:
+                mainGui.displayInfo(settingsModel.getInfo(command));
+                break;
+
+            case COMMAND_INFO_MQTTBROKER:
+                mainGui.displayInfo(settingsModel.getInfo(command));
+                break;
+
+            case COMMAND_INFO_BROKERPORT:
+                mainGui.displayInfo(settingsModel.getInfo(command));
+                break;
+                
+            case COMMAND_INFO_OPTNFILEPATH:
+                mainGui.displayInfo(settingsModel.getInfo(command));
+                break;
+                
+            case COMMAND_INFO_EXTPRGMPATH:
+                mainGui.displayInfo(settingsModel.getInfo(command));
                 break;
         }
     }

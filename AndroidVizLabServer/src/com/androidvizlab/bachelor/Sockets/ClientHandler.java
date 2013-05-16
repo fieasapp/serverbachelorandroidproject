@@ -48,7 +48,7 @@ public class ClientHandler implements Runnable, Observer{
     private MessagePublisher publisher = null;
     
     //AN EXTERNAL PROCESS TO BE EXECUTED
-    ExternalProcessHandler eph = null;
+    private ExternalProcessHandler eph = null;
     
     //READERS AND WRITERS(OPTIONSFILE & CALIBRATION FILES)
     private OptionsFileWriter optionsFileWriter = null;
