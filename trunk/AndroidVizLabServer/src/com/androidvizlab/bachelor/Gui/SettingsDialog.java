@@ -238,18 +238,19 @@ public class SettingsDialog extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnClear.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnClear.setText("Clear");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resources/others/LabelsAndButtonTextBundle"); // NOI18N
+        btnClear.setText(bundle.getString("btnTextClear")); // NOI18N
 
         btnSave.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnSave.setText("Save");
+        btnSave.setText(bundle.getString("btnTextSave")); // NOI18N
 
         jPanel3.setPreferredSize(new java.awt.Dimension(560, 212));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Server Setting");
+        jLabel1.setText(bundle.getString("labelServerSettings")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Server name:");
+        jLabel2.setText(bundle.getString("labelServerName")); // NOI18N
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cbUseMachineName, org.jdesktop.beansbinding.ELProperty.create("${!selected}"), tfServerName, org.jdesktop.beansbinding.BeanProperty.create("editable"));
         bindingGroup.addBinding(binding);
@@ -259,10 +260,10 @@ public class SettingsDialog extends javax.swing.JDialog {
         btnInfoServerName.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/infoiconfocused.png"))); // NOI18N
 
         cbUseMachineName.setSelected(true);
-        cbUseMachineName.setText("Use Machine name");
+        cbUseMachineName.setText(bundle.getString("chckBoxTextMachineName")); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Port:");
+        jLabel3.setText(bundle.getString("labelPort")); // NOI18N
 
         btnInfoServerPort.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/infoicon.png"))); // NOI18N
         btnInfoServerPort.setContentAreaFilled(false);
@@ -277,7 +278,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cbUseMachineName)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -291,7 +292,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addGap(48, 48, 48))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -317,19 +318,19 @@ public class SettingsDialog extends javax.swing.JDialog {
         );
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("MQTT");
+        jLabel4.setText(bundle.getString("labelMqtt")); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Broker address(IP):");
+        jLabel5.setText(bundle.getString("labelBrokerIP")); // NOI18N
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, cbBrokerAddress, org.jdesktop.beansbinding.ELProperty.create("${!selected}"), tfBrokerAddress, org.jdesktop.beansbinding.BeanProperty.create("editable"));
         bindingGroup.addBinding(binding);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Port:");
+        jLabel6.setText(bundle.getString("labelPort")); // NOI18N
 
         cbBrokerAddress.setSelected(true);
-        cbBrokerAddress.setText("Use Localhost  IP");
+        cbBrokerAddress.setText(bundle.getString("chckBoxTextLocalMachineAddress")); // NOI18N
 
         btnInfoBrokerAddress.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/infoicon.png"))); // NOI18N
         btnInfoBrokerAddress.setContentAreaFilled(false);
@@ -402,7 +403,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator1)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -435,33 +436,33 @@ public class SettingsDialog extends javax.swing.JDialog {
                 .addContainerGap(71, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Connection Settings", jPanel1);
+        jTabbedPane1.addTab(bundle.getString("tabBtnTextConnectionSettings"), jPanel1); // NOI18N
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Options filepath:");
+        jLabel7.setText(bundle.getString("labelOptionsfilepath")); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setText("Calibration filepath:");
+        jLabel8.setText(bundle.getString("labelCalfilepath")); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel9.setText("File path and Directories");
+        jLabel9.setText(bundle.getString("labelFilePathHeader")); // NOI18N
 
         btnChooseOptionFilePath.setText("...");
 
         btnChooseCalibrationFilePath.setText("...");
 
         btnSaveFilePaths.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnSaveFilePaths.setText("Save");
+        btnSaveFilePaths.setText(bundle.getString("btnTextSave")); // NOI18N
 
         btnClearPaths.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnClearPaths.setText("Clear");
+        btnClearPaths.setText(bundle.getString("btnTextClear")); // NOI18N
 
         errorLabelPaths.setForeground(new java.awt.Color(255, 51, 51));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setText("External Program Path:");
+        jLabel10.setText(bundle.getString("labelExtPrgPath")); // NOI18N
 
         btnChooseExtProgPath.setText("...");
 
@@ -528,7 +529,7 @@ public class SettingsDialog extends javax.swing.JDialog {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
                                         .addComponent(errorLabelFilePathAndDirectories)
-                                        .addGap(29, 447, Short.MAX_VALUE)))
+                                        .addGap(29, 449, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnChooseExtProgPath, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -579,7 +580,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         btnChooseCalibrationFilePath.getAccessibleContext().setAccessibleName("cCalFilePath");
         btnChooseCalibrationFilePath.getAccessibleContext().setAccessibleDescription("");
 
-        jTabbedPane1.addTab("Files and Directories", jPanel2);
+        jTabbedPane1.addTab(bundle.getString("tabBtnTextFilePaths"), jPanel2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

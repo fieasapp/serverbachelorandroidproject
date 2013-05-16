@@ -338,85 +338,86 @@ public class ServerMainGui extends javax.swing.JFrame {
         aboutHelpMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("3D Motion Tech - Socket Server");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resources/others/LabelsAndButtonTextBundle"); // NOI18N
+        setTitle(bundle.getString("mainWindowTitle")); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Server Name:");
+        jLabel1.setText(bundle.getString("labelServerName")); // NOI18N
 
         dfServerName.setEditable(false);
         dfServerName.setFocusable(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Port:");
+        jLabel2.setText(bundle.getString("labelPort")); // NOI18N
 
         dfServerPort.setEditable(false);
         dfServerPort.setFocusable(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setText("Status:");
+        jLabel3.setText(bundle.getString("labelStatus")); // NOI18N
 
         dfStatus.setEditable(false);
         dfStatus.setFocusable(false);
 
         btnStart.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnStart.setText("START");
+        btnStart.setText(bundle.getString("btnTextStart")); // NOI18N
         btnStart.setMaximumSize(new java.awt.Dimension(70, 25));
         btnStart.setMinimumSize(new java.awt.Dimension(70, 25));
         btnStart.setPreferredSize(new java.awt.Dimension(70, 25));
 
         btnStop.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        btnStop.setText("STOP");
+        btnStop.setText(bundle.getString("btnTextStop")); // NOI18N
         btnStop.setEnabled(false);
         btnStop.setMaximumSize(new java.awt.Dimension(70, 25));
         btnStop.setMinimumSize(new java.awt.Dimension(70, 25));
         btnStop.setPreferredSize(new java.awt.Dimension(70, 25));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Broker address:");
+        jLabel4.setText(bundle.getString("labelBrokerAddress")); // NOI18N
 
         dfBrokerAddress.setEditable(false);
         dfBrokerAddress.setFocusable(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setText("Port:");
+        jLabel5.setText(bundle.getString("labelPort")); // NOI18N
 
         dfBrokerPort.setEditable(false);
         dfBrokerPort.setFocusable(false);
 
         jTabbedPane4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTabbedPane4.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        jTabbedPane4.addTab("Server Messages", serverMsgList);
-        jTabbedPane4.addTab("Client Messages", clientMsgList);
+        jTabbedPane4.addTab(bundle.getString("tabBtnTextServerMsg"), serverMsgList); // NOI18N
+        jTabbedPane4.addTab(bundle.getString("tabBtnTextClientMsg"), clientMsgList); // NOI18N
 
-        fileMenu.setText("File");
+        fileMenu.setText(bundle.getString("menuTextFile")); // NOI18N
 
         exitFileMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         exitFileMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
-        exitFileMenuItem.setText("Exit");
+        exitFileMenuItem.setText(bundle.getString("menuItemTextExit")); // NOI18N
         fileMenu.add(exitFileMenuItem);
 
         mainMenuBar.add(fileMenu);
 
-        settingsMenu.setText("Settings");
+        settingsMenu.setText(bundle.getString("menuTextSettings")); // NOI18N
 
         serverSettingsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         serverSettingsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
-        serverSettingsMenuItem.setText("Server settings");
+        serverSettingsMenuItem.setText(bundle.getString("menuItemTextServerSettings")); // NOI18N
         settingsMenu.add(serverSettingsMenuItem);
 
         mainMenuBar.add(settingsMenu);
 
-        helpMenu.setText("Help");
+        helpMenu.setText(bundle.getString("menuTextHelp")); // NOI18N
 
         helpContentHelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         helpContentHelpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
-        helpContentHelpMenuItem.setText("Help Content");
+        helpContentHelpMenuItem.setText(bundle.getString("menuItemTextHelpContents")); // NOI18N
         helpMenu.add(helpContentHelpMenuItem);
         helpMenu.add(jSeparator1);
 
         aboutHelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         aboutHelpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/filler.png"))); // NOI18N
-        aboutHelpMenuItem.setText("About");
+        aboutHelpMenuItem.setText(bundle.getString("menuItemTextAbout")); // NOI18N
         helpMenu.add(aboutHelpMenuItem);
 
         mainMenuBar.add(helpMenu);
@@ -460,7 +461,7 @@ public class ServerMainGui extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(dfBrokerAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                             .addComponent(dfBrokerPort))))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -48,7 +48,7 @@ Observer, ItemListener, HyperlinkListener{
     private final String COMMAND_CLEAR = "Clear";
     private final String COMMAND_SAVE = "Save";
     private final String COMMAND_EXIT = "Exit";
-    private final String COMMAND_SERVER_SETTINGS = "Server settings";
+    private final String COMMAND_SERVER_SETTINGS = "Server Settings";
     private final String COMMAND_HELP = "Help Content";
     private final String COMMAND_ABOUT = "About";
     public static final String COMMAND_SAVE_FILEPATHS = "Save filepaths";
