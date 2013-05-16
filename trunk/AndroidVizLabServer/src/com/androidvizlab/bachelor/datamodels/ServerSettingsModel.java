@@ -3,7 +3,16 @@ package com.androidvizlab.bachelor.datamodels;
 import com.androidvizlab.bachelor.FileWriterAndReader.FileAccessUtility;
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import com.androidvizlab.bachelor.utilities.NumberConverter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Properties;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,6 +22,7 @@ import javax.swing.JOptionPane;
 public class ServerSettingsModel extends SimpleObservable{
     
     //SOCKET CONNECTION VARIABLES
+    private String serverName = "localhost"; //default
     private String serverAddress = "localhost"; //default
     private int serverPort = 1330; //default
     private String brokerAddress = "localhost"; //default
@@ -27,6 +37,7 @@ public class ServerSettingsModel extends SimpleObservable{
     private String externalProgramPath = "";
     
     //MAP KEYS
+    public static final String KEY_SERVER_NAME = "server_name";
     public static final String KEY_SERVER_ADDRESS = "server_address";
     public static final String KEY_SERVER_PORT = "server_port";
     public static final String KEY_BROKER_ADDRESS = "broker_address";
@@ -41,9 +52,16 @@ public class ServerSettingsModel extends SimpleObservable{
     //UTILITY FOR READING AND WRITING ON TO A TEXT FILE
     private FileAccessUtility fau = null;
     
+    //STORE INFO ON FIELDS IN THE SETTINGS FORM.
+    private HashMap<String,String> infos = new HashMap<>();
+    
     public ServerSettingsModel()
     {
         fau = new FileAccessUtility();
+        
+        loadConfigurationSettings(); //load configuration settings (connection settings and file paths)
+        
+        loadInfo(); //Loads the infomation on fields from property files
     }
     
     /**
@@ -56,7 +74,7 @@ public class ServerSettingsModel extends SimpleObservable{
         
         if(settings != null && !settings.isEmpty())
         {
-            setServerAddress((String)settings.get(KEY_SERVER_ADDRESS));
+            setServerName((String)settings.get(KEY_SERVER_NAME));
             setServerPort(NumberConverter.converToInt(settings.get(KEY_SERVER_PORT),1330));
             setBrokerAddress((String) settings.get(KEY_BROKER_ADDRESS));
             setBrokerPort(NumberConverter.converToInt(settings.get(KEY_BROKER_PORT),1883));
@@ -67,7 +85,7 @@ public class ServerSettingsModel extends SimpleObservable{
         {
             JOptionPane.showMessageDialog(null, "Could not find saved preferences, will use default settings!");
             
-            setServerAddress(serverAddress);
+            setServerName(serverName);
             setServerPort(serverPort);
             setBrokerAddress(brokerAddress);
             setBrokerPort(brokerPort);
@@ -82,16 +100,117 @@ public class ServerSettingsModel extends SimpleObservable{
      */
     public synchronized void saveServerSettings()
     {
-        fau.writeToFile(KEY_SERVER_ADDRESS+":"+serverAddress,
+        fau.writeToFile(KEY_SERVER_NAME+":"+serverName,
                 KEY_SERVER_PORT+":"+serverPort,
                 KEY_BROKER_ADDRESS+":"+brokerAddress,
                 KEY_BROKER_PORT+":"+brokerPort,
                 KEY_LOCAL_BROKERADDRESS+":"+useLocalBrokerAddress,
                 KEY_LOCAL_MACHINENAME+":"+useLocalMachinename);
     }
+    
+    //*** LOAD PROPERTIES AND RESOURCE BUNDLES ***//
+    
+    public void loadInfo()
+    {
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.others.FormFieldInfos");
+        Enumeration keyList = bundle.getKeys();
+        
+        while(keyList.hasMoreElements())
+        {
+            String key = (String)keyList.nextElement();
+            infos.put(key,bundle.getString(key));
+        }
+    }
+    
+    public String getInfo(String key)
+    {
+        if(infos.containsKey(key))
+        {
+            return (String) infos.get(key);
+        }
+        else
+        {
+            return "NO AVAILABLE INFO";
+        }
+    }
+    
+    //LOAD CONFIGURATION SETTINGS
+    public void loadConfigurationSettings()
+    {
+        Properties config = new Properties();
+        
+        try 
+        {
+            config.load(new FileInputStream("src//resources//others//serverconfig.properties"));
+            
+            setServerName((String)config.getProperty(KEY_SERVER_NAME));
+            setServerPort(NumberConverter.converToInt(config.getProperty(KEY_SERVER_PORT),1330));
+            setBrokerAddress((String) config.getProperty(KEY_BROKER_ADDRESS));
+            setBrokerPort(NumberConverter.converToInt(config.getProperty(KEY_BROKER_PORT),1883));
+            setUseLocalBrokerAddress(Boolean.valueOf(config.getProperty(KEY_LOCAL_BROKERADDRESS)));
+            setUseLocalMachinename(Boolean.valueOf(config.getProperty(KEY_LOCAL_MACHINENAME)));
+            setOptionsFilePath((String)config.getProperty(KEY_OPTIONSFILE_PATH));
+            setExternalProgramPath((String)config.getProperty(KEY_EXTERNALPROGRAM_PATH));
+        } 
+        catch (IOException ex) 
+        {
+            JOptionPane.showMessageDialog(null, "Could not find saved preferences, will use default settings!");
+            
+            setServerName(serverName);
+            setServerPort(serverPort);
+            setBrokerAddress(brokerAddress);
+            setBrokerPort(brokerPort);
+            setUseLocalBrokerAddress(false);
+            setUseLocalMachinename(false);
+            setOptionsFilePath(optionsFilePath);
+            setExternalProgramPath(externalProgramPath);
+            
+            
+            ex.printStackTrace();
+        }
+    }
+    
+    public void saveConfigurationSettings()
+    {
+        Properties config = new Properties();
+        
+        try 
+        {
+            //set property values
+            
+            config.setProperty(KEY_SERVER_NAME, serverName);
+            config.setProperty(KEY_SERVER_PORT, serverPort+"");
+            config.setProperty(KEY_BROKER_ADDRESS, brokerAddress);
+            config.setProperty(KEY_BROKER_PORT, brokerPort+"");
+            config.setProperty(KEY_LOCAL_MACHINENAME, useLocalMachinename+"");
+            config.setProperty(KEY_LOCAL_BROKERADDRESS, useLocalBrokerAddress+"");
+            
+            config.setProperty(KEY_OPTIONSFILE_PATH, optionsFilePath);
+            config.setProperty(KEY_EXTERNALPROGRAM_PATH, externalProgramPath);
+            
+            config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
+        } 
+        catch (IOException ex) 
+        {
+            ex.printStackTrace();
+        }
+    }
+    
         
     //*** GETTERS AND SETTERS ***//
 
+    public String getServerName()
+    {
+        return serverName;
+    }
+    
+    public void setServerName(String name)
+    {
+        serverName = name;
+        
+        this.notifyObservers();
+    }
+    
     public String getServerAddress() {
         return serverAddress;
     }

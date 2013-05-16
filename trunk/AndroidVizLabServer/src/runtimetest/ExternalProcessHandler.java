@@ -12,6 +12,7 @@ implements Runnable{
     
     private boolean processStarted = false;
     private int processExitVal = 100;
+    private String executableFilePath = "C:\\Users\\The Hive\\Desktop\\runtimetest";
     
     public ExternalProcessHandler()
     {
@@ -22,7 +23,7 @@ implements Runnable{
         try
         {    
             Runtime rt = Runtime.getRuntime();
-            Process proc = rt.exec("java RuntimeTest",null,new File("C:\\Users\\The Hive\\Desktop\\runtimetest"));
+            Process proc = rt.exec("java RuntimeTest",null,new File(executableFilePath));
             
             // any error message?
             StreamIOCapture error_capture = new 
@@ -50,6 +51,14 @@ implements Runnable{
         }
         
         return processExitVal;
+    }
+
+    public String getExecutableFilePath() {
+        return executableFilePath;
+    }
+
+    public void setExecutableFilePath(String executableFilePath) {
+        this.executableFilePath = executableFilePath;
     }
     
     public boolean hasStarted()
