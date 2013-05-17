@@ -27,11 +27,11 @@ implements Runnable{
             
             // any error message?
             StreamIOCapture error_capture = new 
-                StreamIOCapture(proc.getErrorStream(), "ERROR");            
+            StreamIOCapture(proc.getErrorStream(), "ERROR");            
             
             // any output?
             StreamIOCapture output_capture = new 
-                StreamIOCapture(proc.getInputStream(), "OUTPUT");
+            StreamIOCapture(proc.getInputStream(), "OUTPUT");
                 
             // kick them off
             error_capture.start();

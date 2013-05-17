@@ -2,7 +2,6 @@ package com.androidvizlab.bachelor.Sockets;
 
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import java.net.ServerSocket;
-import java.net.Socket;
 import javax.swing.JOptionPane;
 
 
@@ -11,11 +10,15 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     // SERVER CONNECTION VARIABLES
     private int PORTNR = 1330;
     private ServerSocket serverSocket = null;
-    private ClientHandler clientHandler = null;
+    private ClientHandler clientHandler = null; //Handles and accepts clients  connecting to the server
 
     // MQTT CONNECTION VARIABLES
     private String brokerAddress = "localhost";
     private int brokerPort = 1883;
+    
+    //READING AND WRITING TO FILE VARIABLES
+    private String  optionsFilePath = "";
+    private String externalPrgrmPath = "";
     
     //Server STATE
     private ServerState serverState = ServerState.SERVER_STATE_READY;
@@ -85,6 +88,7 @@ public class ActivityServer extends SimpleObservable implements Runnable{
                 this.notifyObservers("Server: Waiting for client. . .");
                         
                 clientHandler = new ClientHandler(serverSocket.accept());
+                clientHandler.setProcessingVariables(optionsFilePath, externalPrgrmPath, brokerAddress, brokerPort);
                 
                 System.out.println("Server: A Client has connected.");
                 this.notifyObservers("Server: A Client has connected.");
@@ -134,31 +138,19 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     
     //**** GETTERS AND SETTERS ****//
 
-    public int getPORTNR() {
+    public int getPortNr() {
         return PORTNR;
     }
 
-    public void setPORTNR(int PORTNR) {
-        this.PORTNR = PORTNR;
-        this.notifyObservers();
-    }
-
-    public String getBrokerAddress() {
-        return brokerAddress;
-    }
-
-    public void setBrokerAddress(String brokerAddress) {
+    public void setStartUpVaribles(int serverPort, 
+            String brokerAddress, int brokerPort, String optionsFilePath, 
+            String externalPrgrmPath)
+    {
+        PORTNR = serverPort;
         this.brokerAddress = brokerAddress;
-        this.notifyObservers();
-    }
-
-    public int getBrokerPort() {
-        return brokerPort;
-    }
-
-    public void setBrokerPort(int brokerPort) {
         this.brokerPort = brokerPort;
-        this.notifyObservers();
+        this.optionsFilePath = optionsFilePath;
+        this.externalPrgrmPath = externalPrgrmPath;
     }
 
     public boolean isContinueRunning() {

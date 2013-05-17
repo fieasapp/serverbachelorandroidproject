@@ -244,11 +244,15 @@ Observer, ItemListener, HyperlinkListener{
     public void startServer()
     {
         mainGui.setEnableStartBtn(false);
-        activityServer.setPORTNR(settingsModel.getServerPort());
-        activityServer.setBrokerAddress(settingsModel.getBrokerAddress());
-        activityServer.setBrokerPort(settingsModel.getBrokerPort());
+        
+        activityServer.setStartUpVaribles(settingsModel.getServerPort(),
+                settingsModel.getBrokerAddress(),settingsModel.getBrokerPort(),
+                settingsModel.getOptionsFilePath(), settingsModel.getExternalProgramPath());
+        
         thread = new Thread(activityServer);
+        
         thread.start();
+        
         mainGui.setEnableStopBtn(true);
     }
     
