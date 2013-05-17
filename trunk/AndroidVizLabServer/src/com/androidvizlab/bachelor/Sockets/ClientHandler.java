@@ -46,9 +46,11 @@ public class ClientHandler implements Runnable, Observer{
     
     //MQTT
     private MessagePublisher publisher = null;
+    private int brokerPort = 1883;
+    private String brokerAddress = "localhost";
     
     //AN EXTERNAL PROCESS TO BE EXECUTED
-    private ExternalProcessHandler eph = null;
+    private ExternalProcessHandler eph = null; //Handles the execution of the external program
     
     //READERS AND WRITERS(OPTIONSFILE & CALIBRATION FILES)
     private OptionsFileWriter optionsFileWriter = null;
@@ -56,10 +58,12 @@ public class ClientHandler implements Runnable, Observer{
     private CameraFileReader camFileReader = null;
     
     //FILE PATH AND FILENAMES
-    private static final String OPTIONS_FILE_PATH = 
+    private String optionsFilePath = 
             "src//com//androidvizlab//bachelor//calibrationandoptionsfile//options.txt";
     
-    private static final String CALIBRATION_FILE_PATH = "";
+    private String calibrationFilePath = "";
+    
+    private String externalPrgrmPath = ""; 
    
     /**
      * Constructor that accepts server socket connection
@@ -70,8 +74,6 @@ public class ClientHandler implements Runnable, Observer{
     {
         //FILE READERS
         camFileReader = new CameraFileReader();
-        
-        optionsFileReader = new OptionsFileReader(new File(OPTIONS_FILE_PATH));
         
         //SERVER SOCKET ACCEPT
         conSocket = socketAccept;
@@ -144,6 +146,8 @@ public class ClientHandler implements Runnable, Observer{
                     {
                         //Read optionfile, send the optionfile as VizlabInput
                      
+                        optionsFileReader = new OptionsFileReader(new File(optionsFilePath));
+                        
                         data = optionsFileReader.getData();
                         
                         System.out.println("Request received, sending options.txt file...");
@@ -191,7 +195,7 @@ public class ClientHandler implements Runnable, Observer{
                     
                     try 
                     {
-                        optionsFileWriter = new OptionsFileWriter(new File(OPTIONS_FILE_PATH),input);
+                        optionsFileWriter = new OptionsFileWriter(new File(optionsFilePath),input);
                         
                         optionsFileWriter.writeToFile();
                     } 
@@ -281,6 +285,7 @@ public class ClientHandler implements Runnable, Observer{
      */
     private void executeExternalProcess()
     {
+        eph.setExecutableFilePath(optionsFilePath);
         eph.runProcess();
     }
     
@@ -291,8 +296,14 @@ public class ClientHandler implements Runnable, Observer{
     public void publishToTopic()
     {
         publisher = new MessagePublisher();
+        
+        publisher.setBrokerName(brokerAddress);
+        publisher.setBrokerPortNr(brokerPort);
+        
         publisher.setupConnection(); //Connect to broker
-        publisher.publish("new_available_data", "New data available"); //Publish on topic
+        
+        publisher.publish(MessagePublisher.PUBLISH_TO_TOPIC, "New data available"); //Publish on topic
+        
         publisher.disconnect(); //disconnect when done
     }
 
@@ -331,5 +342,15 @@ public class ClientHandler implements Runnable, Observer{
     @Override
     public void update(DataChangeEvent<?> e) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    //*** GETTERS AND SETTERS ***//
+    public void setProcessingVariables(String optionsFilePath, 
+            String externalPrgrmPath, String brokerAddress, int brokerPort)
+    {
+        this.optionsFilePath = optionsFilePath;
+        this.externalPrgrmPath = externalPrgrmPath;
+        this.brokerAddress = brokerAddress;
+        this.brokerPort = brokerPort;
     }
 }

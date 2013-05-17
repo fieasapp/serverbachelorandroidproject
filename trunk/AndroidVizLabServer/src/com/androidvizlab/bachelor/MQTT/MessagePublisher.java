@@ -27,6 +27,8 @@ public class MessagePublisher implements MqttSimpleCallback, Runnable{
     
     private int[] qualityofservice = {0};
     
+    public static final String PUBLISH_TO_TOPIC = "new_available_data";
+    
     public MessagePublisher()
     {
         
