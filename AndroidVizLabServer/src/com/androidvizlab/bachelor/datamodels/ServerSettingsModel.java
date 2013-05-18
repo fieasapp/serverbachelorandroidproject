@@ -70,7 +70,7 @@ public class ServerSettingsModel extends SimpleObservable{
      */
     public void loadServerPreferences()
     {
-        HashMap<String,String> settings = fau.readFromFile();
+        HashMap<String,String> settings = fau.readFromFileKeysAndValues();
         
         if(settings != null && !settings.isEmpty())
         {
@@ -80,6 +80,8 @@ public class ServerSettingsModel extends SimpleObservable{
             setBrokerPort(NumberConverter.converToInt(settings.get(KEY_BROKER_PORT),1883));
             setUseLocalBrokerAddress(Boolean.valueOf(settings.get(KEY_LOCAL_BROKERADDRESS)));
             setUseLocalMachinename(Boolean.valueOf(settings.get(KEY_LOCAL_MACHINENAME)));
+            setOptionsFilePath((String)settings.get(KEY_OPTIONSFILE_PATH));
+            setExternalProgramPath((String)settings.get(KEY_EXTERNALPROGRAM_PATH));
         }
         else
         {
@@ -91,6 +93,8 @@ public class ServerSettingsModel extends SimpleObservable{
             setBrokerPort(brokerPort);
             setUseLocalBrokerAddress(false);
             setUseLocalMachinename(false);
+            setOptionsFilePath(optionsFilePath);
+            setExternalProgramPath(externalProgramPath);
         }
     }
     
@@ -105,7 +109,9 @@ public class ServerSettingsModel extends SimpleObservable{
                 KEY_BROKER_ADDRESS+":"+brokerAddress,
                 KEY_BROKER_PORT+":"+brokerPort,
                 KEY_LOCAL_BROKERADDRESS+":"+useLocalBrokerAddress,
-                KEY_LOCAL_MACHINENAME+":"+useLocalMachinename);
+                KEY_LOCAL_MACHINENAME+":"+useLocalMachinename,
+                KEY_OPTIONSFILE_PATH+":"+optionsFilePath,
+                KEY_EXTERNALPROGRAM_PATH+":"+externalProgramPath);
     }
     
     //*** LOAD PROPERTIES AND RESOURCE BUNDLES ***//

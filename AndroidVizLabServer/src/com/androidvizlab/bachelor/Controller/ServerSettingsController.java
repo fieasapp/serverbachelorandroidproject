@@ -198,6 +198,8 @@ Observer, ItemListener, HyperlinkListener{
             settingsModel.setBrokerAddress(mainGui.getSettingsForm().getBrokerAddressText());
             settingsModel.setBrokerPort(NumberConverter.converToInt(
                     mainGui.getSettingsForm().getBrokerPortText(), 1883));
+            settingsModel.setOptionsFilePath(mainGui.getSettingsForm().getOptionFilePath());
+            settingsModel.setExternalProgramPath(mainGui.getSettingsForm().getExternalProgramPath());
             //settingsModel.saveServerSettings(); 
             settingsModel.saveConfigurationSettings();
             mainGui.getSettingsForm().dispose();
@@ -354,7 +356,8 @@ Observer, ItemListener, HyperlinkListener{
                 
             case COMMAND_SERVER_SETTINGS:
                 mainGui.openSettingsDialog(settingsModel.getServerName(), settingsModel.getServerPort(),
-                        settingsModel.getBrokerAddress(), settingsModel.getBrokerPort());
+                        settingsModel.getBrokerAddress(), settingsModel.getBrokerPort(),
+                        settingsModel.getOptionsFilePath(),settingsModel.getExternalProgramPath());
                 break;
                 
             case COMMAND_HELP:

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.androidvizlab.bachelor.Gui;
 
 import java.awt.Frame;
@@ -23,6 +19,7 @@ public class FieldInfoDialog extends JDialog {
     
     public void displayInfo(String info)
     {
+        this.setTitle("Info");
         jTextPane2.setText(info);
     }
   

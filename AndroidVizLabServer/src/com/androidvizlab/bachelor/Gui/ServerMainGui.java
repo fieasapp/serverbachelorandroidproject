@@ -176,7 +176,8 @@ public class ServerMainGui extends javax.swing.JFrame {
      * Create and open the setting form dialog
      */
     public void openSettingsDialog(String serverName, int port,
-            String brokerAddress, int brokerPort)
+            String brokerAddress, int brokerPort,String optionsFilePath,
+            String externalProgramPath)
     {
         form = new SettingsDialog(this,true,actionListener,itemListener);
         form.setLocationRelativeTo(null);
@@ -184,6 +185,8 @@ public class ServerMainGui extends javax.swing.JFrame {
         form.setServerPortText(Integer.toString(port));
         form.setBrokerAddressText(brokerAddress);
         form.setBrokerPortText(Integer.toString(brokerPort));
+        form.setOptionFilePath(optionsFilePath);
+        form.setExternalProgramPath(externalProgramPath);
         form.addComponentListener(componentListener);
         form.pack();
         form.setVisible(true);
