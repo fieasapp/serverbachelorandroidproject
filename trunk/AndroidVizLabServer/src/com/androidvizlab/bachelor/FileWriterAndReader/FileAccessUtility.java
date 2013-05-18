@@ -4,9 +4,11 @@ package com.androidvizlab.bachelor.FileWriterAndReader;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,7 +104,7 @@ public class FileAccessUtility {
      * Method that reads from a text file
      * @return returns an HashMap of strings
      */
-    public HashMap<String,String> readFromFile()
+    public HashMap<String,String> readFromFileKeysAndValues()
     {
         HashMap<String,String> map = new HashMap<String,String>();
         
@@ -183,5 +185,41 @@ public class FileAccessUtility {
                 }
             }
         }
+    }
+    
+    public ArrayList<String> getDirectoriesFilePathList(String directoryPath, final String fileExtension)
+    {
+        File directory = new File(directoryPath);
+        
+        ArrayList<String> filePathList = null;
+        
+        if(directory.exists())
+        {
+            filePathList = new ArrayList<String>();
+            
+            if(directory.isDirectory())
+            {
+                //create a FileFilter and override its accept-method
+                FileFilter fileFilter = new FileFilter() {
+
+                    public boolean accept(File file) {
+                        //if the file extension is .txt return true, else false
+                        if (file.getName().endsWith(fileExtension)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                };
+               
+                File[] list = directory.listFiles(fileFilter);
+                
+                for(File  f: list)
+                {
+                    filePathList.add(f.getAbsolutePath());
+                    System.out.println(f.getAbsolutePath());
+                }
+            }
+        }
+        return filePathList;
     }
 }
