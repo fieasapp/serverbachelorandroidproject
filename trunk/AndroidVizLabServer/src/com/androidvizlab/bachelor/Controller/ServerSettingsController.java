@@ -134,6 +134,13 @@ Observer, ItemListener, HyperlinkListener{
         }
         else
         {
+            try
+            {
+                Integer.parseInt(mainGui.getSettingsForm().getServerPortText());
+            }catch(Exception e)
+            {
+                return false;
+            }
             mainGui.getSettingsForm().setError(-2);
         }
         
@@ -156,6 +163,13 @@ Observer, ItemListener, HyperlinkListener{
         }
         else
         {
+            try
+            {
+                Integer.parseInt(mainGui.getSettingsForm().getBrokerPortText());
+            }catch(Exception e)
+            {
+                return false;
+            }
             mainGui.getSettingsForm().setError(-4);
         }
         
