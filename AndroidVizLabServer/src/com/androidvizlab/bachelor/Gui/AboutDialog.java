@@ -4,6 +4,9 @@
  */
 package com.androidvizlab.bachelor.Gui;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
@@ -17,8 +20,23 @@ public class AboutDialog extends javax.swing.JDialog {
      */
     public AboutDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-         super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
+        setFrameIcon(); //set the icon shown on the top left side of the frame
         initComponents();
+    }
+    
+    /**
+     * Set the image icon on the window/frame
+     */
+    public void setFrameIcon()
+    {
+        URL imageURL = AboutDialog.class.getResource("/resources/images/frameicon.png");
+        Image img = Toolkit.getDefaultToolkit().getImage(imageURL);
+        
+        if(imageURL != null)
+        {
+            ImageIcon icon = new ImageIcon(img);
+            super.setIconImage(icon.getImage());//window icon
+        }
     }
 
     /**

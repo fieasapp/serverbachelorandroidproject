@@ -147,7 +147,8 @@ public class ServerSettingsModel extends SimpleObservable{
         
         try 
         {
-            config.load(new FileInputStream("src//resources//others//serverconfig.properties"));
+            //config.load(new FileInputStream("src//resources//others//serverconfig.properties"));
+            config.load(new FileInputStream("./serverpreferences/serverconfig.properties"));
             
             setServerName((String)config.getProperty(KEY_SERVER_NAME));
             setServerPort(NumberConverter.converToInt(config.getProperty(KEY_SERVER_PORT),1330));
@@ -194,7 +195,8 @@ public class ServerSettingsModel extends SimpleObservable{
             config.setProperty(KEY_OPTIONSFILE_PATH, optionsFilePath);
             config.setProperty(KEY_EXTERNALPROGRAM_PATH, externalProgramPath);
             
-            config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
+            //config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
+            config.store(new FileOutputStream("./serverpreferences/serverconfig.properties"),null);
         } 
         catch (IOException ex) 
         {

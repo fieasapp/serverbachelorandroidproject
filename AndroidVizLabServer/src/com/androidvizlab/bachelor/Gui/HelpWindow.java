@@ -1,5 +1,7 @@
 package com.androidvizlab.bachelor.Gui;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class HelpWindow extends javax.swing.JFrame {
      */
     public HelpWindow(String defaultURL) 
     {
-        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage()); //window icon
+        setFrameIcon(); //set the icon shown on the top left side of the frame
 
         this.defaultURL = defaultURL; //URL of the html to be displayed
 
@@ -63,7 +65,7 @@ public class HelpWindow extends javax.swing.JFrame {
      */
     public HelpWindow(File file) 
     {
-        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage()); //window icon
+        setFrameIcon(); //set the icon shown on the top left side of the frame
          
         this.initComponents(); //initialises various components
 
@@ -96,6 +98,21 @@ public class HelpWindow extends javax.swing.JFrame {
     public void viePage(URL link) throws IOException
     {
         this.mainEditorPane.setPage(link);
+    }
+    
+    /**
+     * Set the image icon on the window/frame
+     */
+    public void setFrameIcon()
+    {
+        URL imageURL = HelpWindow.class.getResource("/resources/images/frameicon.png");
+        Image img = Toolkit.getDefaultToolkit().getImage(imageURL);
+        
+        if(imageURL != null)
+        {
+            ImageIcon icon = new ImageIcon(img);
+            super.setIconImage(icon.getImage());//window icon
+        }
     }
     
     //GETTERS AND SETTERS

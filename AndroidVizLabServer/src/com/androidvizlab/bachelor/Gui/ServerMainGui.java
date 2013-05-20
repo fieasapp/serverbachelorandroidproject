@@ -6,10 +6,18 @@ import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
 import com.androidvizlab.bachelor.utilities.CustomFileFilter;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.event.HyperlinkListener;
 
@@ -47,16 +55,31 @@ public class ServerMainGui extends javax.swing.JFrame {
     public ServerMainGui(ActionListener actionListener,ItemListener itemListener,
             ComponentListener componentListener,HyperlinkListener linkListener)
     {
-        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());//window icon
+        setFrameIcon(); //set the icon shown on the top left side of the frame
         
         this.actionListener = actionListener;
         this.itemListener = itemListener;
         this.componentListener = componentListener;
         this.linkListener = linkListener;
-        
+
         initComponents();
         setActionListener();
         this.setLocationRelativeTo(null);
+    }
+    
+    /**
+     * Set the image icon on the window/frame
+     */
+    public void setFrameIcon()
+    {
+        URL imageURL = ServerMainGui.class.getResource("/resources/images/frameicon.png");
+        Image img = Toolkit.getDefaultToolkit().getImage(imageURL);
+        
+        if(imageURL != null)
+        {
+            ImageIcon icon = new ImageIcon(img);
+            super.setIconImage(icon.getImage());//window icon
+        }
     }
     
     //*** SET TEXT TO TEXT FIELD ***//
@@ -552,7 +575,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         final ServerMainGui gui = new ServerMainGui(controller,controller,
                 controller,controller);
         gui.setComponentListener(controller); //Set Listener
-        gui.setDefaultURLOrFilePath("src\\resources\\helppages\\english\\index.html"); //default URL for the help pages(local html files)
+        gui.setDefaultURLOrFilePath("src//resources//helppages//english//index.html"); //default URL for the help pages(local html files)
         
         //** Model (Observable)**//
         ServerSettingsModel model = new ServerSettingsModel();
