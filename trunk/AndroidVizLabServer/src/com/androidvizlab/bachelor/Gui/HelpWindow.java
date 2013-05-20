@@ -1,27 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.androidvizlab.bachelor.Gui;
 
-import com.androidvizlab.bachelor.Controller.ServerSettingsController;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
-import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.html.HTMLEditorKit;
 
 /**
  *
@@ -126,11 +110,6 @@ public class HelpWindow extends javax.swing.JFrame {
     public void setActionListeners(ActionListener actionListener)
     {
         this.actionListener = actionListener;
-        
-        btnForward.addActionListener(actionListener);
-        btnForward.setActionCommand(ServerSettingsController.COMMAND_NEXTPAGE);
-        btnBack.addActionListener(actionListener);
-        btnBack.setActionCommand(ServerSettingsController.COMMAND_PREVIOUSPAGE);
     }
     
     public void setHyperLinkListener(HyperlinkListener linkListener)
@@ -150,8 +129,6 @@ public class HelpWindow extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         mainEditorPane = new javax.swing.JEditorPane();
-        btnBack = new javax.swing.JButton();
-        btnForward = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resources/others/LabelsAndButtonTextBundle"); // NOI18N
@@ -165,41 +142,20 @@ public class HelpWindow extends javax.swing.JFrame {
         mainEditorPane.setPreferredSize(new java.awt.Dimension(475, 690));
         jScrollPane1.setViewportView(mainEditorPane);
 
-        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowback.png"))); // NOI18N
-        btnBack.setContentAreaFilled(false);
-        btnBack.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowbackfocused.png"))); // NOI18N
-        btnBack.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowbackfocused.png"))); // NOI18N
-
-        btnForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrow.png"))); // NOI18N
-        btnForward.setContentAreaFilled(false);
-        btnForward.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
-        btnForward.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/arrowfocused.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnForward, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnForward, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -207,8 +163,6 @@ public class HelpWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnForward;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JEditorPane mainEditorPane;
     // End of variables declaration//GEN-END:variables

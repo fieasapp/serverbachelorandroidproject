@@ -552,7 +552,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         final ServerMainGui gui = new ServerMainGui(controller,controller,
                 controller,controller);
         gui.setComponentListener(controller); //Set Listener
-        gui.setDefaultURLOrFilePath("E:\\Interconnect\\My Documents\\NetBeansProjects\\Bachelor\\trunk\\AndroidVizLabServer\\src\\resources\\helppages\\index.html"); //default URL for the help pages(local html files)
+        gui.setDefaultURLOrFilePath("src\\resources\\helppages\\english\\index.html"); //default URL for the help pages(local html files)
         
         //** Model (Observable)**//
         ServerSettingsModel model = new ServerSettingsModel();
