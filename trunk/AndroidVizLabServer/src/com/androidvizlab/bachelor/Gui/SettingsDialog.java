@@ -2,8 +2,11 @@ package com.androidvizlab.bachelor.Gui;
 
 import com.androidvizlab.bachelor.Controller.ServerSettingsController;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 
@@ -23,7 +26,8 @@ public class SettingsDialog extends javax.swing.JDialog {
     public SettingsDialog(Frame parent, boolean modal, 
             ActionListener actionListener, ItemListener itemListener) {
         super(parent, modal);
-        super.setIconImage(new ImageIcon("src/resources/images/frameicon.png").getImage());
+        
+        setFrameIcon(); //set the icon shown on the top left side of the frame
         
         this.actionListener = actionListener;
         this.itemListener = itemListener;
@@ -34,6 +38,21 @@ public class SettingsDialog extends javax.swing.JDialog {
         initComponents();
         setActionListener();
         setAllErrorLabelsInvisibility(); //make the error label invisible when the window loads.
+    }
+    
+    /**
+     * Set the image icon on the window/frame
+     */
+    public void setFrameIcon()
+    {
+        URL imageURL = SettingsDialog.class.getResource("/resources/images/frameicon.png");
+        Image img = Toolkit.getDefaultToolkit().getImage(imageURL);
+        
+        if(imageURL != null)
+        {
+            ImageIcon icon = new ImageIcon(img);
+            super.setIconImage(icon.getImage());//window icon
+        }
     }
     
     /**
