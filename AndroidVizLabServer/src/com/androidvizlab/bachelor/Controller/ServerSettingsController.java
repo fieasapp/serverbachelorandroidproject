@@ -56,8 +56,6 @@ Observer, ItemListener, HyperlinkListener{
     public static final String COMMAND_CHOOSE_OPT_FILEPATH = "cOptFilePath";
     public static final String COMMAND_CHOOSE_CAL_FILEPATH = "cCalFilePath";
     public static final String COMMAND_CHOOSE_EXTPRG_PATH = "cExtPrgPath";
-    public static final String COMMAND_NEXTPAGE = "NEXTPAGE";
-    public static final String COMMAND_PREVIOUSPAGE = "PREVPAGE";
     public static final String COMMAND_INFO_SERVERNAME = "infoServerName";
     public static final String COMMAND_INFO_SERVERPORT = "infoServerPort";
     public static final String COMMAND_INFO_MQTTBROKER = "infoMqttBrokerAddress";
