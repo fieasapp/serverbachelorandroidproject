@@ -3,6 +3,7 @@ package com.androidvizlab.bachelor.utilities;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+import runtimetest.ExternalProcessHandler;
 
 /**
  *
@@ -141,4 +142,17 @@ public class CustomFileFilter extends FileFilter{
     public void setStartingDirectory(String startingDirectory) {
         this.startingDirectory = startingDirectory;
     }
+    
+    /*
+    public static void main(String args[])
+    {
+       CustomFileFilter filter = new CustomFileFilter();
+       filter.setDescription(CustomFileFilter.FILE_EXTENSION_EXE);
+       filter.setFileFormat(FILE_EXTENSION_EXE);
+       filter.setStartingDirectory("E:\\Interconnect\\My Documents\\eclipse\\");
+       ExternalProcessHandler exp = new ExternalProcessHandler();
+       String path = filter.getFilePath();
+       exp.setExecutableFilePath(path);
+       exp.runProcess();
+    }*/
 }
