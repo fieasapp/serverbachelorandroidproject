@@ -2,6 +2,7 @@ package com.androidvizlab.bachelor.Sockets;
 
 import com.androidvizlab.bachelor.Enums.SocketMessage;
 import com.androidvizlab.bachelor.FileWriterAndReader.CameraFileReader;
+import com.androidvizlab.bachelor.FileWriterAndReader.FileAccessUtility;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileReader;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileWriter;
 import com.androidvizlab.bachelor.Interface.DataChangeEvent;
@@ -9,6 +10,7 @@ import com.androidvizlab.bachelor.Interface.Observer;
 import com.androidvizlab.bachelor.MQTT.MessagePublisher;
 import com.androidvizlab.bachelor.datamodels.VizlabInputData;
 import com.androidvizlab.bachelor.datamodels.VizlabOutputData;
+import com.androidvizlab.bachelor.utilities.CustomFileFilter;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -165,11 +167,17 @@ public class ClientHandler implements Runnable, Observer{
                         System.out.println("Fetching calibration results...");
                         
                         //READ FROM FILES
-                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob.dat"));
+                        /*camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob.dat"));
                         
                         camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob2.dat"));
                         
-                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob3.dat"));
+                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob3.dat"));*/
+                        
+                        FileAccessUtility fau = new FileAccessUtility();
+                        
+                        File summary = fau.getCalibrationSummaryFile(calibrationFilePath, CustomFileFilter.FILE_EXTENSION_DAT);
+                        
+                        camFileReader.realCalibrationSummaryFile(summary);
                         
                         //SEND as VizlabOutputData object
                         output = new VizlabOutputData();
