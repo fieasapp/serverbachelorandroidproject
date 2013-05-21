@@ -161,18 +161,11 @@ public class ClientHandler implements Runnable, Observer{
                     else if(msg == SocketMessage.GET_RESULT_DATA) //Get the result of the calibration
                     {
                         //Sends the camera group and camera as Vizlab output (CameraGroup & Camera class)
-                        
-                        //camFileReader.realCalibrationSummaryFile(new File("src//com.androidvizlab.bachelor.calibrationandoptionsfile//calibration_summary.dat"));
-                        
+                    
                         System.out.println("Fetching calibration results...");
                         
                         //READ FROM FILES
-                        /*camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob.dat"));
-                        
-                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob2.dat"));
-                        
-                        camFileReader.readCalibrationCombFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob3.dat"));*/
-                        
+                                
                         FileAccessUtility fau = new FileAccessUtility();
                         
                         File summary = fau.getLatestCalibrationSummaryFile(calibrationFilePath, CustomFileFilter.FILE_EXTENSION_DAT);
@@ -293,7 +286,7 @@ public class ClientHandler implements Runnable, Observer{
      */
     private void executeExternalProcess()
     {
-        eph.setExecutableFilePath(optionsFilePath);
+        eph.setExecutableFilePath(externalPrgrmPath);
         eph.runProcess();
     }
     
