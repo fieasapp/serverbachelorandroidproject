@@ -223,7 +223,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         
         //File file = new File(defaultURLorFilePath);
         //helpWindow = new HelpWindow(file);
-        URL url = ServerMainGui.class.getResource("./helppages/general.html");
+        URL url = ServerMainGui.class.getResource(defaultURLorFilePath);
         
         if(url == null)
         {

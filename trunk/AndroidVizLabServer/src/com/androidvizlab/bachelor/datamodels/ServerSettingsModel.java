@@ -3,6 +3,7 @@ package com.androidvizlab.bachelor.datamodels;
 import com.androidvizlab.bachelor.FileWriterAndReader.FileAccessUtility;
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import com.androidvizlab.bachelor.utilities.NumberConverter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -147,8 +148,8 @@ public class ServerSettingsModel extends SimpleObservable{
         
         try 
         {
-            //config.load(new FileInputStream("src//resources//others//serverconfig.properties"));
-            config.load(new FileInputStream("./serverpreferences/serverconfig.properties"));
+            config.load(new FileInputStream("src//resources//others//serverconfig.properties"));
+            //config.load(new FileInputStream("./serverpreferences/serverconfig.properties"));
             
             setServerName((String)config.getProperty(KEY_SERVER_NAME));
             setServerPort(NumberConverter.converToInt(config.getProperty(KEY_SERVER_PORT),1330));
@@ -195,8 +196,26 @@ public class ServerSettingsModel extends SimpleObservable{
             config.setProperty(KEY_OPTIONSFILE_PATH, optionsFilePath);
             config.setProperty(KEY_EXTERNALPROGRAM_PATH, externalProgramPath);
             
-            //config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
-            config.store(new FileOutputStream("./serverpreferences/serverconfig.properties"),null);
+            config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
+            //config.store(new FileOutputStream("./serverpreferences/serverconfig.properties"),null);
+            
+            /*File dir = new File("./serverpreferences");
+            
+            if(!dir.exists())
+            {
+                if(dir.mkdir())
+                {
+                    config.store(new FileOutputStream("./serverpreferences/serverconfig.properties"),null);
+                }
+                else
+                {
+                    config.store(new FileOutputStream("./serverconfig.properties"),null);
+                }
+            }
+            else
+            {
+                config.store(new FileOutputStream("./serverconfig.properties"),null);
+            }*/
         } 
         catch (IOException ex) 
         {
