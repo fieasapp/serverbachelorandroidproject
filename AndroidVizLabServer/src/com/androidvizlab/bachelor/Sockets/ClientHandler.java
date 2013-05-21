@@ -175,7 +175,7 @@ public class ClientHandler implements Runnable, Observer{
                         
                         FileAccessUtility fau = new FileAccessUtility();
                         
-                        File summary = fau.getCalibrationSummaryFile(calibrationFilePath, CustomFileFilter.FILE_EXTENSION_DAT);
+                        File summary = fau.getLatestCalibrationSummaryFile(calibrationFilePath, CustomFileFilter.FILE_EXTENSION_DAT);
                         
                         camFileReader.realCalibrationSummaryFile(summary);
                         
