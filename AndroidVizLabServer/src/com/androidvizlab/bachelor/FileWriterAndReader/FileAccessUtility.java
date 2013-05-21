@@ -1,6 +1,7 @@
 package com.androidvizlab.bachelor.FileWriterAndReader;
 
 
+import com.androidvizlab.bachelor.utilities.CustomFileFilter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,6 +10,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -221,5 +224,59 @@ public class FileAccessUtility {
             }
         }
         return filePathList;
+    }
+    
+    public File getCalibrationSummaryFile(String filepath,final String fileExtension)
+    {
+        File dir = new File(filepath);
+        
+        File summary = null;
+        
+        if(dir.exists())
+        {
+            if(dir.isDirectory())
+            {
+                //create a FileFilter and override its accept-method
+                FileFilter fileFilter = new FileFilter() {
+
+                    public boolean accept(File file) {
+                        //if the file extension is .txt return true, else false
+                        if (file.getName().endsWith(fileExtension)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                };
+                
+                Date today = new Date();
+
+                Calendar calendar = Calendar.getInstance();
+                
+                today = calendar.getTime();
+                
+                long minLastMod = calendar.getTime().getTime();
+                
+                File[] list = dir.listFiles(fileFilter);
+                
+                for(File f : list)
+                {
+                    if(f.getName().contains("calibration_summary") && 
+                            new Date(f.lastModified()).getDate() == today.getDate())
+                    {
+                        summary = f;
+                    }
+                }
+            }
+        }
+        return summary;
+    }
+    
+    public static void main(String args[])
+    {
+        FileAccessUtility fau = new FileAccessUtility();
+        
+        File f = fau.getCalibrationSummaryFile("src//com//androidvizlab//bachelor//calibrationandoptionsfile", CustomFileFilter.FILE_EXTENSION_DAT);
+        
+        System.out.print(f.getName());
     }
 }
