@@ -33,11 +33,9 @@ public class HelpWindow extends javax.swing.JFrame {
      * 
      * @param defaultURL the URL of the index page 
      */
-    public HelpWindow(String defaultURL) 
+    public HelpWindow(URL url) 
     {
         setFrameIcon(); //set the icon shown on the top left side of the frame
-
-        this.defaultURL = defaultURL; //URL of the html to be displayed
 
         this.initComponents(); //initialises various components
 
@@ -46,9 +44,8 @@ public class HelpWindow extends javax.swing.JFrame {
          */
         try 
         {
-            currentPage = new URL(defaultURL);
+            currentPage = url;
             this.mainEditorPane.setContentType("txt/html");
-            //this.mainEditorPane.setText(defaultURL);
             this.mainEditorPane.setPage(currentPage);
         } 
         catch (IOException ex) 

@@ -1,6 +1,5 @@
 package com.androidvizlab.bachelor.Gui;
 
-
 import com.androidvizlab.bachelor.Controller.ServerSettingsController;
 import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
@@ -11,13 +10,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentListener;
 import java.awt.event.ItemListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.event.HyperlinkListener;
 
@@ -224,9 +221,32 @@ public class ServerMainGui extends javax.swing.JFrame {
     {
         //helpWindow = new HelpWindow(defaultURLorFilePath);
         
-        File file = new File(defaultURLorFilePath);
+        //File file = new File(defaultURLorFilePath);
+        //helpWindow = new HelpWindow(file);
+        URL url = ServerMainGui.class.getResource("./helppages/general.html");
         
-        helpWindow = new HelpWindow(file);
+        if(url == null)
+        {
+            url = ServerMainGui.class.getResource(defaultURLorFilePath);
+        }
+        else
+        {
+            try 
+            {
+                File dir = new File(url.toURI());
+                
+                if(!dir.exists())
+                {
+                   url = ServerMainGui.class.getResource(defaultURLorFilePath);
+                }
+            } 
+            catch (URISyntaxException ex) 
+            {
+                url = ServerMainGui.class.getResource(defaultURLorFilePath);
+            }
+        }
+         
+        helpWindow = new HelpWindow(url);
         
         helpWindow.setHyperLinkListener(linkListener);
         helpWindow.setActionListeners(actionListener);
@@ -575,7 +595,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         final ServerMainGui gui = new ServerMainGui(controller,controller,
                 controller,controller);
         gui.setComponentListener(controller); //Set Listener
-        gui.setDefaultURLOrFilePath("src//resources//helppages//english//index.html"); //default URL for the help pages(local html files)
+        gui.setDefaultURLOrFilePath("/resources/helppages/english/index.html"); //default URL for the help pages(local html files)
         
         //** Model (Observable)**//
         ServerSettingsModel model = new ServerSettingsModel();
