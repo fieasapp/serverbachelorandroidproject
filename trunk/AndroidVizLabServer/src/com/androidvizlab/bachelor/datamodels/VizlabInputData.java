@@ -39,6 +39,9 @@ public class VizlabInputData implements Serializable {
     private String helpFileOutputConnectPoints = "T";
     private String helpFileOutputTimeseries = "T";
     private double approxFrameMarkerLimit = 1000;
+    
+    //Production only
+    private String selectedTripCamGrps = "";
 
     //GETTERS AND SETTERS
 
@@ -242,11 +245,19 @@ public class VizlabInputData implements Serializable {
     
 
     public int getOffsetPix() {
-            return offsetPix;
+        return offsetPix;
     }
 
     public void setOffsetPix(int offsetPix) {
-            this.offsetPix = offsetPix;
+        this.offsetPix = offsetPix;
+    }
+    
+    public String getSelectedTripCamGrps() {
+        return selectedTripCamGrps;
+    }
+
+    public void setSelectedTripCamGrps(String selectedTripCamGrps) {
+        this.selectedTripCamGrps = selectedTripCamGrps;
     }
 
     @Override
