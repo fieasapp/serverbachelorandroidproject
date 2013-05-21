@@ -3,7 +3,7 @@ C:/CalPoint_des2012/calibration_2013012208_5420/calibration_comb_0_1_2.dat
 
 S0 = 0.0677. Mean: 0.45, max: 0.58
 
-Camno 0. Serial no. 34900252
+Camno 9. Serial no. 34900252
   XO: -1543.06        Y0: -222.92         Z0: 1861.89       
   AL: -0.952571       BE: 0.148936        KA: -1.46469      
 
@@ -14,7 +14,7 @@ Camno 0. Serial no. 34900252
   F3: 1.31e-022      F3 std.dev.: 0               P1: 1.23e-006      P1 std.dev.: 5.35e-006     
   P2: 1.95e-006      P2 std.dev.: 5.32e-006       RO: 0             
 
-Camno 4. Serial no. 50800042
+Camno 10. Serial no. 50800042
   XO: -803.75         Y0: -1589.54        Z0: 1868.71       
   AL: -0.589559       BE: 0.746746        KA: -0.867116     
 
@@ -25,7 +25,7 @@ Camno 4. Serial no. 50800042
   F3: -3.21e-023     F3 std.dev.: 0               P1: 2.72e-006      P1 std.dev.: 5.58e-006     
   P2: 3.34e-006      P2 std.dev.: 3.74e-006       RO: 0             
 
-Camno 8. Serial no. 50800016
+Camno 11. Serial no. 50800016
   XO: 1228.19         Y0: -1388.93        Z0: 1861.34       
   AL: 0.497364        BE: 0.762289        KA: 0.61989       
 

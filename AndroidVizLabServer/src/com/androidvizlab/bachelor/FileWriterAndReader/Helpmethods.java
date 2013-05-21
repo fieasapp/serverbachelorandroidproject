@@ -1,5 +1,7 @@
 package com.androidvizlab.bachelor.FileWriterAndReader;
 
+import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.formatSentence;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +59,22 @@ public class Helpmethods implements Serializable {
 		return ret;
 	}
 	
-/*	public static boolean findMatch(String line, String match){
-		String[] lineTab = line.split(" ");
-		String[] matchTab = match.split(" ");
-		
-		for(int i = 0; i< matchTab.length; i++){
-			
+	/**
+	 * @param word
+	 *            A string that gets compared to the string of every index of
+	 *            the list.
+	 * @return An ArrayList containing all the indices of the input string.
+	 */
+	public static ArrayList<Integer> findIndices(String word, ArrayList<String> list) {
+		ArrayList<Integer> al = new ArrayList<Integer>();
+		for (int i = 0; i < list.size(); i++) {
+			if (formatSentence(list.get(i), 1, 0)
+					.equals(word)) {
+				al.add(i);
+			}
 		}
-	}*/
+		return al;
+	}
 	
 
 

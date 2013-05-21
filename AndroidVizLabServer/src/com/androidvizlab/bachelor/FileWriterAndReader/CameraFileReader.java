@@ -2,8 +2,11 @@ package com.androidvizlab.bachelor.FileWriterAndReader;
 
 import com.androidvizlab.bachelor.datamodels.Camera;
 import com.androidvizlab.bachelor.datamodels.CameraGroup;
+import com.androidvizlab.bachelor.datamodels.UniqueCamGroups;
+
 import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.formatSentence;
 import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.removeChars;
+import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.findIndices;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,11 +25,11 @@ public class CameraFileReader {
 	 * 
 	 */
 
-	private ArrayList<String> allLinesCameraGroupFile;
+	private ArrayList<String> allLinesCalibSummary;
 	private ArrayList<String> allLinesCameraCombinationsFile;
 	private ArrayList<Camera> cameras;
-	private ArrayList<String> cameraGroupInfoLines;
-	private ArrayList<String> cameraCombinations;
+	private ArrayList<String> sortedTableFromSummary;
+	private ArrayList<String> camGrpNames;
 	private ArrayList<Double> s0;
 	private ArrayList<Double> mean;
 	private ArrayList<Double> max;
@@ -38,8 +41,8 @@ public class CameraFileReader {
 	public CameraFileReader() {
 		allLinesCameraCombinationsFile = new ArrayList<String>();
 		cameras = new ArrayList<Camera>();
-		allLinesCameraGroupFile = new ArrayList<String>();
-		cameraCombinations = new ArrayList<String>();
+		allLinesCalibSummary = new ArrayList<String>();
+		camGrpNames = new ArrayList<String>();
 		s0 = new ArrayList<Double>();
 		mean = new ArrayList<Double>();
 		max = new ArrayList<Double>();
@@ -74,7 +77,7 @@ public class CameraFileReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		cameraGroups.add(addCameraGroup());
+		//cameraGroups.add(addCameraGroup());
 
 	}
 
@@ -92,7 +95,7 @@ public class CameraFileReader {
 		try {
 			while ((line = in.readLine()) != null) {
 
-				allLinesCameraGroupFile.add(line);
+				allLinesCalibSummary.add(line);
 
 			}
 		} catch (IOException e) {
@@ -107,39 +110,40 @@ public class CameraFileReader {
 			e.printStackTrace();
 		}
 
-		cameraGroupInfoLines = formatLineArray('=', allLinesCameraGroupFile, 0); // takes
-																					// all
-																					// relevant
-																					// lines
-																					// from
-																					// the
-																					// allLines
-																					// array
-																					// and
-																					// puts
-																					// them
-																					// in
-																					// the
-																					// cameraGroupInfoLines
-																					// array
-
-		// Adds all the separate info from the cameraGroupInfoLines array into
-		// their own respective array
+		sortedTableFromSummary = formatLineArray('=', allLinesCalibSummary, 0);
 		addAllCameraComps();
 		addAllS0();
 		addAllMeans();
 		addAllMax();
 		addAllNoOfFramesUsed();
+		makeCameraObjects();
+
+	}
+
+	private void makeCameraObjects() {
+		for (int i = 0; i < camGrpNames.size(); i++) {
+			cameraGroups.add(new CameraGroup(camGrpNames.get(i), mean.get(i),
+					max.get(i), s0.get(i), noOfFramesUsed.get(i), getCams(i)));
+		}
+	}
+
+	public ArrayList<Camera> getCams(int i) {
+		ArrayList<String> temp = new ArrayList<>();
+		temp = formatLineArray('=', allLinesCalibSummary, i+1);
+		return addCamera(findIndices("Camno", temp), temp);
 	}
 
 	/**
 	 * Adds the first word of every line in the cameraGroupInfoLines array to
 	 * the cameraCombinations array.
 	 */
-	public void addAllCameraComps() {
-		for (int i = 0; i < cameraGroupInfoLines.size(); i++) {
-			cameraCombinations.add(Helpmethods.formatSentence(
-					cameraGroupInfoLines.get(i), 1, 0).replaceAll(":", ""));
+	private void addAllCameraComps() {
+		String line = "";
+		for (int i = 0; i < sortedTableFromSummary.size(); i++) {
+			line = sortedTableFromSummary.get(i);
+			line.replaceAll("_", " ");
+			line.replaceAll(":", "");
+			camGrpNames.add(formatSentence(line, 1, 0));
 		}
 	}
 
@@ -147,11 +151,11 @@ public class CameraFileReader {
 	 * Adds the second word of every line in the cameraGroupInfoLines array to
 	 * the s0 array.
 	 */
-	public void addAllS0() {
+	private void addAllS0() {
 		double value = 0.0;
 		String t = "";
-		for (int i = 0; i < cameraGroupInfoLines.size(); i++) {
-			t = Helpmethods.formatSentence(cameraGroupInfoLines.get(i), 1, 1)
+		for (int i = 0; i < sortedTableFromSummary.size(); i++) {
+			t = Helpmethods.formatSentence(sortedTableFromSummary.get(i), 1, 1)
 					.trim();
 			if (t.length() > 0) {
 				value = Double.parseDouble(t.substring(0, t.length() - 1));
@@ -164,11 +168,11 @@ public class CameraFileReader {
 	 * Adds the 4th word of every line in the cameraGroupInfoLines array to the
 	 * mean array.
 	 */
-	public void addAllMeans() {
+	private void addAllMeans() {
 		double value = 0.0;
-		for (int i = 0; i < cameraGroupInfoLines.size(); i++) {
+		for (int i = 0; i < sortedTableFromSummary.size(); i++) {
 			value = Double.parseDouble(Helpmethods.formatSentence(
-					cameraGroupInfoLines.get(i), 1, 3).replaceAll(",", ""));
+					sortedTableFromSummary.get(i), 1, 3).replaceAll(",", ""));
 			mean.add(new Double(value));
 		}
 	}
@@ -177,11 +181,11 @@ public class CameraFileReader {
 	 * Adds the 6th word of every line in the cameraGroupInfoLines array to the
 	 * max array.
 	 */
-	public void addAllMax() {
+	private void addAllMax() {
 		double value = 0.0;
 		String t = "";
-		for (int i = 0; i < cameraGroupInfoLines.size(); i++) {
-			t = Helpmethods.formatSentence(cameraGroupInfoLines.get(i), 1, 5)
+		for (int i = 0; i < sortedTableFromSummary.size(); i++) {
+			t = Helpmethods.formatSentence(sortedTableFromSummary.get(i), 1, 5)
 					.trim();
 			if (t.length() > 0) {
 				value = Double.parseDouble(t.substring(0, t.length() - 1));
@@ -194,11 +198,11 @@ public class CameraFileReader {
 	 * Adds the 11th word of every line in the cameraGroupInfoLines array to the
 	 * noOfFramesUsed array
 	 */
-	public void addAllNoOfFramesUsed() {
+	private void addAllNoOfFramesUsed() {
 		int value = 0;
-		for (int i = 0; i < cameraGroupInfoLines.size(); i++) {
+		for (int i = 0; i < sortedTableFromSummary.size(); i++) {
 			value = Integer.parseInt(Helpmethods.formatSentence(
-					cameraGroupInfoLines.get(i), 1, 10));
+					sortedTableFromSummary.get(i), 1, 10));
 			noOfFramesUsed.add(new Integer(value));
 		}
 	}
@@ -206,7 +210,7 @@ public class CameraFileReader {
 	/**
 	 * This method removes all lines before the first and after the second
 	 * occurrence of the specified character in the inputArray and returns it as
-	 * a new array. (not deep copy)
+	 * a new array.
 	 * 
 	 * 
 	 */
@@ -223,7 +227,7 @@ public class CameraFileReader {
 		String line;
 		for (int i = 0; i < array.size(); i++) {
 			line = array.get(i);
-			if (!line.equals(" ")) {
+			if (!line.isEmpty()){
 				c = line.charAt(0);
 				if (c == ch) {
 					occurances++;
@@ -249,13 +253,14 @@ public class CameraFileReader {
 	}
 
 	public void printFile() {
-		for (String s : allLinesCameraGroupFile) {
+		for (String s : allLinesCalibSummary) {
 			System.out.println(s);
 		}
 	}
 
 	// Fra calib_cobFiler
-	public CameraGroup addCameraGroup() {
+
+/*	public CameraGroup addCameraGroup() {
 		double s0 = 0.0;
 		double mean = 0.0;
 		double max = 0.0;
@@ -274,9 +279,9 @@ public class CameraFileReader {
 		CameraGroup c = new CameraGroup(mean, max, s0, addAllCameras());
 		allLinesCameraCombinationsFile.clear();
 		return c;
-	}
+	}*/
 
-	public ArrayList<Camera> addAllCameras() {
+/*	public ArrayList<Camera> addAllCameras() {
 		ArrayList<Camera> cams = new ArrayList<Camera>();
 		ArrayList<Integer> indexes = findIndices("Camno");
 		for (int i = 0; i < indexes.size(); i++) {
@@ -285,7 +290,7 @@ public class CameraFileReader {
 		// Collections.sort(cameras);
 		Collections.sort(cams);
 		return cams;
-	}
+	}*/
 
 	/**
 	 * This method iterates through the allLinesCameraCombinationsFile list,
@@ -296,7 +301,7 @@ public class CameraFileReader {
 	 * @param start
 	 *            The index of the list it will start the iteration.
 	 */
-	private Camera addCamera(int start) {
+	private ArrayList<Camera> addCamera(ArrayList<Integer> indices, ArrayList<String> text) {
 		int camNo = 0;
 		double c = 0.0;
 		double xh = 0.0;
@@ -306,72 +311,48 @@ public class CameraFileReader {
 		float f2 = 0;
 		float p1 = 0;
 		float p2 = 0;
+		ArrayList<Camera> camList = new ArrayList<>();
 		String line = "";
-
-		for (int i = start; i < start + 10; i++) {
-			line = allLinesCameraCombinationsFile.get(i);
-			if (Helpmethods.formatSentence(line, 1, 0).equals("Camno")) {
-				String temp = Helpmethods.formatSentence(line, 1, 1);
-				if (temp.length() > 0) {
-					camNo = Integer.parseInt(temp.substring(0,
-							temp.length() - 1));
+		for (int j = 0; j < indices.size(); j++) {
+			for (int i = indices.get(j); i < indices.get(j) + 10; i++) {
+				line = text.get(i);
+				if (formatSentence(line, 1, 0).equals("Camno")) {
+					String temp = formatSentence(line, 1, 1);
+					if (temp.length() > 0) {
+						camNo = Integer.parseInt(temp.substring(0,
+								temp.length() - 1));
+					}
 				}
-			}
-			if (Helpmethods.formatSentence(line, 1, 0).equals("C:")) {
-				c = Double.parseDouble(Helpmethods.formatSentence(line, 1, 1));
-				xh = Double.parseDouble(Helpmethods.formatSentence(line, 1, 6));
-			}
+				if (formatSentence(line, 1, 0).equals("C:")) {
+					c = Double.parseDouble(formatSentence(line, 1, 1));
+					xh = Double.parseDouble(formatSentence(line, 1, 6));
+				}
 
-			if (Helpmethods.formatSentence(line, 1, 0).equals("YH:")) {
-				yh = Double.parseDouble(Helpmethods.formatSentence(line, 1, 1));
-			}
+				if (formatSentence(line, 1, 0).equals("YH:")) {
+					yh = Double.parseDouble(formatSentence(line, 1, 1));
+				}
 
-			if (Helpmethods.formatSentence(line, 1, 0).equals("ORT:")) {
-				ort = Double
-						.parseDouble(Helpmethods.formatSentence(line, 1, 1));
-			}
+				if (formatSentence(line, 1, 0).equals("ORT:")) {
+					ort = Double.parseDouble(formatSentence(line, 1, 1));
+				}
 
-			if (Helpmethods.formatSentence(line, 1, 0).equals("F1:")) {
-				f1 = Float.parseFloat(Helpmethods.formatSentence(line, 1, 1));
-				f2 = Float.parseFloat(Helpmethods.formatSentence(line, 1, 6));
-			}
+				if (formatSentence(line, 1, 0).equals("F1:")) {
+					f1 = Float.parseFloat(formatSentence(line, 1, 1));
+					f2 = Float.parseFloat(formatSentence(line, 1, 6));
+				}
 
-			if (Helpmethods.formatSentence(line, 1, 0).equals("F3:")) {
-				p1 = Float.parseFloat(Helpmethods.formatSentence(line, 1, 6));
-			}
+				if (formatSentence(line, 1, 0).equals("F3:")) {
+					p1 = Float.parseFloat(formatSentence(line, 1, 6));
+				}
 
-			if (Helpmethods.formatSentence(line, 1, 0).equals("P2:")) {
-				p2 = Float.parseFloat(Helpmethods.formatSentence(line, 1, 1));
-			}
+				if (formatSentence(line, 1, 0).equals("P2:")) {
+					p2 = Float.parseFloat(formatSentence(line, 1, 1));
+				}
 
+			}
+			camList.add(new Camera(camNo, c, xh, yh, ort, f1, f2, p1, p2));
 		}
-		/*
-		 * if(!isCameraAdded(camNo)){ cameras.add(new Camera(camNo, c, xh, yh,
-		 * ort, f1, f2, p1, p2));
-		 * 
-		 * }
-		 */
-		return new Camera(camNo, c, xh, yh, ort, f1, f2, p1, p2);
-	}
-
-	/**
-	 * Iterates through the allLinesCameraCombinationsFile list and removes the
-	 * everything but the first word at every index.
-	 * 
-	 * @param word
-	 *            A string that gets compared to the string of every index of
-	 *            the list.
-	 * @return An ArrayList containing all the indices of the input string.
-	 */
-	private ArrayList<Integer> findIndices(String word) {
-		ArrayList<Integer> al = new ArrayList<Integer>();
-		for (int i = 0; i < allLinesCameraCombinationsFile.size(); i++) {
-			if (Helpmethods.formatSentence(
-					allLinesCameraCombinationsFile.get(i), 1, 0).equals(word)) {
-				al.add(i);
-			}
-		}
-		return al;
+		return camList;
 	}
 
 	public ArrayList<Camera> getCameras() {
@@ -382,14 +363,15 @@ public class CameraFileReader {
 		return cameraGroups;
 	}
 
-	public ArrayList<CameraGroup> getCameraCombInfo() {
+/*	public ArrayList<CameraGroup> getCameraCombInfo() {
 		ArrayList<CameraGroup> list = new ArrayList<CameraGroup>();
-		for (int i = 0; i < cameraCombinations.size(); i++) {
+		for (int i = 0; i < camGrpNames.size(); i++) {
 			list.add(new CameraGroup(mean.get(i), max.get(i), s0.get(i),
-					addCameraToCameraGroup(cameraCombinations.get(i))));
+					noOfFramesUsed.get(i), addCameraToCameraGroup(camGrpNames
+							.get(i))));
 		}
 		return list;
-	}
+	}*/
 
 	private ArrayList<Camera> addCameraToCameraGroup(String s) {
 		ArrayList<Camera> list = new ArrayList<Camera>();
@@ -439,38 +421,73 @@ public class CameraFileReader {
 		return output;
 	}
 
+	public ArrayList<CameraGroup> getRecommendedCameraGroups(int start) {
+		ArrayList<CameraGroup> input = getCameraGroups();
+		ArrayList<CameraGroup> output = new ArrayList<CameraGroup>();
+		Collections.sort(input);
+		output.add(input.get(start));
+		boolean b = false;
+		for (int i = 0; i < input.size(); i++) {
+			for (int j = 0; j < output.size(); j++) {
+				b = output.get(j).hasSameCamera(input.get(i));
+				if (b) {
+					break;
+				}
+			}
+			if (!b) {
+				output.add(input.get(i));
+			}
+		}
+
+		return output;
+	}
+
+	public ArrayList<UniqueCamGroups> getAllUniqueCamGrpSorted() {
+		ArrayList<UniqueCamGroups> list = new ArrayList<UniqueCamGroups>();
+		boolean isDuplicate = false;
+		for (int i = 0; i < getCameraGroups().size(); i++) {
+			isDuplicate = false;
+			UniqueCamGroups obj = new UniqueCamGroups(
+					getRecommendedCameraGroups(i));
+			for (int j = 0; j < list.size(); j++) {
+				if (obj.compareTo(list.get(j)) == 0) {
+					isDuplicate = true;
+				}
+			}
+			if (!isDuplicate) {
+				list.add(obj);
+			}
+		}
+
+		Collections.sort(list);
+		return list;
+	}
+
 	public static void main(String[] args) {
 		CameraFileReader cfr = new CameraFileReader();
-		/*
-		 * cfr.readCalibrationCombFile(new File(
-		 * "src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob.dat"
-		 * )); cfr.readCalibrationCombFile(new File(
-		 * "src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob2.dat"
-		 * )); cfr.readCalibrationCombFile(new File(
-		 * "src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob3.dat"
-		 * )); cfr.readCalibrationCombFile(new File(
-		 * "src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob4.dat"
-		 * )); cfr.readCalibrationCombFile(new File(
-		 * "src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob5.dat"
-		 * )); cfr.readCalibrationCombFile(new File(
-		 * "src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibrationcob6.dat"
-		 * )); ArrayList<CameraGroup> ccc = cfr.getCameraGroups();
-		 * System.out.println("tabsize: " + ccc.size()); for(CameraGroup c :
-		 * ccc){ System.out.println(c.getGroupName() + " " + c.getS0()); }
-		 * System.out.println(); System.out.println();
-		 * System.out.println("Anbefalte kameragrupper:"); for(CameraGroup c :
-		 * cfr.getRecommendedCameraGroups()){
-		 * System.out.println(c.getGroupName() + " " + c.getS0()); }
-		 */
-
-		ArrayList<String> test = new ArrayList<String>();
-		test.add("====");
-		test.add("avsnitt1");
-	
-		ArrayList<String> t = cfr.formatLineArray('=', test, 0);
-		for (String s : t) {
-			System.out.println(s);
+		cfr.realCalibrationSummaryFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibration_summary_ny.dat"));
+		ArrayList<CameraGroup> ccc = cfr.getCameraGroups();
+		Collections.sort(ccc);
+		System.out.println("tabsize: " + ccc.size());
+		for (CameraGroup c : ccc) {
+			System.out.println(c.toString());
 		}
+		System.out.println();
+		System.out.println();
+		System.out.println("Anbefalte kameragrupper:");
+		for (CameraGroup c : cfr.getRecommendedCameraGroups()) {
+			System.out.println(c.getGroupName() + " " + c.getS0());
+		}
+		System.out.println();
+		System.out.println();
+		System.out.println("Snitt:");
+
+		ArrayList<UniqueCamGroups> ucg = cfr.getAllUniqueCamGrpSorted();
+		for (UniqueCamGroups cc : ucg) {
+			System.out.println(cc.toString());
+			System.out.println();
+		}
+
 	}
 
 }

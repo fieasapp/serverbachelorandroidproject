@@ -10,17 +10,19 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String groupName = "";
-        private double mean = 0.0;
+	private double mean = 0.0;
 	private double max = 0.0;
 	private double s0 = 0.0;
-	private ArrayList<Integer> cameraNumbers;
+	private int noOfFramesUsed = 0;
 	private ArrayList<Camera> cameraList;
-        
-	public CameraGroup(double mean, double max, double s0,
+
+	public CameraGroup(String groupName, double mean, double max, double s0, int noOfFramesUsed,
 			ArrayList<Camera> cameraList) {
+		this.groupName = groupName;
 		this.mean = mean;
 		this.max = max;
 		this.s0 = s0;
+		this.noOfFramesUsed = noOfFramesUsed;
 		this.cameraList = cameraList;
 		for (int i = 0; i < cameraList.size(); i++) {
 			groupName += cameraList.get(i).getCamNo() + " ";
@@ -58,20 +60,13 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 		ret += s0 + "\n";
 		ret += mean + "\n";
 		ret += max + "\n";
-		for(Camera c : cameraList){
+		for (Camera c : cameraList) {
 			ret += c.toString();
 			ret += "\n";
 		}
 		return ret;
 	}
 
-	public ArrayList<Integer> getCameraNumbers() {
-		return cameraNumbers;
-	}
-
-	public void setCameraNumbers(ArrayList<Integer> cameraNumbers) {
-		this.cameraNumbers = cameraNumbers;
-	}
 
 	public ArrayList<Camera> getCameraList() {
 		return cameraList;
@@ -81,13 +76,13 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 		this.cameraList = cameraList;
 	}
 
-        public String getGroupName() {
-            return groupName;
-        }
+	public String getGroupName() {
+		return groupName;
+	}
 
-        public void setGroupName(String groupName) {
-            this.groupName = groupName;
-        }
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
 
 	@Override
 	public int compareTo(CameraGroup o) {
@@ -114,6 +109,5 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 		}
 		return bool;
 	}
-
 
 }
