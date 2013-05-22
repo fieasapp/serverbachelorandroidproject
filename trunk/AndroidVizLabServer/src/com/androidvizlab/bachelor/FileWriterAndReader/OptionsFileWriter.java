@@ -41,8 +41,8 @@ public class OptionsFileWriter {
 	}
 
 	public void setAllData() throws IOException {
-		setCalibDir(inputData.getCalibrationFileName());
-		setCalibFilePath(inputData.getCalibrationFilePath());
+		setCalibDir(inputData.getCalibrationFilePath());
+		setCalibFilePath(inputData.getCalibrationFileName());
 		setTriggingInterval(inputData.getTriggingInterval());
 		setRunType(inputData.getRunType());
 		setNrOfTripletGroups(inputData.getNumTripletCamGrp());
@@ -67,7 +67,7 @@ public class OptionsFileWriter {
 		setHelpFileOutputFromConnectPoints(inputData
 				.getHelpFileOutputConnectPoints());
 		setHelpFileOutputFromTimeseries(inputData.getHelpFileOutputTimeseries());
-		setApproxLimit(inputData.getApproxFrameMarkerLimit());
+		
 	}
 
 	// set "path for calibration files
@@ -352,16 +352,6 @@ public class OptionsFileWriter {
 		}
 	}
 
-	public void setApproxLimit(double d) {
-		if (d >= 0) {
-			for (int i = 0; i < tab.size(); i++) {
-				if (Helpmethods.formatSentence(tab.get(i), 5, 1).equals(
-						"Approximation limit for frame markers")) {
-					tab.set(i + 1, d + "");
-				}
-			}
-		}
-	}
 
 	public void writeToFile() throws IOException {
 		BufferedWriter out = new BufferedWriter(new FileWriter(file));
