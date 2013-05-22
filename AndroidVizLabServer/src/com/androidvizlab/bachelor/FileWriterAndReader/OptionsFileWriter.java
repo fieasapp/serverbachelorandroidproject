@@ -364,7 +364,7 @@ public class OptionsFileWriter {
 		System.out.println("ALT I ORDEN KAMERAT");
 	}
 
-	public static void main(String[] args) throws IOException {
+	/*public static void main(String[] args) throws IOException {
 		/*VizlabInputData vid = new VizlabInputData("Calibdir sucsess!",
 				"runtype sucsess!", "calib file path sucsess!", 1, 2, 3, 4,
 				"SOCKETCON sucsess!", 5, 6, 7, 8, "tripletsfromfile",
@@ -376,6 +376,6 @@ public class OptionsFileWriter {
 				"output_from_connectpointssucsess!",
 				"output_from_timeseriessucsess!", 666.666);
 		OptionsFileWriter opt = new OptionsFileWriter(new File("src//options.txt"), vid);*/
-	}
+	//}
 
 }

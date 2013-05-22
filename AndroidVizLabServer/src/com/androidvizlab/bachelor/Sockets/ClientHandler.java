@@ -7,7 +7,9 @@ import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileReader;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileWriter;
 import com.androidvizlab.bachelor.Interface.DataChangeEvent;
 import com.androidvizlab.bachelor.Interface.Observer;
+import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import com.androidvizlab.bachelor.MQTT.MessagePublisher;
+import com.androidvizlab.bachelor.datamodels.UniqueCamGroups;
 import com.androidvizlab.bachelor.datamodels.VizlabInputData;
 import com.androidvizlab.bachelor.datamodels.VizlabOutputData;
 import com.androidvizlab.bachelor.utilities.CustomFileFilter;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import runtimetest.ExternalProcessHandler;
@@ -24,7 +27,7 @@ import runtimetest.ExternalProcessHandler;
  *
  * @author The Hive
  */
-public class ClientHandler implements Runnable, Observer{
+public class ClientHandler extends SimpleObservable implements Runnable, Observer{
     
     //CLIENTS SOCKET
     private Socket conSocket = null;
@@ -153,16 +156,19 @@ public class ClientHandler implements Runnable, Observer{
                         data = optionsFileReader.getData();
                         
                         System.out.println("Request received, sending options.txt file...");
+                        notifyObservers("Request received, sending options.txt file...");
                         
                         sendData(data);
                         
                         System.out.println("File sent.");
+                        notifyObservers("File sent.");
                     }
                     else if(msg == SocketMessage.GET_RESULT_DATA) //Get the result of the calibration
                     {
                         //Sends the camera group and camera as Vizlab output (CameraGroup & Camera class)
                     
                         System.out.println("Fetching calibration results...");
+                        notifyObservers("Fetching calibration results...");
                         
                         //READ FROM FILES
                                 
@@ -172,16 +178,22 @@ public class ClientHandler implements Runnable, Observer{
                         
                         camFileReader.realCalibrationSummaryFile(summary);
                         
+                        ArrayList<UniqueCamGroups> uniquegrp = camFileReader.getAllUniqueCamGrpSorted();
+                        
                         //SEND as VizlabOutputData object
                         output = new VizlabOutputData();
                         
                         output.setListCamGrp(camFileReader.getCameraGroups());
 
+                        //output.setListCamGrp("");
+                        
                         System.out.println("Sending calibration results...");
+                        notifyObservers("Sending calibration results...");
                         
                         sendData(output);
                         
                         System.out.println("Requested data sent.");
+                        notifyObservers("Requested data sent.");
                     }
                 }
                 else if(obj instanceof VizlabInputData)
@@ -189,8 +201,10 @@ public class ClientHandler implements Runnable, Observer{
                     //Overwrite optionsfile.txt and execute external process/program(Vizlab)
                     
                     System.out.println("VizlabInputData received.");
+                    notifyObservers("VizlabInputData received.");
                     
                     System.out.println("Overwriting optionsfile.txt . . .");
+                    notifyObservers("Overwriting optionsfile.txt . . .");
                     
                     input = (VizlabInputData) obj;
                     
@@ -204,10 +218,12 @@ public class ClientHandler implements Runnable, Observer{
                     {
                         System.out.println("Failed to overwrite file.");
                     
-                        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+                        notifyObservers("Failed to overwrite file.");
                     }
                     
                     System.out.println("File overwritten.\nExecuting external process...");
+                    notifyObservers("File overwritten.");
+                    notifyObservers("Executing external process...");
                     
                     executeExternalProcess();       
                 }
@@ -227,7 +243,8 @@ public class ClientHandler implements Runnable, Observer{
     	String msg = "Ready to send data...";
     	
     	System.out.println(msg);
-    	
+    	notifyObservers(msg);
+        
     	try
     	{
             outputstream.writeObject(object);
@@ -237,17 +254,20 @@ public class ClientHandler implements Runnable, Observer{
             msg = "Data is sent.";
     	
             System.out.println(msg);
+            notifyObservers(msg);
     	}
     	catch(IOException ex)
     	{
             msg = "ERROR!! " +ex;
             ex.printStackTrace();
             System.out.println(msg);
+            notifyObservers(msg);
     	}
     	catch(Exception e)
     	{
             msg = "ERROR!! " +e;
             System.out.println("ERROR!! " +e);
+            notifyObservers(msg);
     	}
     }
     
@@ -257,6 +277,7 @@ public class ClientHandler implements Runnable, Observer{
     	String msg = "Ready to send message...";
     	
     	System.out.println(msg);
+        notifyObservers(msg);
     	
     	try
     	{
@@ -267,17 +288,20 @@ public class ClientHandler implements Runnable, Observer{
             msg = "Message is sent.";
     	
             System.out.println(msg);
+            notifyObservers(msg);
     	}
     	catch(IOException ex)
     	{
             msg = "ERROR!! " +ex;
             ex.printStackTrace();
             System.out.println(msg);
+            notifyObservers(msg);
     	}
     	catch(Exception e)
     	{
             msg = "ERROR!! " +e;
             System.out.println("ERROR!! " +e);
+            notifyObservers(msg);
     	}
     }
     
@@ -322,6 +346,7 @@ public class ClientHandler implements Runnable, Observer{
             String procMsg = (String) obj;
             
             System.out.println(procMsg);
+            notifyObservers(procMsg);
             
             if(procMsg.equalsIgnoreCase("PROCESS_STARTED"))
             {
@@ -347,11 +372,12 @@ public class ClientHandler implements Runnable, Observer{
     
     //*** GETTERS AND SETTERS ***//
     public void setProcessingVariables(String optionsFilePath, 
-            String externalPrgrmPath, String brokerAddress, int brokerPort)
+            String externalPrgrmPath, String brokerAddress, int brokerPort,String calibrationFilePath)
     {
         this.optionsFilePath = optionsFilePath;
         this.externalPrgrmPath = externalPrgrmPath;
         this.brokerAddress = brokerAddress;
         this.brokerPort = brokerPort;
+        this.calibrationFilePath = calibrationFilePath;
     }
 }

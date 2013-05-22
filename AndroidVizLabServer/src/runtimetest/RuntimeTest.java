@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  */
 public class RuntimeTest {
     
-    public static void main(String args[]){
+    /*public static void main(String args[]){
         try {
             Thread t = new Thread();
             
@@ -23,5 +23,5 @@ public class RuntimeTest {
         } catch (InterruptedException ex) {
             Logger.getLogger(RuntimeTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 }

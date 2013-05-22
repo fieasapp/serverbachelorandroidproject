@@ -1,5 +1,6 @@
 package com.androidvizlab.bachelor.Sockets;
 
+import com.androidvizlab.bachelor.Interface.Observer;
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import java.net.ServerSocket;
 import javax.swing.JOptionPane;
@@ -11,7 +12,7 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     private int PORTNR = 1330;
     private ServerSocket serverSocket = null;
     private ClientHandler clientHandler = null; //Handles and accepts clients  connecting to the server
-
+    
     // MQTT CONNECTION VARIABLES
     private String brokerAddress = "localhost";
     private int brokerPort = 1883;
@@ -19,12 +20,15 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     //READING AND WRITING TO FILE VARIABLES
     private String  optionsFilePath = "";
     private String externalPrgrmPath = "";
+    private String calibrationFilePath = "";
     
     //Server STATE
     private ServerState serverState = ServerState.SERVER_STATE_READY;
     
     //RUNNING
     private boolean continueRunning = true;
+    
+    private Observer clientObserver = null;
     
     public ActivityServer()
     {
@@ -88,7 +92,9 @@ public class ActivityServer extends SimpleObservable implements Runnable{
                 this.notifyObservers("Server: Waiting for client. . .");
                         
                 clientHandler = new ClientHandler(serverSocket.accept());
-                clientHandler.setProcessingVariables(optionsFilePath, externalPrgrmPath, brokerAddress, brokerPort);
+                clientHandler.addObserver(clientObserver);
+                clientHandler.setProcessingVariables(optionsFilePath, externalPrgrmPath, brokerAddress, brokerPort
+                        ,calibrationFilePath);
                 
                 System.out.println("Server: A Client has connected.");
                 this.notifyObservers("Server: A Client has connected.");
@@ -144,13 +150,15 @@ public class ActivityServer extends SimpleObservable implements Runnable{
 
     public void setStartUpVaribles(int serverPort, 
             String brokerAddress, int brokerPort, String optionsFilePath, 
-            String externalPrgrmPath)
+            String externalPrgrmPath,String calibrationFilePath,Observer clientObserver)
     {
         PORTNR = serverPort;
         this.brokerAddress = brokerAddress;
         this.brokerPort = brokerPort;
         this.optionsFilePath = optionsFilePath;
         this.externalPrgrmPath = externalPrgrmPath;
+        this.calibrationFilePath = calibrationFilePath;
+        this.clientObserver = clientObserver;
     }
 
     public boolean isContinueRunning() {
@@ -216,9 +224,9 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     }
     
     //JUST FOR TESTING
-    public static void main(String args[])
+    /*public static void main(String args[])
     {
         ActivityServer as = new ActivityServer();
         as.start();
-    }
+    }*/
 }

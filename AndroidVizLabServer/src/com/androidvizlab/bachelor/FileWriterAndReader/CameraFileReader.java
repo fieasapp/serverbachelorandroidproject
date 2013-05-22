@@ -463,7 +463,7 @@ public class CameraFileReader {
 		return list;
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		CameraFileReader cfr = new CameraFileReader();
 		cfr.realCalibrationSummaryFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibration_summary_ny.dat"));
 		ArrayList<CameraGroup> ccc = cfr.getCameraGroups();
@@ -488,6 +488,6 @@ public class CameraFileReader {
 			System.out.println();
 		}
 
-	}
+	}*/
 
 }
