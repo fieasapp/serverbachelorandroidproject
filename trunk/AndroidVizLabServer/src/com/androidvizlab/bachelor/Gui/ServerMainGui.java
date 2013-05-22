@@ -297,10 +297,8 @@ public class ServerMainGui extends javax.swing.JFrame {
         else if(command.equals("cCalFilePath"))
         {
             fileFilter = new CustomFileFilter();
-            fileFilter.setFileFormat(CustomFileFilter.FILE_EXTENSION_DAT);
-            fileFilter.setDescription(CustomFileFilter.FILE_DESC_DAT);
             
-            path = fileFilter.getFilePath();
+            path = fileFilter.getDirectoryPath();
             
             form.setCalibrationFilePath(path);
         }
