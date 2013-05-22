@@ -127,7 +127,7 @@ public class CameraFileReader {
 		}
 	}
 
-	public ArrayList<Camera> getCams(int i) {
+	private ArrayList<Camera> getCams(int i) {
 		ArrayList<String> temp = new ArrayList<>();
 		temp = formatLineArray('=', allLinesCalibSummary, i+1);
 		return addCamera(findIndices("Camno", temp), temp);
@@ -438,7 +438,7 @@ public class CameraFileReader {
 				output.add(input.get(i));
 			}
 		}
-
+		Collections.sort(output);
 		return output;
 	}
 

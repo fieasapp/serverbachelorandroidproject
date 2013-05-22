@@ -1,9 +1,14 @@
 package com.androidvizlab.bachelor.datamodels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UniqueCamGroups implements Comparable<UniqueCamGroups>{
+public class UniqueCamGroups implements Comparable<UniqueCamGroups>, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8805183700783394319L;
 	private ArrayList<CameraGroup> groups;
 	private double avgS0;
 	
@@ -17,6 +22,11 @@ public class UniqueCamGroups implements Comparable<UniqueCamGroups>{
 	
 	public double getAvgS0(){
 		return avgS0;
+	}
+	
+
+	public ArrayList<CameraGroup> getGroups() {
+		return groups;
 	}
 
 	@Override

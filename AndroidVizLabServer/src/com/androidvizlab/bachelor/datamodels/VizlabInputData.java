@@ -38,14 +38,54 @@ public class VizlabInputData implements Serializable {
     private String helpFileOutputdobbelMatch = "T";
     private String helpFileOutputConnectPoints = "T";
     private String helpFileOutputTimeseries = "T";
-    private double approxFrameMarkerLimit = 1000;
+    
+    
     
     //Production only
     private String selectedTripCamGrps = "";
 
     //GETTERS AND SETTERS
+    public VizlabInputData(){}
+    public VizlabInputData(String calibrationFilePath, String runType,
+			String calibrationFileName, int triggingInterval,
+			int numTripletCamGrp, int numTimePts, int numMarkers,
+			String programOutputSocketConnection, int offsetPix, int minpix,
+			int maxpix, int minsep, int maxerr, String imgFileInputTriplets,
+			String imgFileInputTripletsTurnedRight,
+			String imgFileOutputOriginalImg,
+			String imgFileOutputGeneratedTriplets,
+			String imgFileOutputGeneratedTripletsTurnedRight,
+			String helpFileOutputImageDetectPoints,
+			String helpFileOutputDuplicatePoints, String helpFileOutputMatch3,
+			String helpFileOutputdobbelMatch,
+			String helpFileOutputConnectPoints, String helpFileOutputTimeseries) {
+		this.calibrationFilePath = calibrationFilePath;
+		this.runType = runType;
+		this.calibrationFileName = calibrationFileName;
+		this.triggingInterval = triggingInterval;
+		this.numTripletCamGrp = numTripletCamGrp;
+		this.numTimePts = numTimePts;
+		this.numMarkers = numMarkers;
+		this.programOutputSocketConnection = programOutputSocketConnection;
+		this.offsetPix = offsetPix;
+		this.minpix = minpix;
+		this.maxpix = maxpix;
+		this.minsep = minsep;
+		this.maxerr = maxerr;
+		this.imgFileInputTriplets = imgFileInputTriplets;
+		this.imgFileInputTripletsTurnedRight = imgFileInputTripletsTurnedRight;
+		this.imgFileOutputOriginalImg = imgFileOutputOriginalImg;
+		this.imgFileOutputGeneratedTriplets = imgFileOutputGeneratedTriplets;
+		this.imgFileOutputGeneratedTripletsTurnedRight = imgFileOutputGeneratedTripletsTurnedRight;
+		this.helpFileOutputImageDetectPoints = helpFileOutputImageDetectPoints;
+		this.helpFileOutputDuplicatePoints = helpFileOutputDuplicatePoints;
+		this.helpFileOutputMatch3 = helpFileOutputMatch3;
+		this.helpFileOutputdobbelMatch = helpFileOutputdobbelMatch;
+		this.helpFileOutputConnectPoints = helpFileOutputConnectPoints;
+		this.helpFileOutputTimeseries = helpFileOutputTimeseries;
+	}
 
-    public String getCalibrationFilePath() {
+	public String getCalibrationFilePath() {
         return calibrationFilePath;
     }
 
@@ -203,14 +243,6 @@ public class VizlabInputData implements Serializable {
         this.helpFileOutputTimeseries = helpFileOutputTimeseries;
     }
 
-    public double getApproxFrameMarkerLimit() {
-        return approxFrameMarkerLimit;
-    }
-
-    public void setApproxFrameMarkerLimit(double approxFrameMarkerLimit) {
-        this.approxFrameMarkerLimit = approxFrameMarkerLimit;
-    }
-
     public int getMinpix() {
         return minpix;
     }
@@ -286,6 +318,6 @@ public class VizlabInputData implements Serializable {
                             + helpFileOutputdobbelMatch + ", helpFileOutputConnectPoints="
                             + helpFileOutputConnectPoints + ", helpFileOutputTimeseries="
                             + helpFileOutputTimeseries + ", approxFrameMarkerLimit="
-                            + approxFrameMarkerLimit + "]";
+                            +  "]";
     }
 }
