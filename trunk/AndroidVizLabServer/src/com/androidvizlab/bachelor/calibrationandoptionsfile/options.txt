@@ -14,9 +14,9 @@ input/
 ! path for output  (incl. slash)- subdirectories not allowed, that is helpfiles, socket file and log file: BasicsDef::theOutpath
 output/
 !path for calibration files
-C:/CalPoint_des2012/
+calibration_summary_2013012208_5420.dat
 ! Run type. Type C for calibration run, P for production run, and R for recalculation calibration values
-C
+P
 ! Camera type. RGB24 or RGB8
 RGB8
 ! Frame and wand type. ORIGINAL or DIODE
@@ -24,7 +24,7 @@ ORIGINAL
 ! name of calibration summary file, for recalculating calibration values. The file has to be in the calibration directory.
 calibration_summary_2012062311_3540.dat
 ! path and name of calibration file, the file has to be placed in the input directory: BasicsDef::calibrationFilename = BasicsDef::theInpath + ... calibration_summary_2012122008_5133.dat
-calibration_summary_2013012208_5420.dat
+C:/CalPoint_des2012/
 ! path and name of trigger program (only relevant if all image file input options are false)
 k:/4dviz/Programvare/kode/TTL_PortNoInput/Release/TTL_PortNoInput.exe
 ! trigging interval, millisec: InputDef::triggingIntervalMs
@@ -40,11 +40,11 @@ COM4
 ! no of markers (time tracks): InputDef::noOfTracks
 10
 ! Parameter for point detection: Offset pixel value (from median) to separate background from particles: InputDef::imlimit
-0
+80
 ! Parameter for point detection: Minimum number of pixels in the x- and y-direction to identify a point: InputDef::minpix
 0
 ! Parameter for point detection: Maximum number of pixels in the x- and y-direction to identify a point: InputDef::maxpix
-0
+50
 ! Parameter for point detection: Size of window used for removing image 'background': ImageDef::subwinz
 100
 ! Min. distance between particles (pixels): InputDef::minsep
@@ -52,7 +52,7 @@ COM4
 ! Area of search along epipolar line (pixels): InputDef::epilim
 50
 ! Max. error (mm) in 'ellemelle'-function: InputDef::maxerr
-0
+50
 ! Parameter for identifying possible next point in trajectory: Max. hor.dist. (mm): InputDef::maxdist2
 200.0
 ! Parameter for identifying possible next point in trajectory: Max. vert. dist. (mm): InputDef::maxdeltaz (ML: M� v�re >0, men ellers ingen effekt)

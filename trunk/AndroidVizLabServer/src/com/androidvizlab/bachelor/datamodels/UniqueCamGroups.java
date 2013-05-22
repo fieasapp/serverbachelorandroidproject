@@ -19,15 +19,6 @@ public class UniqueCamGroups implements Comparable<UniqueCamGroups>, Serializabl
 		}
 		avgS0 /= this.groups.size();
 	}
-	
-	public double getAvgS0(){
-		return avgS0;
-	}
-	
-
-	public ArrayList<CameraGroup> getGroups() {
-		return groups;
-	}
 
 	@Override
 	public int compareTo(UniqueCamGroups o) {
@@ -52,5 +43,19 @@ public class UniqueCamGroups implements Comparable<UniqueCamGroups>, Serializabl
 		s += "Avg s0: " + avgS0;
 		return s;
 	}
-	
+        
+        //GETTERS AND SETTERS
+
+    public double getAvgS0()
+    {
+	return avgS0;
+    }
+        
+    public ArrayList<CameraGroup> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(ArrayList<CameraGroup> groups) {
+        this.groups = groups;
+    }
 }

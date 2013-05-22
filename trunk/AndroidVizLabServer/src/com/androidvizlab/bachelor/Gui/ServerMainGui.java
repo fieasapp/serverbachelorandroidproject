@@ -197,7 +197,7 @@ public class ServerMainGui extends javax.swing.JFrame {
      */
     public void openSettingsDialog(String serverName, int port,
             String brokerAddress, int brokerPort,String optionsFilePath,
-            String externalProgramPath)
+            String externalProgramPath,String calibrationPath)
     {
         form = new SettingsDialog(this,true,actionListener,itemListener);
         form.setLocationRelativeTo(null);
@@ -207,6 +207,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         form.setBrokerPortText(Integer.toString(brokerPort));
         form.setOptionFilePath(optionsFilePath);
         form.setExternalProgramPath(externalProgramPath);
+        form.setCalibrationFilePath(calibrationPath);
         form.addComponentListener(componentListener);
         form.pack();
         form.setVisible(true);

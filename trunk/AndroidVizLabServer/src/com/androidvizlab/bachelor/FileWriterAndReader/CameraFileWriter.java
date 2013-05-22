@@ -53,9 +53,9 @@ public class CameraFileWriter {
 		System.out.println("ALT I ORDEN KAMERAT");
 	}
 	
-	public static void main(String[] args) throws IOException{
+	/*public static void main(String[] args) throws IOException{
 		CameraFileWriter c = new CameraFileWriter(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibration_summary_ny.dat"));
 		c.setCameraGroups("1_2_3");
 		c.writeToFile();
-	}
+	}*/
 }

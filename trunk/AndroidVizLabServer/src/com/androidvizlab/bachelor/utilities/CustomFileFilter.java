@@ -143,8 +143,8 @@ public class CustomFileFilter extends FileFilter{
         this.startingDirectory = startingDirectory;
     }
     
-    /*
-    public static void main(String args[])
+    
+    /*public static void main(String args[])
     {
        CustomFileFilter filter = new CustomFileFilter();
        filter.setDescription(CustomFileFilter.FILE_EXTENSION_EXE);

@@ -9,11 +9,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -81,6 +78,7 @@ public class ServerSettingsModel extends SimpleObservable{
             setBrokerPort(NumberConverter.converToInt(settings.get(KEY_BROKER_PORT),1883));
             setUseLocalBrokerAddress(Boolean.valueOf(settings.get(KEY_LOCAL_BROKERADDRESS)));
             setUseLocalMachinename(Boolean.valueOf(settings.get(KEY_LOCAL_MACHINENAME)));
+            setCalibrationFilePath(calibrationFilePath);
             setOptionsFilePath((String)settings.get(KEY_OPTIONSFILE_PATH));
             setExternalProgramPath((String)settings.get(KEY_EXTERNALPROGRAM_PATH));
         }
@@ -95,6 +93,7 @@ public class ServerSettingsModel extends SimpleObservable{
             setUseLocalBrokerAddress(false);
             setUseLocalMachinename(false);
             setOptionsFilePath(optionsFilePath);
+            setCalibrationFilePath(calibrationFilePath);
             setExternalProgramPath(externalProgramPath);
         }
     }
@@ -112,6 +111,7 @@ public class ServerSettingsModel extends SimpleObservable{
                 KEY_LOCAL_BROKERADDRESS+":"+useLocalBrokerAddress,
                 KEY_LOCAL_MACHINENAME+":"+useLocalMachinename,
                 KEY_OPTIONSFILE_PATH+":"+optionsFilePath,
+                KEY_CALIBRATIONFILE_PATH+":"+calibrationFilePath,
                 KEY_EXTERNALPROGRAM_PATH+":"+externalProgramPath);
     }
     
@@ -158,6 +158,7 @@ public class ServerSettingsModel extends SimpleObservable{
             setUseLocalBrokerAddress(Boolean.valueOf(config.getProperty(KEY_LOCAL_BROKERADDRESS)));
             setUseLocalMachinename(Boolean.valueOf(config.getProperty(KEY_LOCAL_MACHINENAME)));
             setOptionsFilePath((String)config.getProperty(KEY_OPTIONSFILE_PATH));
+            setCalibrationFilePath((String)config.getProperty(KEY_CALIBRATIONFILE_PATH));
             setExternalProgramPath((String)config.getProperty(KEY_EXTERNALPROGRAM_PATH));
         } 
         catch (IOException ex) 
@@ -171,6 +172,7 @@ public class ServerSettingsModel extends SimpleObservable{
             setUseLocalBrokerAddress(false);
             setUseLocalMachinename(false);
             setOptionsFilePath(optionsFilePath);
+            setCalibrationFilePath(calibrationFilePath);
             setExternalProgramPath(externalProgramPath);
             
             
@@ -192,14 +194,13 @@ public class ServerSettingsModel extends SimpleObservable{
             config.setProperty(KEY_BROKER_PORT, brokerPort+"");
             config.setProperty(KEY_LOCAL_MACHINENAME, useLocalMachinename+"");
             config.setProperty(KEY_LOCAL_BROKERADDRESS, useLocalBrokerAddress+"");
-            
+            config.setProperty(KEY_CALIBRATIONFILE_PATH, calibrationFilePath);
             config.setProperty(KEY_OPTIONSFILE_PATH, optionsFilePath);
             config.setProperty(KEY_EXTERNALPROGRAM_PATH, externalProgramPath);
             
             config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
-            //config.store(new FileOutputStream("./serverpreferences/serverconfig.properties"),null);
-            
-            /*File dir = new File("./serverpreferences");
+            /*
+            File dir = new File("./serverpreferences");
             
             if(!dir.exists())
             {

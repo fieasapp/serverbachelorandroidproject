@@ -193,6 +193,17 @@ Observer, ItemListener, HyperlinkListener{
             mainGui.getSettingsForm().setError(-6);
         }
         
+        if(mainGui.getSettingsForm().getCalibrationFilePath() == null 
+                || mainGui.getSettingsForm().getCalibrationFilePath().equals(""))
+        {
+            mainGui.getSettingsForm().setError(7);
+            return false;
+        }
+        else
+        {
+            mainGui.getSettingsForm().setError(-7);
+        }
+        
         return true;
     }
     
@@ -211,6 +222,7 @@ Observer, ItemListener, HyperlinkListener{
             settingsModel.setBrokerPort(NumberConverter.converToInt(
                     mainGui.getSettingsForm().getBrokerPortText(), 1883));
             settingsModel.setOptionsFilePath(mainGui.getSettingsForm().getOptionFilePath());
+            settingsModel.setCalibrationFilePath(mainGui.getSettingsForm().getCalibrationFilePath());
             settingsModel.setExternalProgramPath(mainGui.getSettingsForm().getExternalProgramPath());
             //settingsModel.saveServerSettings(); 
             settingsModel.saveConfigurationSettings();
@@ -261,7 +273,8 @@ Observer, ItemListener, HyperlinkListener{
         
         activityServer.setStartUpVaribles(settingsModel.getServerPort(),
                 settingsModel.getBrokerAddress(),settingsModel.getBrokerPort(),
-                settingsModel.getOptionsFilePath(), settingsModel.getExternalProgramPath());
+                settingsModel.getOptionsFilePath(), settingsModel.getExternalProgramPath()
+                ,settingsModel.getCalibrationFilePath(),this);
         
         thread = new Thread(activityServer);
         
@@ -369,7 +382,8 @@ Observer, ItemListener, HyperlinkListener{
             case COMMAND_SERVER_SETTINGS:
                 mainGui.openSettingsDialog(settingsModel.getServerName(), settingsModel.getServerPort(),
                         settingsModel.getBrokerAddress(), settingsModel.getBrokerPort(),
-                        settingsModel.getOptionsFilePath(),settingsModel.getExternalProgramPath());
+                        settingsModel.getOptionsFilePath(),settingsModel.getExternalProgramPath(),
+                        settingsModel.getCalibrationFilePath());
                 break;
                 
             case COMMAND_HELP:
