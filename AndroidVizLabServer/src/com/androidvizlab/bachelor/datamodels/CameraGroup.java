@@ -54,19 +54,13 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 		this.s0 = s0;
 	}
 
-	public String toString() {
-		String ret = groupName;
-		ret += "\n";
-		ret += s0 + "\n";
-		ret += mean + "\n";
-		ret += max + "\n";
-		for (Camera c : cameraList) {
-			ret += c.toString();
-			ret += "\n";
-		}
-		return ret;
-	}
+        public int getNoOfFramesUsed() {
+            return noOfFramesUsed;
+        }
 
+        public void setNoOfFramesUsed(int noOfFramesUsed) {
+            this.noOfFramesUsed = noOfFramesUsed;
+        }
 
 	public ArrayList<Camera> getCameraList() {
 		return cameraList;
@@ -82,6 +76,19 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+        
+        public String toString() {
+		String ret = groupName;
+		ret += "\n";
+		ret += s0 + "\n";
+		ret += mean + "\n";
+		ret += max + "\n";
+		for (Camera c : cameraList) {
+			ret += c.toString();
+			ret += "\n";
+		}
+		return ret;
 	}
 
 	@Override
