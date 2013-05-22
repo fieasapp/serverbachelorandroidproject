@@ -9,6 +9,7 @@ public class VizlabOutputData implements Serializable{
 
     private ArrayList<CameraGroup> listCamGrp = new ArrayList<CameraGroup>();
     private ArrayList<CameraGroup> recomListGrp = new ArrayList<CameraGroup>();
+    private ArrayList<UniqueCamGroups> uniqueCamGrp = new ArrayList<UniqueCamGroups>();
 
     public VizlabOutputData()
     {
@@ -29,5 +30,13 @@ public class VizlabOutputData implements Serializable{
 
     public void setRecomListGrp(ArrayList<CameraGroup> recomListGrp) {
         this.recomListGrp = recomListGrp;
+    }
+
+    public ArrayList<UniqueCamGroups> getUniqueCamGrp() {
+        return uniqueCamGrp;
+    }
+
+    public void setUniqueCamGrp(ArrayList<UniqueCamGroups> uniqueCamGrp) {
+        this.uniqueCamGrp = uniqueCamGrp;
     }
 }
