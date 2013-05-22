@@ -105,6 +105,29 @@ public class CustomFileFilter extends FileFilter{
         return filename;
     }
     
+    public String getDirectoryPath()
+    {
+        String directoryPath = "";
+        JFileChooser fc = new JFileChooser(startingDirectory);
+        fc.setDialogTitle("Select File");
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        
+        int checker = fc.showOpenDialog(null);
+        File f = fc.getSelectedFile();
+        try
+        {
+            if(checker == JFileChooser.APPROVE_OPTION){
+                directoryPath = f.getAbsolutePath();
+                System.out.println(directoryPath);
+            }
+        }
+        catch(NullPointerException ex)
+        {
+            System.err.println("file could not be found.");
+        }
+        return directoryPath;
+    }
+    
     //GETTERS AND SETTERS
     
     /**
