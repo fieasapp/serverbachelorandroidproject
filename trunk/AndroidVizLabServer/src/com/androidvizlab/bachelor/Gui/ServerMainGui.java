@@ -160,12 +160,28 @@ public class ServerMainGui extends javax.swing.JFrame {
     }
     
     /**
+     * Remove all server message on Server Messages tab
+     */
+    public void clearServerMessages()
+    {
+        serverMsgList.removeAll();
+    }
+    
+    /**
      * Adds the message from the client to be viewed by user.
      * @param input client message.
      */
     public void setClientMessage(String input)
     {
         clientMsgList.add(input);        
+    }
+    
+    /**
+     * Remove all client message on Client Messages tab
+     */
+    public void clearClientMessages()
+    {
+        clientMsgList.removeAll();
     }
     
     /**
