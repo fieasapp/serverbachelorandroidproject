@@ -14,9 +14,9 @@ input/
 ! path for output  (incl. slash)- subdirectories not allowed, that is helpfiles, socket file and log file: BasicsDef::theOutpath
 output/
 !path for calibration files
-calibration_summary_2013012208_5420.dat
+C:/CalPoint_des2012/
 ! Run type. Type C for calibration run, P for production run, and R for recalculation calibration values
-P
+C
 ! Camera type. RGB24 or RGB8
 RGB8
 ! Frame and wand type. ORIGINAL or DIODE
@@ -24,7 +24,7 @@ ORIGINAL
 ! name of calibration summary file, for recalculating calibration values. The file has to be in the calibration directory.
 calibration_summary_2012062311_3540.dat
 ! path and name of calibration file, the file has to be placed in the input directory: BasicsDef::calibrationFilename = BasicsDef::theInpath + ... calibration_summary_2012122008_5133.dat
-C:/CalPoint_des2012/
+calibration_summary_2013012208_5420.dat
 ! path and name of trigger program (only relevant if all image file input options are false)
 k:/4dviz/Programvare/kode/TTL_PortNoInput/Release/TTL_PortNoInput.exe
 ! trigging interval, millisec: InputDef::triggingIntervalMs
@@ -42,7 +42,7 @@ COM4
 ! Parameter for point detection: Offset pixel value (from median) to separate background from particles: InputDef::imlimit
 80
 ! Parameter for point detection: Minimum number of pixels in the x- and y-direction to identify a point: InputDef::minpix
-0
+6
 ! Parameter for point detection: Maximum number of pixels in the x- and y-direction to identify a point: InputDef::maxpix
 50
 ! Parameter for point detection: Size of window used for removing image 'background': ImageDef::subwinz
