@@ -209,7 +209,7 @@ Observer, ItemListener, HyperlinkListener{
     
     /**
      * Method that execute save function after 
-     * data is validated.
+     * data is validated. Data is save in serverconfig.properties file.
      */
     public void saveServerSettings()
     {
@@ -292,6 +292,9 @@ Observer, ItemListener, HyperlinkListener{
             mainGui.setEnableStopBtn(false);
             activityServer.stop();
             thread.join();
+            thread = null;
+            mainGui.clearServerMessages();
+            mainGui.clearClientMessages();
             mainGui.setEnableStartBtn(true);
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerSettingsController.class.getName()).log(Level.SEVERE, null, ex);

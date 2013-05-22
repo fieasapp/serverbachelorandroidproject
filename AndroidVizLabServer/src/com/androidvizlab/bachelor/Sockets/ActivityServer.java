@@ -77,6 +77,8 @@ public class ActivityServer extends SimpleObservable implements Runnable{
             stop();
         }    
         
+        setContinueRunning(true);
+        
         setServerState(ServerState.SERVER_STATE_RUNNING); //Set server state
             
         while(continueRunning)
@@ -102,14 +104,6 @@ public class ActivityServer extends SimpleObservable implements Runnable{
             catch(Exception ex)
             {
                 this.notifyObservers("Server: Closing socket connection...");
-                try
-                {
-                    Thread.sleep(10000);
-                }
-                catch(InterruptedException ie)
-                {
-                    
-                }
                 this.notifyObservers("Server: Connection closed.");
                 ex.printStackTrace();
             }

@@ -61,8 +61,7 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     private CameraFileReader camFileReader = null;
     
     //FILE PATH AND FILENAMES
-    private String optionsFilePath = 
-            "src//com//androidvizlab//bachelor//calibrationandoptionsfile//options.txt";
+    private String optionsFilePath = "";
     
     private String calibrationFilePath = "";
     
@@ -106,10 +105,18 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     {
         try
         {
+            if(publisher != null)
+            {
+                publisher.disconnect();
+            }
+            
+            setContinueReading(false);
+            
             if(!conSocket.isClosed() && conSocket != null)
             {
                 conSocket.close();
             }
+            
             t.join();
             t = null;
         }
@@ -228,9 +235,9 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
             }
             catch(Exception e)
             {
-                //continueReading = false;
                 e.printStackTrace();
                 System.out.println("Error: " + e);
+                continueReading = false;
             }
         }
     }
@@ -369,6 +376,17 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     }
     
     //*** GETTERS AND SETTERS ***//
+
+    public boolean isContinueReading() {
+        return continueReading;
+    }
+
+    public void setContinueReading(boolean continueReading) {
+        this.continueReading = continueReading;
+        
+        notifyObservers();
+    }
+    
     public void setProcessingVariables(String optionsFilePath, 
             String externalPrgrmPath, String brokerAddress, int brokerPort,String calibrationFilePath)
     {
