@@ -1,7 +1,6 @@
 package runtimetest;
 
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
-import java.io.File;
 
 /**
  *
@@ -23,8 +22,8 @@ implements Runnable{
         try
         {    
             Runtime rt = Runtime.getRuntime();
-            Process proc = rt.exec("java RuntimeTest",null,new File(executableFilePath));
-            //Process proc = rt.exec(executableFilePath);
+            //Process proc = rt.exec("java RuntimeTest",null,new File(executableFilePath));
+            Process proc = rt.exec(executableFilePath);
             
             // any error message?
             StreamIOCapture error_capture = new 
