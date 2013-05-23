@@ -183,7 +183,7 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
                         
                         File summary = fau.getLatestCalibrationSummaryFile(calibrationFilePath, CustomFileFilter.FILE_EXTENSION_DAT);
                         
-                        camFileReader.realCalibrationSummaryFile(summary);
+                        camFileReader.readCalibrationSummaryFile(summary);
                         
                         ArrayList<UniqueCamGroups> uniquegrp = camFileReader.getAllUniqueCamGrpSorted();
           
