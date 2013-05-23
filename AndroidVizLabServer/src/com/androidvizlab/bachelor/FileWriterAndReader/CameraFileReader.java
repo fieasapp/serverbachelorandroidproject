@@ -77,11 +77,18 @@ public class CameraFileReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//cameraGroups.add(addCameraGroup());
+		// cameraGroups.add(addCameraGroup());
 
 	}
 
-	public void realCalibrationSummaryFile(File file) {
+	/**
+	 * Reads a file line by line and stores all the lines in an ArrayList inside
+	 * the CameraFileReader object.
+	 * 
+	 * @param file
+	 *            The calibration summary .dat file
+	 */
+	public void readCalibrationSummaryFile(File file) {
 
 		// Reads all lines from the file to the allLines array
 		try {
@@ -110,7 +117,7 @@ public class CameraFileReader {
 			e.printStackTrace();
 		}
 
-		sortedTableFromSummary = formatLineArray('=', allLinesCalibSummary, 0);
+		sortedTableFromSummary = separateSection('=', allLinesCalibSummary, 0);
 		addAllCameraComps();
 		addAllS0();
 		addAllMeans();
@@ -129,13 +136,14 @@ public class CameraFileReader {
 
 	private ArrayList<Camera> getCams(int i) {
 		ArrayList<String> temp = new ArrayList<>();
-		temp = formatLineArray('=', allLinesCalibSummary, i+1);
+		temp = separateSection('=', allLinesCalibSummary, i + 1);
 		return addCamera(findIndices("Camno", temp), temp);
 	}
 
 	/**
-	 * Adds the first word of every line in the cameraGroupInfoLines array to
-	 * the cameraCombinations array.
+	 * Reads all cameragroup names from the first column in the
+	 * "SORTED - Camera combinations with S0" table, and adds them in the
+	 * camGrpNames ArrayList.
 	 */
 	private void addAllCameraComps() {
 		String line = "";
@@ -148,8 +156,10 @@ public class CameraFileReader {
 	}
 
 	/**
-	 * Adds the second word of every line in the cameraGroupInfoLines array to
-	 * the s0 array.
+	 * Reads all data from the s0 column (second column) in the
+	 * "SORTED - Camera combinations with S0" table, and adds them in the s0
+	 * ArrayList
+	 * 
 	 */
 	private void addAllS0() {
 		double value = 0.0;
@@ -165,8 +175,9 @@ public class CameraFileReader {
 	}
 
 	/**
-	 * Adds the 4th word of every line in the cameraGroupInfoLines array to the
-	 * mean array.
+	 * Reads all data from the mean column (third column) in the
+	 * "SORTED - Camera combinations with S0" table, and adds them in the mean
+	 * ArrayList
 	 */
 	private void addAllMeans() {
 		double value = 0.0;
@@ -178,8 +189,9 @@ public class CameraFileReader {
 	}
 
 	/**
-	 * Adds the 6th word of every line in the cameraGroupInfoLines array to the
-	 * max array.
+	 * Reads all data from the max column (fourth column) in the
+	 * "SORTED - Camera combinations with S0" table, and adds them in the max
+	 * ArrayList
 	 */
 	private void addAllMax() {
 		double value = 0.0;
@@ -195,8 +207,9 @@ public class CameraFileReader {
 	}
 
 	/**
-	 * Adds the 11th word of every line in the cameraGroupInfoLines array to the
-	 * noOfFramesUsed array
+	 * Reads all data from the No of frames used column (fifth column) in the
+	 * "SORTED - Camera combinations with S0" table, and adds them in the
+	 * noOfFramesUsed ArrayList
 	 */
 	private void addAllNoOfFramesUsed() {
 		int value = 0;
@@ -208,43 +221,48 @@ public class CameraFileReader {
 	}
 
 	/**
-	 * This method removes all lines before the first and after the second
-	 * occurrence of the specified character in the inputArray and returns it as
-	 * a new array.
+	 * This method is used to separate the different sections in the calibration
+	 * summary file, witch is separated by one line of "============" It checks if the first char at the line equals ch, if so it
+	 * removes every line before the first and after the second occurrence of ch.
 	 * 
+	 * @param ch - the character that separates the sections, presumably '='
+	 * @param inputArray - ArrayList containing the calibration summary, line by line
+	 * @param offset - used to skip sections, i.e with offset = 1, it removes every line before the second and after the third occurrence of ch. etc.
 	 * 
+	 * @return ArrayList containing the desired section
 	 */
-	private ArrayList<String> formatLineArray(char ch,
+	private ArrayList<String> separateSection(char ch,
 			ArrayList<String> inputArray, int offset) {
 		ArrayList<String> array = new ArrayList<String>();
 		for (String s : inputArray) {
 			array.add(s);
 		}
-		int occurances = 0;
-		int indexStart = -1;
+		int occurances = 0; //counts the occurrences of ch
+		int indexStart = -1; //Is set to -1 in case c==ch in the first round of the for-loop below
 		int indexEnd = 0;
 		char c = 0;
 		String line;
 		for (int i = 0; i < array.size(); i++) {
 			line = array.get(i);
-			if (!line.isEmpty()){
-				c = line.charAt(0);
+			if (!line.isEmpty()) {
+				c = line.charAt(0); //checks the first char at the current line (current index in array)
 				if (c == ch) {
-					occurances++;
-					if (indexStart > -1 && occurances > offset) {
+					occurances++; 
+					if (indexStart > -1 && occurances > offset) { //Conditions true only if indexStart already has been set in the else if below
 						indexEnd = i;
 						break;
-					} else if (occurances > offset) {
+					} else if (occurances > offset) { //Will always be true before the if-statement above
 						indexStart = i;
 					}
 				}
 			}
 		}
+		//Removes elements after indexEnd
 		int temp = array.size();
 		for (int i = indexEnd; i < temp; i++) {
 			array.remove(indexEnd);
 		}
-
+		//Removes elements before indexStart
 		for (int i = 0; i <= indexStart; i++) {
 			array.remove(0);
 		}
@@ -252,56 +270,40 @@ public class CameraFileReader {
 		return array;
 	}
 
-	public void printFile() {
-		for (String s : allLinesCalibSummary) {
-			System.out.println(s);
-		}
-	}
 
 	// Fra calib_cobFiler
 
-/*	public CameraGroup addCameraGroup() {
-		double s0 = 0.0;
-		double mean = 0.0;
-		double max = 0.0;
-		for (int i = 0; i < allLinesCameraCombinationsFile.size(); i++) {
-			String temp = allLinesCameraCombinationsFile.get(i);
-			if (formatSentence(temp, 1, 0).equals("S0")) {
-				s0 = Double
-						.parseDouble(removeChars(formatSentence(temp, 1, 2)));
-				mean = Double
-						.parseDouble(removeChars(formatSentence(temp, 1, 4)));
-				max = Double
-						.parseDouble(removeChars(formatSentence(temp, 1, 6)));
-				break;
-			}
-		}
-		CameraGroup c = new CameraGroup(mean, max, s0, addAllCameras());
-		allLinesCameraCombinationsFile.clear();
-		return c;
-	}*/
+	/*
+	 * public CameraGroup addCameraGroup() { double s0 = 0.0; double mean = 0.0;
+	 * double max = 0.0; for (int i = 0; i <
+	 * allLinesCameraCombinationsFile.size(); i++) { String temp =
+	 * allLinesCameraCombinationsFile.get(i); if (formatSentence(temp, 1,
+	 * 0).equals("S0")) { s0 = Double
+	 * .parseDouble(removeChars(formatSentence(temp, 1, 2))); mean = Double
+	 * .parseDouble(removeChars(formatSentence(temp, 1, 4))); max = Double
+	 * .parseDouble(removeChars(formatSentence(temp, 1, 6))); break; } }
+	 * CameraGroup c = new CameraGroup(mean, max, s0, addAllCameras());
+	 * allLinesCameraCombinationsFile.clear(); return c; }
+	 */
 
-/*	public ArrayList<Camera> addAllCameras() {
-		ArrayList<Camera> cams = new ArrayList<Camera>();
-		ArrayList<Integer> indexes = findIndices("Camno");
-		for (int i = 0; i < indexes.size(); i++) {
-			cams.add(addCamera(indexes.get(i)));
-		}
-		// Collections.sort(cameras);
-		Collections.sort(cams);
-		return cams;
-	}*/
+	/*
+	 * public ArrayList<Camera> addAllCameras() { ArrayList<Camera> cams = new
+	 * ArrayList<Camera>(); ArrayList<Integer> indexes = findIndices("Camno");
+	 * for (int i = 0; i < indexes.size(); i++) {
+	 * cams.add(addCamera(indexes.get(i))); } // Collections.sort(cameras);
+	 * Collections.sort(cams); return cams; }
+	 */
 
 	/**
-	 * This method iterates through the allLinesCameraCombinationsFile list,
-	 * picks up the parameters needed to make a cameraInfo object and adds the
-	 * object to the cameras list. Only adds one object to the list based on the
-	 * start parameter.
+	 * Makes Camera objects from a String ArrayList
 	 * 
-	 * @param start
-	 *            The index of the list it will start the iteration.
+	 * @param indices - list of indices, so the method knows how many Camera-objects to add and at witch index to start reading 
+	 * @param text - containing the raw String from the calibration summary with the data needed to make one or more Camera-objects
 	 */
-	private ArrayList<Camera> addCamera(ArrayList<Integer> indices, ArrayList<String> text) {
+	private ArrayList<Camera> addCamera(ArrayList<Integer> indices,
+			ArrayList<String> text) {
+		
+		/*Camera attributes*/
 		int camNo = 0;
 		double c = 0.0;
 		double xh = 0.0;
@@ -311,6 +313,8 @@ public class CameraFileReader {
 		float f2 = 0;
 		float p1 = 0;
 		float p2 = 0;
+		
+		
 		ArrayList<Camera> camList = new ArrayList<>();
 		String line = "";
 		for (int j = 0; j < indices.size(); j++) {
@@ -363,15 +367,13 @@ public class CameraFileReader {
 		return cameraGroups;
 	}
 
-/*	public ArrayList<CameraGroup> getCameraCombInfo() {
-		ArrayList<CameraGroup> list = new ArrayList<CameraGroup>();
-		for (int i = 0; i < camGrpNames.size(); i++) {
-			list.add(new CameraGroup(mean.get(i), max.get(i), s0.get(i),
-					noOfFramesUsed.get(i), addCameraToCameraGroup(camGrpNames
-							.get(i))));
-		}
-		return list;
-	}*/
+	/*
+	 * public ArrayList<CameraGroup> getCameraCombInfo() {
+	 * ArrayList<CameraGroup> list = new ArrayList<CameraGroup>(); for (int i =
+	 * 0; i < camGrpNames.size(); i++) { list.add(new CameraGroup(mean.get(i),
+	 * max.get(i), s0.get(i), noOfFramesUsed.get(i),
+	 * addCameraToCameraGroup(camGrpNames .get(i)))); } return list; }
+	 */
 
 	private ArrayList<Camera> addCameraToCameraGroup(String s) {
 		ArrayList<Camera> list = new ArrayList<Camera>();
@@ -400,7 +402,7 @@ public class CameraFileReader {
 		}
 		return b;
 	}
-
+	
 	public ArrayList<CameraGroup> getRecommendedCameraGroups() {
 		ArrayList<CameraGroup> output = new ArrayList<CameraGroup>();
 		ArrayList<CameraGroup> input = getCameraGroups();
@@ -465,7 +467,8 @@ public class CameraFileReader {
 
 	/*public static void main(String[] args) {
 		CameraFileReader cfr = new CameraFileReader();
-		cfr.realCalibrationSummaryFile(new File("src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibration_summary_ny.dat"));
+		cfr.readCalibrationSummaryFile(new File(
+				"src//com//androidvizlab//bachelor//calibrationandoptionsfile//calibration_summary_ny.dat"));
 		ArrayList<CameraGroup> ccc = cfr.getCameraGroups();
 		Collections.sort(ccc);
 		System.out.println("tabsize: " + ccc.size());

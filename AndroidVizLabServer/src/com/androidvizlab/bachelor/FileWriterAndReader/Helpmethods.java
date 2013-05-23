@@ -1,7 +1,5 @@
 package com.androidvizlab.bachelor.FileWriterAndReader;
 
-import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.formatSentence;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
