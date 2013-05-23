@@ -68,7 +68,7 @@ public class MessagePublisher implements MqttSimpleCallback, Runnable{
     {
         try
         {
-            if(mqttClient.isConnected())
+            if(mqttClient != null && mqttClient.isConnected())
             {
                 mqttClient.disconnect();
             }

@@ -2,6 +2,7 @@ package com.androidvizlab.bachelor.Sockets;
 
 import com.androidvizlab.bachelor.Enums.SocketMessage;
 import com.androidvizlab.bachelor.FileWriterAndReader.CameraFileReader;
+import com.androidvizlab.bachelor.FileWriterAndReader.CameraFileWriter;
 import com.androidvizlab.bachelor.FileWriterAndReader.FileAccessUtility;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileReader;
 import com.androidvizlab.bachelor.FileWriterAndReader.OptionsFileWriter;
@@ -56,9 +57,10 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     private ExternalProcessHandler eph = null; //Handles the execution of the external program
     
     //READERS AND WRITERS(OPTIONSFILE & CALIBRATION FILES)
-    private OptionsFileWriter optionsFileWriter = null;
-    private OptionsFileReader optionsFileReader = null;
-    private CameraFileReader camFileReader = null;
+    private OptionsFileWriter optionsFileWriter = null; //For overwritting options.txt file.
+    private OptionsFileReader optionsFileReader = null; //For reading options.txt file.
+    private CameraFileReader camFileReader = null; //For reading calibration summary file.
+    private CameraFileWriter camFileWriter = null; //For overwritting calibration summary files for Production.
     
     //FILE PATH AND FILENAMES
     private String optionsFilePath = "";
@@ -184,7 +186,7 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
                         camFileReader.realCalibrationSummaryFile(summary);
                         
                         ArrayList<UniqueCamGroups> uniquegrp = camFileReader.getAllUniqueCamGrpSorted();
-                        
+          
                         //SEND as VizlabOutputData object
                         output = new VizlabOutputData();
                         output.setUniqueCamGrp(uniquegrp);
@@ -213,24 +215,34 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
                     
                     input = (VizlabInputData) obj;
                     
-                    try 
+                    if(input != null)
                     {
-                        optionsFileWriter = new OptionsFileWriter(new File(optionsFilePath),input);
-                        
-                        optionsFileWriter.writeToFile();
-                    } 
-                    catch (IOException ex)
-                    {
-                        System.out.println("Failed to overwrite file.");
-                    
-                        notifyObservers("Failed to overwrite file.");
-                    }
-                    
-                    System.out.println("File overwritten.\nExecuting external process...");
-                    notifyObservers("File overwritten.");
-                    notifyObservers("Executing external process...");
-                    
-                    executeExternalProcess();       
+                        try 
+                        {
+                            if(input.getRunType().equals("P"))
+                            {
+                                camFileWriter = new CameraFileWriter(new File(input.getCalibrationFilePath().trim()+input.getCalibrationFileName().trim()));
+                                camFileWriter.setCameraGroups(input.getSelectedTripCamGrps());
+                                camFileWriter.writeToFile();
+                            }
+                            
+                            optionsFileWriter = new OptionsFileWriter(new File(optionsFilePath),input);
+
+                            optionsFileWriter.writeToFile();
+                        } 
+                        catch (IOException ex)
+                        {
+                            System.out.println("Failed to overwrite file.");
+
+                            notifyObservers("Failed to overwrite file.");
+                        }
+
+                        System.out.println("File overwritten.\nExecuting external process...");
+                        notifyObservers("File overwritten.");
+                        notifyObservers("Executing external process...");
+
+                        executeExternalProcess();
+                    }       
                 }
             }
             catch(Exception e)
