@@ -29,7 +29,7 @@ import javax.swing.event.HyperlinkListener;
  *
  * @author The Hive
  */
-public class ServerSettingsController extends ComponentAdapter implements ActionListener,
+public class ServerController extends ComponentAdapter implements ActionListener,
 Observer, ItemListener, HyperlinkListener{
     
     private ServerMainGui mainGui = null; //Main View
@@ -63,12 +63,12 @@ Observer, ItemListener, HyperlinkListener{
     public static final String COMMAND_INFO_OPTNFILEPATH = "infoOptnsFilePath";
     public static final String COMMAND_INFO_EXTPRGMPATH = "infoExtPrgmPath";
     
-    public ServerSettingsController()
+    public ServerController()
     {
         
     }
     
-    public ServerSettingsController(ServerMainGui mainGui, 
+    public ServerController(ServerMainGui mainGui, 
             ServerSettingsModel settingsModel, ActivityServer activityServer)
     {
         this.settingsModel = settingsModel;
@@ -297,7 +297,7 @@ Observer, ItemListener, HyperlinkListener{
             mainGui.clearClientMessages();
             mainGui.setEnableStartBtn(true);
         } catch (InterruptedException ex) {
-            Logger.getLogger(ServerSettingsController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
