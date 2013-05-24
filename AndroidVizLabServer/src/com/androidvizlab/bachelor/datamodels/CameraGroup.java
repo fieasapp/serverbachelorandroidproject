@@ -24,10 +24,6 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 		this.s0 = s0;
 		this.noOfFramesUsed = noOfFramesUsed;
 		this.cameraList = cameraList;
-		for (int i = 0; i < cameraList.size(); i++) {
-			groupName += cameraList.get(i).getCamNo() + " ";
-		}
-
 	}
 
 	public double getMean() {
