@@ -1,6 +1,6 @@
 package com.androidvizlab.bachelor.Gui;
 
-import com.androidvizlab.bachelor.Controller.ServerSettingsController;
+import com.androidvizlab.bachelor.Controller.ServerController;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -81,47 +81,47 @@ public class SettingsDialog extends javax.swing.JDialog {
     public void setActionListener()
     {
         btnClear.addActionListener(actionListener);
-        btnClear.setActionCommand(ServerSettingsController.COMMAND_CLEAR);
+        btnClear.setActionCommand(ServerController.COMMAND_CLEAR);
         
         btnSave.addActionListener(actionListener);
-        btnSave.setActionCommand(ServerSettingsController.COMMAND_SAVE);
+        btnSave.setActionCommand(ServerController.COMMAND_SAVE);
         
         cbUseMachineName.addItemListener(itemListener);
         cbBrokerAddress.addItemListener(itemListener);
         
         btnChooseOptionFilePath.addActionListener(actionListener);
-        btnChooseOptionFilePath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_OPT_FILEPATH);
+        btnChooseOptionFilePath.setActionCommand(ServerController.COMMAND_CHOOSE_OPT_FILEPATH);
         
         btnChooseCalibrationFilePath.addActionListener(actionListener);
-        btnChooseCalibrationFilePath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_CAL_FILEPATH);
+        btnChooseCalibrationFilePath.setActionCommand(ServerController.COMMAND_CHOOSE_CAL_FILEPATH);
         
         btnChooseExtProgPath.addActionListener(actionListener);
-        btnChooseExtProgPath.setActionCommand(ServerSettingsController.COMMAND_CHOOSE_EXTPRG_PATH);
+        btnChooseExtProgPath.setActionCommand(ServerController.COMMAND_CHOOSE_EXTPRG_PATH);
         
         btnSaveFilePaths.addActionListener(actionListener);
-        btnSaveFilePaths.setActionCommand(ServerSettingsController.COMMAND_SAVE_FILEPATHS);
+        btnSaveFilePaths.setActionCommand(ServerController.COMMAND_SAVE_FILEPATHS);
         
         btnClearPaths.addActionListener(actionListener);
-        btnClearPaths.setActionCommand(ServerSettingsController.COMMAND_CLEAR_PATHS);
+        btnClearPaths.setActionCommand(ServerController.COMMAND_CLEAR_PATHS);
         
         //info buttons
         btnInfoServerName.addActionListener(actionListener);
-        btnInfoServerName.setActionCommand(ServerSettingsController.COMMAND_INFO_SERVERNAME);
+        btnInfoServerName.setActionCommand(ServerController.COMMAND_INFO_SERVERNAME);
         
         btnInfoServerPort.addActionListener(actionListener);
-        btnInfoServerPort.setActionCommand(ServerSettingsController.COMMAND_INFO_SERVERPORT);
+        btnInfoServerPort.setActionCommand(ServerController.COMMAND_INFO_SERVERPORT);
         
         btnInfoBrokerAddress.addActionListener(actionListener);
-        btnInfoBrokerAddress.setActionCommand(ServerSettingsController.COMMAND_INFO_MQTTBROKER);
+        btnInfoBrokerAddress.setActionCommand(ServerController.COMMAND_INFO_MQTTBROKER);
         
         btnInfoBrokerPort.addActionListener(actionListener);
-        btnInfoBrokerPort.setActionCommand(ServerSettingsController.COMMAND_INFO_BROKERPORT);
+        btnInfoBrokerPort.setActionCommand(ServerController.COMMAND_INFO_BROKERPORT);
         
         btnInfoOptionsFilePath.addActionListener(actionListener);
-        btnInfoOptionsFilePath.setActionCommand(ServerSettingsController.COMMAND_INFO_OPTNFILEPATH);
+        btnInfoOptionsFilePath.setActionCommand(ServerController.COMMAND_INFO_OPTNFILEPATH);
         
         btnInfoExternalPrgmPath.addActionListener(actionListener);
-        btnInfoExternalPrgmPath.setActionCommand(ServerSettingsController.COMMAND_INFO_EXTPRGMPATH);
+        btnInfoExternalPrgmPath.setActionCommand(ServerController.COMMAND_INFO_EXTPRGMPATH);
     }
     
     //*** SET TEXT TO TEXT FIELD ***//

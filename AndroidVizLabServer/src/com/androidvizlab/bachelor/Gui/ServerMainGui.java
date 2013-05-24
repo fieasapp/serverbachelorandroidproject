@@ -1,6 +1,6 @@
 package com.androidvizlab.bachelor.Gui;
 
-import com.androidvizlab.bachelor.Controller.ServerSettingsController;
+import com.androidvizlab.bachelor.Controller.ServerController;
 import com.androidvizlab.bachelor.Sockets.ActivityServer;
 import com.androidvizlab.bachelor.datamodels.ServerSettingsModel;
 import com.androidvizlab.bachelor.utilities.CustomFileFilter;
@@ -190,17 +190,17 @@ public class ServerMainGui extends javax.swing.JFrame {
     public void setActionListener()
     {
         btnStart.addActionListener(actionListener);
-        btnStart.setActionCommand(ServerSettingsController.COMMAND_START);
+        btnStart.setActionCommand(ServerController.COMMAND_START);
         btnStop.addActionListener(actionListener);
-        btnStop.setActionCommand(ServerSettingsController.COMMAND_STOP);
+        btnStop.setActionCommand(ServerController.COMMAND_STOP);
         exitFileMenuItem.addActionListener(actionListener);
-        exitFileMenuItem.setActionCommand(ServerSettingsController.COMMAND_EXIT);
+        exitFileMenuItem.setActionCommand(ServerController.COMMAND_EXIT);
         serverSettingsMenuItem.addActionListener(actionListener);
-        serverSettingsMenuItem.setActionCommand(ServerSettingsController.COMMAND_SERVER_SETTINGS);
+        serverSettingsMenuItem.setActionCommand(ServerController.COMMAND_SERVER_SETTINGS);
         helpContentHelpMenuItem.addActionListener(actionListener);
-        helpContentHelpMenuItem.setActionCommand(ServerSettingsController.COMMAND_HELP);
+        helpContentHelpMenuItem.setActionCommand(ServerController.COMMAND_HELP);
         aboutHelpMenuItem.addActionListener(actionListener);
-        aboutHelpMenuItem.setActionCommand(ServerSettingsController.COMMAND_ABOUT);
+        aboutHelpMenuItem.setActionCommand(ServerController.COMMAND_ABOUT);
     }
     
     public void setComponentListener(ComponentListener listener)
@@ -604,7 +604,7 @@ public class ServerMainGui extends javax.swing.JFrame {
         //**** MVC ***//
          
         //** Controller (Observer,Listener)**//
-        ServerSettingsController controller = new ServerSettingsController();
+        ServerController controller = new ServerController();
         
         //** Main View **//
         final ServerMainGui gui = new ServerMainGui(controller,controller,
