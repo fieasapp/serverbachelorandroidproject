@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import runtimetest.ExternalProcessHandler;
 
 /**
- *
+ * Handles client connections in new thread.
  * @author The Hive
  */
 public class ClientHandler extends SimpleObservable implements Runnable, Observer{
@@ -103,6 +103,9 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
         }
     }
  
+    /**
+     * Closes the socket connection and stops the client thread.
+     */
     public void stop()
     {
         try
@@ -255,6 +258,10 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     }
     
     //Send data - VizlabInpuData or VizlabOutputData
+    /**
+     * Method to send data through the socket stream.
+     * @param object object that are sent must be serialized.
+     */
     public void sendData(Object object)
     {
     	String msg = "Ready to send data...";
@@ -289,6 +296,10 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     }
     
     //Send message
+    /**
+     * Sends a string through the socket stream.
+     * @param m a string message sent through the stream.
+     */
     public void sendMessage(String m)
     {
     	String msg = "Ready to send message...";
@@ -382,6 +393,12 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
         }
     }
     
+    /**
+     * Observer interface method -
+     * Allows observer to perform updates when changes in the observable happened
+     * 
+     * @param e
+     */
     @Override
     public void update(DataChangeEvent<?> e) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -399,6 +416,15 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
         notifyObservers();
     }
     
+    /**
+     * An method used by the server to set the proper values for paths and location of
+     * certain resources need to run the appliction.
+     * @param optionsFilePath File path of the options.txt file.
+     * @param externalPrgrmPath File path and name of the executable file (.exe)
+     * @param brokerAddress MQTT's IP address
+     * @param brokerPort MQTT's port number
+     * @param calibrationFilePath File path for the calibration summary.
+     */
     public void setProcessingVariables(String optionsFilePath, 
             String externalPrgrmPath, String brokerAddress, int brokerPort,String calibrationFilePath)
     {
