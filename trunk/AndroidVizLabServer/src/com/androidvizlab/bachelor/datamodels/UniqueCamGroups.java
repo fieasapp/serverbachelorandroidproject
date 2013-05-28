@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Holds a list of camera groups that are uniquely combine
+ * Holds a list of camera groups that are uniquely combined
  * @author Jakob
  */
 public class UniqueCamGroups implements Comparable<UniqueCamGroups>, Serializable{
