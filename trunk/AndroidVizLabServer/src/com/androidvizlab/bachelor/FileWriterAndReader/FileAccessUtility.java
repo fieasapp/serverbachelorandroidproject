@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * A utility class containing certain method for reading, writing and retrieving file paths.
  * @author The Hive
  */
 public class FileAccessUtility {
@@ -47,6 +47,10 @@ public class FileAccessUtility {
         this.FILE_NAME = filename;
     }
     
+    /**
+     * Creates a file is the file does not exists
+     * @param filename the name of the file to be created
+     */
     public void createFile(String filename)
     {
         try 
@@ -60,6 +64,11 @@ public class FileAccessUtility {
         }
     }
     
+    /**
+     * Checks if a given file exists
+     * @param file the file in questioned
+     * @return Returns a positive integer if the file exists, otherwise a negative integer is returned.
+     */
     public int checkFileExist(File file)
     {
         int id = 1;
@@ -192,6 +201,12 @@ public class FileAccessUtility {
         }
     }
     
+    /**
+     * Retrieves a list of file paths and file names under a given directory. A file extension must be declared.
+     * @param directoryPath the directory address of the file(s).
+     * @param fileExtension a specified file extension to determine the type of file to be retrieved.
+     * @return 
+     */
     public ArrayList<String> getDirectoriesFilePathList(String directoryPath, final String fileExtension)
     {
         File directory = new File(directoryPath);
@@ -228,6 +243,12 @@ public class FileAccessUtility {
         return filePathList;
     }
     
+    /**
+     * Retrieves the lastes modified file in a given directory.
+     * @param filepath the path of the directory where the file is located.
+     * @param fileExtension determines the type of file to be retrieved by an extension
+     * @return Returns the lastes modified file under the directory.
+     */
     public File getLatestCalibrationSummaryFile(String filepath, final String fileExtension)
     {
         File dir = new File(filepath);
