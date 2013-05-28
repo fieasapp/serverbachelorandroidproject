@@ -1,7 +1,7 @@
 package com.androidvizlab.bachelor.Interface;
 
 /**
- * 
+ * An interface implemented by Observers. Used in the observer-pattern
  * @author The Hive
  */
 public interface Observer {

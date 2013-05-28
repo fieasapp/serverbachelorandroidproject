@@ -3,7 +3,7 @@ package com.androidvizlab.bachelor.Interface;
 import java.util.ArrayList;
 
 /**
- * 
+ * An interface implemented by the observable objects. Used in the observer-pattern.
  * @author The Hive
  */
 public interface IObservable {
