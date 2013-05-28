@@ -2,7 +2,7 @@ package runtimetest;
 
 import java.io.*;
 /**
- *
+ * This is used to capture streams from an external process
  * @author The Hive
  */
 public class StreamIOCapture extends Thread{
@@ -18,6 +18,9 @@ public class StreamIOCapture extends Thread{
         this.type = type;
     }
     
+    /**
+     * main run method for execution on a thread
+     */
     @Override
     public void run()
     {

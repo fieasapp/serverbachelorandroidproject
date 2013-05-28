@@ -105,6 +105,10 @@ public class CustomFileFilter extends FileFilter{
         return filename;
     }
     
+    /**
+     * Used to find a given directory.
+     * @return returns a string value of a given directory's path
+     */
     public String getDirectoryPath()
     {
         String directoryPath = "";
