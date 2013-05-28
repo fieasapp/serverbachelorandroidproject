@@ -3,7 +3,7 @@ package com.androidvizlab.bachelor.datamodels;
 import java.io.Serializable;
 
 /**
- * Represents the options-file. This class is sent through the stream between client and server
+ * Holds the values in the options-file. This class is sent through the stream between client and server
  * @author Jakob
  */
 public class VizlabInputData implements Serializable {
