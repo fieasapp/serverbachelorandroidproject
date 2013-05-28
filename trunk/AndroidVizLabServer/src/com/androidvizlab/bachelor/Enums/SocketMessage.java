@@ -1,7 +1,7 @@
 package com.androidvizlab.bachelor.Enums;
 
 /**
- *
+ * Enums used as commands sent between client and server.
  * @author The Hive
  */
 public enum SocketMessage

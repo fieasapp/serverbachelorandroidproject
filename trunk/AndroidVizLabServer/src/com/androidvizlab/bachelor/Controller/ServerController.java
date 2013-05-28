@@ -26,7 +26,9 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
 /**
- *
+ * This is the main Controller for the application.
+ * Handles all clicks and events.
+ * 
  * @author The Hive
  */
 public class ServerController extends ComponentAdapter implements ActionListener,
@@ -303,6 +305,11 @@ Observer, ItemListener, HyperlinkListener{
     
     //*** COMPONENT LISTENER  ***//
     
+    /**
+     * Listens for a specific component to be visible and 
+     * updates or set initial values.
+     * @param ce source of the event
+     */
     @Override
     public void componentShown(ComponentEvent ce) {
         super.componentShown(ce);
@@ -319,6 +326,12 @@ Observer, ItemListener, HyperlinkListener{
     
     //*** ITEM LISTENER INTERFACE ***//
     
+    /**
+     * Listens to change on an items state.
+     * Mainly used in CheckBoxes.
+     * 
+     * @param ie event source
+     */
     @Override
     public void itemStateChanged(ItemEvent ie) {
         
@@ -355,6 +368,11 @@ Observer, ItemListener, HyperlinkListener{
     
     //*** ACTION LISTENER INTERFACE ***//
     
+    /**
+     * Listens for a click event and executes the proper action 
+     * accordingly.
+     * @param ae 
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
         
@@ -363,81 +381,81 @@ Observer, ItemListener, HyperlinkListener{
         switch (command) 
         {
             case COMMAND_START:
-                startServer();
+                startServer(); //when the Start-button is clicked
                 break;
                 
             case COMMAND_STOP:
-                stopServer();
+                stopServer(); //when the Stop-button is clicked
                 break;
                 
             case COMMAND_CLEAR:
-                mainGui.getSettingsForm().clearForm();
+                mainGui.getSettingsForm().clearForm(); //when the Clear-button is clicked
                 break;
                 
             case COMMAND_SAVE:
-                saveServerSettings();
+                saveServerSettings(); //when the Save-button is clicked
                 break;
                 
             case COMMAND_EXIT:
-                mainGui.exit();
+                mainGui.exit(); //when the the exit-menu item is clicked or Ctrl+x
                 break;
                 
-            case COMMAND_SERVER_SETTINGS:
+            case COMMAND_SERVER_SETTINGS: //opens server settings dialog when Server Settings menu item is clicked or Ctrl+Alt+S
                 mainGui.openSettingsDialog(settingsModel.getServerName(), settingsModel.getServerPort(),
                         settingsModel.getBrokerAddress(), settingsModel.getBrokerPort(),
                         settingsModel.getOptionsFilePath(),settingsModel.getExternalProgramPath(),
                         settingsModel.getCalibrationFilePath());
                 break;
                 
-            case COMMAND_HELP:
+            case COMMAND_HELP: //opens the help window when Help menu item is clicked or Ctrl+H
                 mainGui.openHelpWindow();
                 break;
                 
-            case COMMAND_ABOUT:
+            case COMMAND_ABOUT: //opens the About window when About menu item is clicked or Ctrl+A
                 mainGui.openAboutWindow();
                 break;
                 
-            case COMMAND_CHOOSE_OPT_FILEPATH:
+            case COMMAND_CHOOSE_OPT_FILEPATH: //open a file chooser window for the options-file path field
                 mainGui.openFileChooserWindow(command);
                 break;
                 
-            case COMMAND_CHOOSE_CAL_FILEPATH:
+            case COMMAND_CHOOSE_CAL_FILEPATH: //opens a file chooser window for the calibration summary path field
                 mainGui.openFileChooserWindow(command);
                 break;
                 
-            case COMMAND_CHOOSE_EXTPRG_PATH:
+            case COMMAND_CHOOSE_EXTPRG_PATH: //opens a file chooser window for the executable program path field
                 mainGui.openFileChooserWindow(command);
                 break;
                 
-            case COMMAND_SAVE_FILEPATHS:
+            case COMMAND_SAVE_FILEPATHS: //save server configuration settings when Save-button is clicked
                 saveServerSettings();
                 break;
                 
-            case COMMAND_CLEAR_PATHS:
+            case COMMAND_CLEAR_PATHS: //save server configuration settings when Save-button is clicked
                 mainGui.getSettingsForm().clearFormPaths();
                 break;
                 
-            case COMMAND_INFO_SERVERNAME:
+            case COMMAND_INFO_SERVERNAME: //opens a help dialog for a given field
                 mainGui.displayInfo(settingsModel.getInfo(command));
                 break;
                 
-            case COMMAND_INFO_SERVERPORT:
+            case COMMAND_INFO_SERVERPORT: //opens a help dialog for a given field
                 mainGui.displayInfo(settingsModel.getInfo(command));
                 break;
 
-            case COMMAND_INFO_MQTTBROKER:
+            case COMMAND_INFO_MQTTBROKER: //opens a help dialog for a given field
                 mainGui.displayInfo(settingsModel.getInfo(command));
                 break;
 
-            case COMMAND_INFO_BROKERPORT:
+            case COMMAND_INFO_BROKERPORT: //opens a help dialog for a given field
                 mainGui.displayInfo(settingsModel.getInfo(command));
                 break;
                 
-            case COMMAND_INFO_OPTNFILEPATH:
+            case COMMAND_INFO_OPTNFILEPATH: //opens a help dialog for a given field
                 mainGui.displayInfo(settingsModel.getInfo(command));
                 break;
                 
-            case COMMAND_INFO_EXTPRGMPATH:
+            case COMMAND_INFO_EXTPRGMPATH: //opens a help dialog for a given field
                 mainGui.displayInfo(settingsModel.getInfo(command));
                 break;
         }
@@ -468,11 +486,21 @@ Observer, ItemListener, HyperlinkListener{
 
     //*** OBSERVER INTERFACE ***//
     
+    /**
+     * Receives update from an observable object and executes 
+     * update on the view
+     * @param e 
+     */
     @Override
     public void update(DataChangeEvent<?> e) {
         updateMainGui(); //update the main view
     }
 
+    /**
+     * Receives update from an observable object and executes 
+     * update on the view
+     * @param e 
+     */
     @Override
     public void update(DataChangeEvent<?> e, Object obj) {
         mainGui.setServerMessage((String)obj);

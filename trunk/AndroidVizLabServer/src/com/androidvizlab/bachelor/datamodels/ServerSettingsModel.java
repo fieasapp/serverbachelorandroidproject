@@ -14,7 +14,8 @@ import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * A model of the server configuration settings. This is used to handles loading and 
+ * saving of server settings on to a .properties file or a regular text file.
  * @author The Hive
  */
 public class ServerSettingsModel extends SimpleObservable{
@@ -65,6 +66,7 @@ public class ServerSettingsModel extends SimpleObservable{
     /**
      * Read server preferences and settings from file
      * and set the values to the model accordingly.
+     * Uses a text-file to save sever Settings
      */
     public void loadServerPreferences()
     {
@@ -117,6 +119,9 @@ public class ServerSettingsModel extends SimpleObservable{
     
     //*** LOAD PROPERTIES AND RESOURCE BUNDLES ***//
     
+    /**
+     * Loads static string values from a resource bundle.
+     */
     public void loadInfo()
     {
         ResourceBundle bundle = ResourceBundle.getBundle("resources.others.FormFieldInfos");
@@ -129,6 +134,12 @@ public class ServerSettingsModel extends SimpleObservable{
         }
     }
     
+    /**
+     * Retrieves a specific value using a specific key. This is used to retrieve info 
+     * on a given field in the server settings dialog.
+     * @param key a specific key used to retrieve a value
+     * @return a string value containing information on a certain field.
+     */
     public String getInfo(String key)
     {
         if(infos.containsKey(key))
@@ -142,14 +153,18 @@ public class ServerSettingsModel extends SimpleObservable{
     }
     
     //LOAD CONFIGURATION SETTINGS
+    /**
+     * Loads the configuration settings from the serverconfig.properties file
+     * If the configuration settings are not found default values will be used.
+     */
     public void loadConfigurationSettings()
     {
         Properties config = new Properties();
         
         try 
         {
-            config.load(new FileInputStream("src//resources//others//serverconfig.properties"));
-            //config.load(new FileInputStream("./serverpreferences/serverconfig.properties"));
+            //config.load(new FileInputStream("src//resources//others//serverconfig.properties"));
+            config.load(new FileInputStream("./serverpreferences/serverconfig.properties"));
             
             setServerName((String)config.getProperty(KEY_SERVER_NAME));
             setServerPort(NumberConverter.converToInt(config.getProperty(KEY_SERVER_PORT),1330));
@@ -180,6 +195,15 @@ public class ServerSettingsModel extends SimpleObservable{
         }
     }
     
+    /**
+     * Saves the configuration settings for the server application.
+     * Settings are saved in a configuration .properties file. If the .properties file
+     * are not found the application will try and create this file.
+     * 
+     * Note! Depending on where the server application is installed it might not be allowed to
+     * create the serverpreferences folder containing the serverconfig.properties file. When this happens 
+     * the folder needs to be create manually is the same directory as the executable jar file.
+     */
     public void saveConfigurationSettings()
     {
         Properties config = new Properties();
@@ -198,8 +222,8 @@ public class ServerSettingsModel extends SimpleObservable{
             config.setProperty(KEY_OPTIONSFILE_PATH, optionsFilePath);
             config.setProperty(KEY_EXTERNALPROGRAM_PATH, externalProgramPath);
             
-            config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
-            /*
+            //config.store(new FileOutputStream("src//resources//others//serverconfig.properties"),null);
+            
             File dir = new File("./serverpreferences");
             
             if(!dir.exists())
@@ -216,7 +240,7 @@ public class ServerSettingsModel extends SimpleObservable{
             else
             {
                 config.store(new FileOutputStream("./serverconfig.properties"),null);
-            }*/
+            }
         } 
         catch (IOException ex) 
         {

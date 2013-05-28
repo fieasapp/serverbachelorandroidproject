@@ -3,7 +3,7 @@ package runtimetest;
 import com.androidvizlab.bachelor.Interface.SimpleObservable;
 
 /**
- *
+ * This class handles and executes a process using RunTiem.exec
  * @author The Hive
  */
 public class ExternalProcessHandler extends SimpleObservable 
@@ -17,6 +17,10 @@ implements Runnable{
     {
     }
     
+    /**
+     * Executes an external process
+     * @return exit value of a given process.
+     */
     public int runProcess()
     {
         try
