@@ -6,7 +6,8 @@ import com.ibm.mqtt.MqttPersistence;
 import com.ibm.mqtt.MqttSimpleCallback;
 
 /**
- *
+ * Main client that connects to the MQTT broker. This is used as a publisher on the publisher/subscriber pattern
+ * This class is used to publish on a given topic where a subscriber(s) is currently registered.
  * @author The Hive
  */
 public class MessagePublisher implements MqttSimpleCallback, Runnable{
@@ -34,6 +35,9 @@ public class MessagePublisher implements MqttSimpleCallback, Runnable{
         
     }
     
+    /**
+     * Sets up the connection and connects to the MQTT broker
+     */
     public void setupConnection()
     {
         connString += brokerName + "@" + brokerPortNr;
@@ -51,6 +55,11 @@ public class MessagePublisher implements MqttSimpleCallback, Runnable{
         }
     }
     
+    /**
+     * Publishes to a given topic.
+     * @param topic the topic to publish to.
+     * @param content the content to publish 
+     */
     public void publish(String topic, String content)
     {
         try
@@ -64,6 +73,9 @@ public class MessagePublisher implements MqttSimpleCallback, Runnable{
         }        
     }
     
+    /**
+     * Disconnects from the MQTT broker
+     */
     public void disconnect()
     {
         try
