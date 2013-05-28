@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 import com.androidvizlab.bachelor.datamodels.VizlabInputData;
 
+/**
+ * Utility class to read the contents of the options-file
+ * @author Jakob
+ */
 public class OptionsFileReader {
 
 	private ArrayList<String> optionsFile;

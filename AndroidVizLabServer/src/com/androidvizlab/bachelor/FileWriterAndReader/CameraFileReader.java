@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
+ * Utility class used to read the contents of the calibration summary file.
  * 
  * @author Jakob
  */
