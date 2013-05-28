@@ -3,6 +3,11 @@ package com.androidvizlab.bachelor.datamodels;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Contains information from the calibration summary file.
+ * 
+ * @author Jakob
+ */
 public class VizlabOutputData implements Serializable{
 	
     private static final long serialVersionUID = 2L;

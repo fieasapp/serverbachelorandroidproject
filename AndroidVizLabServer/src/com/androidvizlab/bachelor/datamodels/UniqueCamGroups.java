@@ -3,6 +3,10 @@ package com.androidvizlab.bachelor.datamodels;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Holds a list of camera groups that are uniquely combine
+ * @author Jakob
+ */
 public class UniqueCamGroups implements Comparable<UniqueCamGroups>, Serializable{
 	
 	/**
@@ -20,6 +24,11 @@ public class UniqueCamGroups implements Comparable<UniqueCamGroups>, Serializabl
 		avgS0 /= this.groups.size();
 	}
 
+        /**
+         * Compares camera groups
+         * @param o an object in comparison
+         * @return Returns an integer value to determine if the two camera groups are a like
+         */
 	@Override
 	public int compareTo(UniqueCamGroups o) {
 		// TODO Auto-generated method stub
