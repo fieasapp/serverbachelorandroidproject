@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import static com.androidvizlab.bachelor.FileWriterAndReader.Helpmethods.formatSentence;
 
+/**
+ * Utility class used to overwrite the calibration summary file.
+ * @author Jakob
+ */
 public class CameraFileWriter {
 	
 	ArrayList<String> tab;
