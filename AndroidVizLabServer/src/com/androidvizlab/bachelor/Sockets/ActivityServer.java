@@ -5,7 +5,11 @@ import com.androidvizlab.bachelor.Interface.SimpleObservable;
 import java.net.ServerSocket;
 import javax.swing.JOptionPane;
 
-
+/**
+ * This is the main socket server. Clients that connects to the server socket 
+ * is passed to a client handler and is executed on a different thread.
+ * @author TheHive
+ */
 public class ActivityServer extends SimpleObservable implements Runnable{
     
     // SERVER CONNECTION VARIABLES
@@ -35,11 +39,19 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         setServerState(ServerState.SERVER_STATE_READY);
     }
     
+    /**
+     * Describe the state of the server
+     * @return an enum containing the state of the server
+     */
     public ServerState getServerState()
     {
         return serverState;
     }
     
+    /**
+     * Sets the state of the server.
+     * @param state an enum use to determine the state of the server
+     */
     public void setServerState(ServerState state)
     {
         switch(state)
@@ -64,6 +76,10 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     }
 
 
+    /**
+     * Create a server socket with a given port number and continously listens to 
+     * incoming connection from the clients.
+     */
     public void start()
     {
         try
@@ -111,6 +127,9 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         
     }
 
+    /**
+     * Stops the clienthandler and closes the server socket.
+     */
     public void stop()
     {
         try
@@ -142,6 +161,17 @@ public class ActivityServer extends SimpleObservable implements Runnable{
         return PORTNR;
     }
 
+    /**
+     * A public method accessable to the main class that runs teh server to sets vital variable used 
+     * for execution.
+     * @param serverPort server port number
+     * @param brokerAddress the MQTT broker address
+     * @param brokerPort the port number used by the MQTT broker
+     * @param optionsFilePath the options file path
+     * @param externalPrgrmPath the external executable file path(a .exe)
+     * @param calibrationFilePath the file path of the calibration summary file
+     * @param clientObserver an observer of the client handler. Inforamation received from a client is passed to the controller class.
+     */
     public void setStartUpVaribles(int serverPort, 
             String brokerAddress, int brokerPort, String optionsFilePath, 
             String externalPrgrmPath,String calibrationFilePath,Observer clientObserver)
@@ -166,14 +196,20 @@ public class ActivityServer extends SimpleObservable implements Runnable{
     
     //*** RUNNABLE INTERFACE ***//
     
+    /**
+     * Run method implemented from the Runnable interface
+     */
     @Override
     public void run() 
     {
-        start(); //
+        start(); //start the server, continously listens and accepts client connection
     }
     
     //*** SERVER STATE ENUM ***//
     
+    /**
+     * A private Enum use to determine the server state
+     */
     public enum ServerState
     {
         SERVER_STATE_READY(1000),
