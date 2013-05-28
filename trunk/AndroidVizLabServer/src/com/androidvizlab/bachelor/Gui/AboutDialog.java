@@ -10,7 +10,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Displays information about the application and its owners.
  * @author Interconnect
  */
 public class AboutDialog extends javax.swing.JDialog {

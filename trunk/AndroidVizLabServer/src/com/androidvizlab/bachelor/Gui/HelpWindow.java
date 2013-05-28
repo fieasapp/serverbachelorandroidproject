@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.event.HyperlinkListener;
 
 /**
- *
+ * Displays information about the application using html files.
  * @author The Hive
  */
 public class HelpWindow extends javax.swing.JFrame {

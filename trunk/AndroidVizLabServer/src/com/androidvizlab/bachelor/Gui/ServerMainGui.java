@@ -19,7 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.event.HyperlinkListener;
 
 /**
- *
+ * This is at the main user interface of the server application.
  * @author The Hive
  */
 public class ServerMainGui extends javax.swing.JFrame {
@@ -203,6 +203,11 @@ public class ServerMainGui extends javax.swing.JFrame {
         aboutHelpMenuItem.setActionCommand(ServerController.COMMAND_ABOUT);
     }
     
+    /**
+     * Sets component listeners. Component listeners are use to listen for a certain 
+     * component to be visible and execute the correct action.
+     * @param listener 
+     */
     public void setComponentListener(ComponentListener listener)
     {
         addComponentListener(listener);
@@ -575,6 +580,7 @@ public class ServerMainGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * MAIN RUN method
      * @param args the command line arguments
      */
     public static void main(String args[]) {
