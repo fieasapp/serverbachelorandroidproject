@@ -25,9 +25,9 @@ public class UniqueCamGroups implements Comparable<UniqueCamGroups>, Serializabl
 	}
 
         /**
-         * Compares camera groups
-         * @param o an object in comparison
-         * @return Returns an integer value to determine if the two camera groups are a like
+         * Compares camera groups by the average s0
+         * @param o an object to compare with
+         * @return Returns a positive integer if the average s0 is greater than the compared object
          */
 	@Override
 	public int compareTo(UniqueCamGroups o) {
