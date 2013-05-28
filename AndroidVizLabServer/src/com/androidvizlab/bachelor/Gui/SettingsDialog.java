@@ -11,7 +11,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 
 /**
- *
+ * This the server settings dialog. A form is displayed to the user when fields of 
+ * informations vital to the application are saved in the serverconfig.properties file.
  * @author The Hive
  */
 public class SettingsDialog extends javax.swing.JDialog {
@@ -68,6 +69,9 @@ public class SettingsDialog extends javax.swing.JDialog {
         cbBrokerAddress.setSelected(false);
     }
     
+    /**
+     * Clears all Text fields in the file path forms
+     */
     public void clearFormPaths()
     {
         this.tfOptFilePath.setText("");

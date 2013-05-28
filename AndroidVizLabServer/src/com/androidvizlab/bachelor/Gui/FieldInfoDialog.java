@@ -4,7 +4,7 @@ import java.awt.Frame;
 import javax.swing.JDialog;
 
 /**
- *
+ * Displays information about a given field in the server settings dialog.
  * @author Interconnect
  */
 public class FieldInfoDialog extends JDialog {
