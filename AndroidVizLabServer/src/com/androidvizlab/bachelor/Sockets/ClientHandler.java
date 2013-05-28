@@ -418,7 +418,7 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     
     /**
      * An method used by the server to set the proper values for paths and location of
-     * certain resources need to run the appliction.
+     * certain resources need to run the application.
      * @param optionsFilePath File path of the options.txt file.
      * @param externalPrgrmPath File path and name of the executable file (.exe)
      * @param brokerAddress MQTT's IP address
