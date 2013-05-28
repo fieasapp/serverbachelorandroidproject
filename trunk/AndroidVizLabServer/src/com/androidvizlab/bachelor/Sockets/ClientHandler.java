@@ -260,7 +260,7 @@ public class ClientHandler extends SimpleObservable implements Runnable, Observe
     //Send data - VizlabInpuData or VizlabOutputData
     /**
      * Method to send data through the socket stream.
-     * @param object object that are sent must be serialized.
+     * @param object object that are sent must be serialised.
      */
     public void sendData(Object object)
     {

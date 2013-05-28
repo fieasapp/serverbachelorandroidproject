@@ -90,7 +90,11 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 		}
 		return ret;
 	}
-
+        
+        /**
+        * Determines if the CameraGroup has a large s0.
+        * @return returns an positive integer if this object has a larger s0
+        */
 	@Override
 	public int compareTo(CameraGroup o) {
 
@@ -103,6 +107,9 @@ public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 		}
 	}
 
+        /**
+	 * Checks if the current CameraGroup contains the same Camera with another CameraGroup object
+	 */
 	public boolean hasSameCamera(CameraGroup cg) {
 		boolean bool = false;
 		for (int i = 0; i < cg.getCameraList().size(); i++) {
