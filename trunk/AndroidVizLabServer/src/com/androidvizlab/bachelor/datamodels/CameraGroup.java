@@ -3,6 +3,10 @@ package com.androidvizlab.bachelor.datamodels;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Holds data about the camera group combination from the calibration summary file.
+ * @author Jakob
+ */
 public class CameraGroup implements Serializable, Comparable<CameraGroup> {
 
 	/**
